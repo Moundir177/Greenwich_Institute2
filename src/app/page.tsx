@@ -1,103 +1,236 @@
-import Image from "next/image";
+"use client";
+
+import React from 'react';
+import { FaAward, FaUserGraduate, FaBriefcase, FaGlobe, FaChevronRight, FaGraduationCap, FaBook, FaCertificate } from 'react-icons/fa';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <>
+      {/* Hero Section */}
+      <section className="hero-enhanced">
+        <div className="pattern-overlay"></div>
+        <div className="hero-particles">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="hero-particle"
+              style={{
+                width: `${Math.random() * 20 + 5}px`,
+                height: `${Math.random() * 20 + 5}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDuration: `${Math.random() * 20 + 10}s`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="highlight-circle"></div>
+        <div className="highlight-circle"></div>
+        <div className="highlight-circle"></div>
+        <div className="container hero-content">
+          <div className="text-center">
+            <h1 className="text-uk-white animate-bounceIn">
+              Excellence in <span className="text-gold text-shadow-gold shimmer">Education</span>
+            </h1>
+            <p className="text-xl text-uk-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
+              Join one of the UK's premier institutes offering world-class courses, certifications, and professional development opportunities.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4 animate-scaleIn" style={{ animationDelay: '0.6s' }}>
+              <Button 
+                href="/courses" 
+                variant="gold"
+                effect="3d"
+                icon={<FaChevronRight />}
+              >
+                Browse Courses
+              </Button>
+              <Button 
+                href="/contact" 
+                variant="white"
+                effect="hoverglow"
+              >
+                Contact Us
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="scroll-indicator animate-fadeIn" style={{ animationDelay: '1.2s' }}>
+          <div className="mouse"></div>
+          <p>Scroll Down</p>
+        </div>
+      </section>
+      
+      {/* Why Choose Us */}
+      <section className="section bg-uk-white pattern-dots">
+        <div className="container">
+          <div className="text-center mb-12">
+            <span className="badge badge-primary animate-flipIn">Excellence</span>
+            <h2 className="section-title text-uk-blue mt-4">
+              Why Choose <span className="gradient-text">UK Institute</span>
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto animate-slideUpFade">
+              We provide world-class education with a focus on practical skills and industry relevance
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: FaAward,
+                title: "Accredited Courses",
+                description: "All our courses are fully accredited and recognized internationally"
+              },
+              {
+                icon: FaUserGraduate,
+                title: "Expert Instructors",
+                description: "Learn from industry professionals with years of practical experience"
+              },
+              {
+                icon: FaBriefcase,
+                title: "Career Support",
+                description: "Comprehensive career services to help you achieve your professional goals"
+              },
+              {
+                icon: FaGlobe,
+                title: "Global Community",
+                description: "Join a diverse community of students and alumni from around the world"
+              }
+            ].map((feature, index) => (
+              <div key={index} className="card-3d animate-fadeIn" style={{ animationDelay: `${index * 0.1}s` }}>
+                <Card variant="elevated" className="h-full">
+                  <div className="flex flex-col items-center">
+                    <div className="bg-uk-blue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-gold shimmer">
+                      <feature.icon size={32} />
+                    </div>
+                    <h3 className="card-title text-center mb-3">{feature.title}</h3>
+                    <p className="text-center">{feature.description}</p>
+                  </div>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Featured Programs */}
+      <section className="section bg-gray-50">
+        <div className="container">
+          <div className="text-center mb-12">
+            <span className="badge badge-secondary animate-flipIn">Programs</span>
+            <h2 className="section-title text-uk-blue mt-4">
+              Featured <span className="text-uk-red">Academic Programs</span>
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto animate-slideUpFade">
+              Discover our popular programs designed to help you excel in today's competitive world
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: FaGraduationCap,
+                title: "Undergraduate Degrees",
+                description: "Bachelor's programs in Business, Technology, Arts, and Sciences",
+                color: "blue"
+              },
+              {
+                icon: FaBook,
+                title: "Master's Programs",
+                description: "Advanced degrees with specializations in high-demand fields",
+                color: "red"
+              },
+              {
+                icon: FaCertificate,
+                title: "Professional Certifications",
+                description: "Industry-recognized certifications to enhance your career prospects",
+                color: "gold"
+              }
+            ].map((program, index) => (
+              <div key={index} className="animate-slideUp" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className={`uk-border-gradient-${program.color} p-1 rounded-lg glass-${program.color === 'gold' ? 'light' : 'dark'}`}>
+                  <div className="p-8 rounded-lg h-full">
+                    <div className={`bg-uk-${program.color} w-16 h-16 rounded-full flex items-center justify-center mb-6 text-uk-white shimmer`}>
+                      <program.icon size={32} />
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-uk-white mb-4">{program.title}</h3>
+                    <p className="text-uk-white/90 mb-6">{program.description}</p>
+                    <Button 
+                      href="/courses" 
+                      variant={program.color === "gold" ? "white" : program.color === "red" ? "white" : "outline"}
+                      size="sm"
+                    >
+                      Learn More
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Wave Separator */}
+      <div className="wave-separator gray">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <path d="M0,50 C150,100 350,0 500,50 C650,100 800,0 1000,50 C1200,100 1350,0 1440,50 L1440,100 L0,100 Z"></path>
+        </svg>
+      </div>
+      
+      {/* Statistics Section */}
+      <section className="section bg-uk-white">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            {[
+              { number: "25+", label: "Years of Excellence" },
+              { number: "150+", label: "Expert Instructors" },
+              { number: "10,000+", label: "Successful Graduates" },
+              { number: "95%", label: "Employment Rate" }
+            ].map((stat, index) => (
+              <div key={index} className="animate-fadeIn" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className="uk-border-gradient p-1 rounded-lg">
+                  <div className="bg-white p-6 rounded-lg h-full">
+                    <h3 className="text-4xl font-bold text-uk-blue mb-2 gradient-text">{stat.number}</h3>
+                    <p className="text-gray-600">{stat.label}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-br from-uk-blue-dark to-uk-blue">
+        <div className="container">
+          <div className="callout-ribbon p-12 rounded-xl bg-white/5 backdrop-blur-lg border border-white/10 animate-fadeIn">
+            <div className="content">
+              <h2 className="text-3xl font-serif font-bold text-gold text-shadow-gold mb-6">Ready to Transform Your Future?</h2>
+              <p className="text-xl text-uk-white mb-8 max-w-3xl mx-auto animate-slideUpFade">
+                Take the first step towards a brighter future with our world-class courses and expert guidance.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scaleIn">
+                <Button 
+                  href="/courses" 
+                  variant="gold"
+                  effect="3d"
+                >
+                  Explore Courses
+                </Button>
+                <Button 
+                  href="/contact" 
+                  variant="white"
+                  effect="hoverglow"
+                >
+                  Contact Advisors
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
