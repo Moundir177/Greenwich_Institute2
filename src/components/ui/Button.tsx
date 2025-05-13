@@ -38,12 +38,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     
     // Variant classes
     const variantClasses = {
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-      outline: 'btn-outline',
-      white: 'bg-white text-uk-blue hover:bg-gray-100',
-      gold: 'btn-gold',
-      text: 'bg-transparent text-uk-blue hover:bg-gray-100/30 shadow-none'
+      primary: 'bg-dark-blue text-white hover:bg-opacity-90',
+      secondary: 'bg-gray text-white hover:bg-opacity-90',
+      outline: 'bg-transparent border border-dark-blue text-dark-blue hover:bg-dark-blue hover:text-white',
+      white: 'bg-white text-dark-blue hover:bg-light-gray',
+      gold: 'bg-gold text-white hover:bg-opacity-90',
+      text: 'bg-transparent text-dark-blue hover:bg-light-gray shadow-none'
     };
     
     // Size classes

@@ -1,11 +1,12 @@
-import Link from 'next/link';
-import { FaSearch, FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import Button from '@/components/ui/Button';
+"use client";
 
-export const metadata = {
-  title: 'Frequently Asked Questions | UK Institute',
-  description: 'Find answers to common questions about admissions, courses, payments, certifications, and student support at UK Institute.',
-};
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { FaSearch, FaChevronDown, FaChevronUp, FaQuestion, FaArrowRight } from 'react-icons/fa';
+import Button from '@/components/ui/Button';
+import Particles from 'react-particles';
+import { loadSlim } from "tsparticles-slim";
+import { Engine } from 'tsparticles-engine';
 
 const faqCategories = [
   {
@@ -104,7 +105,7 @@ const faqCategories = [
       },
       {
         question: 'How do I verify the authenticity of a certificate?',
-        answer: 'All certificates issued by UK Institute include a unique verification code. Employers and other institutions can verify certificate authenticity through our online verification portal at verify.ukinstitute.edu. Simply enter the verification code and student name to confirm certificate validity and view completion details.',
+        answer: 'All certificates issued by Greenwich include a unique verification code. Employers and other institutions can verify certificate authenticity through our online verification portal at verify.greenwich.edu. Simply enter the verification code and student name to confirm certificate validity and view completion details.',
       },
       {
         question: 'Do certificates expire?',
@@ -167,77 +168,238 @@ const faqCategories = [
 ];
 
 export default function FAQPage() {
+  const [activeCategory, setActiveCategory] = useState('admissions');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [openQuestions, setOpenQuestions] = useState<Record<string, boolean>>({});
+  
+  const particlesInit = async (engine: Engine) => {
+    await loadSlim(engine);
+  };
+  
+  // Toggle question open/closed state
+  const toggleQuestion = (categoryId: string, questionIndex: number) => {
+    const key = `${categoryId}-${questionIndex}`;
+    setOpenQuestions(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+  
+  // Filter FAQs based on search query
+  const filteredCategories = searchQuery
+    ? faqCategories.map(category => ({
+        ...category,
+        faqs: category.faqs.filter(faq => 
+          faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      })).filter(category => category.faqs.length > 0)
+    : faqCategories;
+
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-uk-blue py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-serif font-bold text-uk-white mb-2">Frequently Asked Questions</h1>
-            <p className="text-uk-white/90 max-w-xl mx-auto">
+      <section className="relative min-h-[50vh] bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white py-20 overflow-hidden">
+        {/* Particle Effects Background */}
+        <div className="absolute inset-0 z-0">
+          <Particles
+            id="tsparticles"
+            init={particlesInit}
+            options={{
+              background: {
+                color: {
+                  value: "transparent",
+                },
+              },
+              particles: {
+                number: {
+                  value: 70,
+                  density: {
+                    enable: true,
+                    value_area: 800,
+                  },
+                },
+                color: {
+                  value: "#f0c674",
+                },
+                shape: {
+                  type: "circle",
+                },
+                opacity: {
+                  value: 0.2,
+                  random: true,
+                  anim: {
+                    enable: true,
+                    speed: 0.5,
+                    opacity_min: 0.1,
+                    sync: false,
+                  },
+                },
+                size: {
+                  value: 3,
+                  random: true,
+                  anim: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.3,
+                    sync: false,
+                  },
+                },
+                line_linked: {
+                  enable: true,
+                  distance: 150,
+                  color: "#ffffff",
+                  opacity: 0.1,
+                  width: 1,
+                },
+                move: {
+                  enable: true,
+                  speed: 0.7,
+                  direction: "none",
+                  random: true,
+                  straight: false,
+                  out_mode: "out",
+                  bounce: false,
+                },
+              },
+              interactivity: {
+                detect_on: "canvas",
+                events: {
+                  onhover: {
+                    enable: true,
+                    mode: "grab",
+                  },
+                  onclick: {
+                    enable: true,
+                    mode: "push",
+                  },
+                  resize: true,
+                },
+                modes: {
+                  grab: {
+                    distance: 140,
+                    line_linked: {
+                      opacity: 0.3,
+                    },
+                  },
+                  push: {
+                    particles_nb: 3,
+                  },
+                },
+              },
+              retina_detect: true,
+            }}
+          />
+        </div>
+        
+        {/* Decorative Blurs */}
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gold opacity-20 rounded-full filter blur-[100px] animate-pulse z-0"></div>
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-blue-500 opacity-20 rounded-full filter blur-[100px] animate-pulse z-0" style={{ animationDelay: "2s" }}></div>
+
+        {/* 3D Polygons */}
+        <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 animate-bounceIn">
+              Frequently Asked <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Questions</span>
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
               Find answers to common questions about our courses, admissions, payments, and more.
             </p>
-          </div>
-        </div>
-      </section>
-      
-      {/* Search Section */}
-      <section className="py-8 bg-gray-50 border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaSearch className="h-5 w-5 text-gray-400" />
+            
+            {/* Search Box */}
+            <div className="max-w-2xl mx-auto mt-8 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search for a question..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-6 py-4 pl-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300"
+                />
+                <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/60" />
+              </div>
             </div>
-            <input
-              type="text"
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-uk-blue focus:border-uk-blue sm:text-sm"
-              placeholder="Search for a question..."
-            />
           </div>
         </div>
       </section>
       
       {/* FAQ Categories Section */}
-      <section className="py-6 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 bg-gray-50 relative overflow-hidden border-b border-gray-200">
+        <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-wrap justify-center gap-4">
-            {faqCategories.map((category) => (
-              <a 
+            {filteredCategories.map((category) => (
+              <button 
                 key={category.id}
-                href={`#${category.id}`}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 font-medium text-sm transition-colors"
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeCategory === category.id 
+                    ? 'bg-uk-blue text-white shadow-lg' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
               >
                 {category.title}
-              </a>
+              </button>
             ))}
           </div>
         </div>
       </section>
       
       {/* FAQ Content */}
-      <section className="py-12 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
-            {faqCategories.map((category) => (
-              <div key={category.id} id={category.id} className="scroll-mt-24">
-                <h2 className="text-2xl font-serif font-bold text-uk-blue mb-6 pb-2 border-b border-gray-200">
-                  {category.title}
-                </h2>
+      <section className="py-16 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full filter blur-3xl"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            {filteredCategories.map((category) => (
+              <div 
+                key={category.id} 
+                id={category.id} 
+                className={`scroll-mt-24 transition-all duration-500 ${activeCategory === category.id ? 'block' : 'hidden'}`}
+              >
+                <div className="mb-12">
+                  <div className="inline-block bg-blue-100 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">
+                    {category.title}
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-uk-blue via-uk-blue-light to-uk-blue">
+                      {category.title}
+                    </span>
+                  </h2>
+                </div>
+                
                 <div className="space-y-6">
-                  {category.faqs.map((faq, index) => (
-                    <details key={index} className="group bg-gray-50 rounded-lg p-6 open:ring-1 open:ring-uk-blue/10 open:shadow-lg">
-                      <summary className="flex cursor-pointer items-center justify-between">
-                        <h3 className="text-lg font-medium text-gray-900">{faq.question}</h3>
-                        <span className="ml-6 flex-shrink-0 text-uk-blue">
-                          <FaChevronDown className="block group-open:hidden h-5 w-5" />
-                          <FaChevronUp className="hidden group-open:block h-5 w-5" />
-                        </span>
-                      </summary>
-                      <div className="mt-4 text-gray-600 leading-relaxed">
-                        <p>{faq.answer}</p>
+                  {category.faqs.map((faq, index) => {
+                    const isOpen = openQuestions[`${category.id}-${index}`];
+                    
+                    return (
+                      <div 
+                        key={index} 
+                        className={`bg-gray-50 rounded-xl overflow-hidden transition-all duration-300 ${
+                          isOpen ? 'shadow-xl' : 'shadow-md'
+                        }`}
+                      >
+                        <button
+                          onClick={() => toggleQuestion(category.id, index)}
+                          className="w-full px-6 py-4 text-left flex items-center justify-between focus:outline-none"
+                        >
+                          <h3 className="text-lg font-medium text-uk-blue flex-1">{faq.question}</h3>
+                          <span className={`flex-shrink-0 ml-4 p-1 rounded-full bg-gray-200 text-uk-blue transition-transform duration-300 ${
+                            isOpen ? 'rotate-180' : ''
+                          }`}>
+                            <FaChevronDown className="h-5 w-5" />
+                          </span>
+                        </button>
+                        <div className={`px-6 overflow-hidden transition-all duration-300 ${
+                          isOpen ? 'max-h-96 pb-6' : 'max-h-0'
+                        }`}>
+                          <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                        </div>
                       </div>
-                    </details>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -246,20 +408,27 @@ export default function FAQPage() {
       </section>
       
       {/* Contact CTA */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-uk-blue rounded-lg shadow-lg p-8">
+      <section className="py-16 bg-gradient-to-br from-dark-blue via-blue-900 to-dark-blue relative overflow-hidden">
+        <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="backdrop-blur-md bg-white/5 rounded-xl p-8 md:p-12 border border-white/10 shadow-2xl animate-fadeIn">
             <div className="text-center">
-              <h2 className="text-2xl font-serif font-bold text-white mb-4">Couldn't Find Your Answer?</h2>
-              <p className="text-white/90 max-w-2xl mx-auto mb-8">
-                Our support team is here to help. Contact us for personalized assistance with any questions you may have.
+              <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Still Have Questions?</span>
+              </h2>
+              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto animate-slideUpFade">
+                If you couldn't find the answer to your question, our support team is here to help.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button href="/contact" variant="secondary">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scaleIn">
+                <Button 
+                  href="/contact" 
+                  variant="gold"
+                  effect="3d"
+                  icon={<FaArrowRight />}
+                >
                   Contact Support
-                </Button>
-                <Button href="/live-chat" variant="white">
-                  Start Live Chat
                 </Button>
               </div>
             </div>

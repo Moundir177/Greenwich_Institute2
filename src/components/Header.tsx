@@ -19,7 +19,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <Disclosure as="nav" className="bg-uk-blue shadow-md">
+    <Disclosure as="nav" className="bg-dark-blue shadow-md">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,7 +38,7 @@ export default function Header() {
                     </div>
                     <div>
                       <h1 className="text-gold font-serif font-bold text-xl md:text-2xl">UK Institute</h1>
-                      <p className="text-uk-white text-xs md:text-sm">Excellence in Education</p>
+                      <p className="text-white text-xs md:text-sm">Excellence in Education</p>
                     </div>
                   </Link>
                 </div>
@@ -47,7 +47,7 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-uk-white hover:text-gold inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-300"
+                      className="text-white hover:text-gold inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-300"
                     >
                       {item.name}
                     </Link>
@@ -56,19 +56,19 @@ export default function Header() {
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
                 {isLoggedIn ? (
-                  <Link href="/profile" className="flex items-center space-x-2 bg-uk-red bg-opacity-80 hover:bg-uk-red px-4 py-2 rounded-md text-uk-white">
+                  <Link href="/profile" className="flex items-center space-x-2 bg-gray hover:bg-gold px-4 py-2 rounded-md text-white">
                     <FaUser />
                     <span>My Profile</span>
                   </Link>
                 ) : (
-                  <Link href="/login" className="flex items-center space-x-2 bg-uk-red bg-opacity-80 hover:bg-uk-red px-4 py-2 rounded-md text-uk-white">
+                  <Link href="/login" className="flex items-center space-x-2 bg-gray hover:bg-gold px-4 py-2 rounded-md text-white">
                     <FaUser />
                     <span>Login</span>
                   </Link>
                 )}
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-uk-white hover:text-gold focus:outline-none">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gold focus:outline-none">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <FaTimes className="block h-6 w-6" aria-hidden="true" />
@@ -86,7 +86,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-uk-white hover:bg-uk-red block px-3 py-2 text-base font-medium"
+                  className="text-white hover:bg-gray block px-3 py-2 text-base font-medium"
                 >
                   {item.name}
                 </Link>
@@ -94,7 +94,7 @@ export default function Header() {
               {isLoggedIn ? (
                 <Link
                   href="/profile"
-                  className="flex items-center space-x-2 text-uk-white hover:bg-uk-red px-3 py-2 text-base font-medium"
+                  className="flex items-center space-x-2 text-white hover:bg-gray px-3 py-2 text-base font-medium"
                 >
                   <FaUser />
                   <span>My Profile</span>
@@ -102,7 +102,7 @@ export default function Header() {
               ) : (
                 <Link
                   href="/login"
-                  className="flex items-center space-x-2 text-uk-white hover:bg-uk-red px-3 py-2 text-base font-medium"
+                  className="flex items-center space-x-2 text-white hover:bg-gray px-3 py-2 text-base font-medium"
                 >
                   <FaUser />
                   <span>Login</span>

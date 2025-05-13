@@ -1,505 +1,968 @@
+"use client";
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaGraduationCap, FaUsers, FaGlobe, FaChalkboardTeacher, FaBullseye, FaLightbulb, FaHandshake, FaShieldAlt, FaChevronDown } from 'react-icons/fa';
-import Button from '@/components/ui/Button';
-import Breadcrumbs from '@/components/ui/Breadcrumbs';
-import ImageCarousel from '@/components/ui/ImageCarousel';
-import TestimonialCard from '@/components/ui/TestimonialCard';
-import Card from '@/components/ui/Card';
+import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar } from 'react-icons/fa';
+import { useLanguage } from '../contexts/LanguageContext';
+import { motion } from 'framer-motion';
 
-export const metadata = {
-  title: 'About Us | UK Institute',
-  description: 'Learn about UK Institute\'s history, mission, values, and the team of educators shaping the future of education.',
-};
-
-const values = [
+// Sample team data
+const LEADERSHIP_TEAM = [
   {
-    title: 'Excellence',
-    description: 'We strive for excellence in all aspects of education, from teaching methods to learning resources.',
-    icon: <FaGraduationCap className="text-gold text-3xl" />,
+    id: 1,
+    name: 'Dr. Jonathan Hughes',
+    title: 'President & CEO',
+    image: '/images/team/president.jpg',
+    bio: 'Dr. Hughes has over 25 years of experience in higher education and previously served as Dean of Business at Oxford University.',
   },
   {
-    title: 'Innovation',
-    description: 'We embrace new technologies and teaching approaches to provide cutting-edge educational experiences.',
-    icon: <FaLightbulb className="text-gold text-3xl" />,
+    id: 2,
+    name: 'Prof. Maria Rodriguez',
+    title: 'Academic Director',
+    image: '/images/team/academic-director.jpg',
+    bio: 'Prof. Rodriguez leads our academic programs with her extensive background in curriculum development and educational innovation.',
   },
   {
-    title: 'Inclusivity',
-    description: 'We believe education should be accessible to all, regardless of background or circumstances.',
-    icon: <FaUsers className="text-gold text-3xl" />,
+    id: 3,
+    name: 'Dr. David Chen',
+    title: 'Director of Technology',
+    image: '/images/team/tech-director.jpg',
+    bio: 'Dr. Chen oversees our technology infrastructure and digital learning initiatives, bringing 15 years of EdTech experience.',
   },
   {
-    title: 'Integrity',
-    description: 'We uphold the highest ethical standards in all our educational and business practices.',
-    icon: <FaShieldAlt className="text-gold text-3xl" />,
-  },
-];
-
-const leadershipTeam = [
-  {
-    name: 'Dr. Elizabeth Wright',
-    role: 'President',
-    bio: 'Former Dean of Education at Oxford University with over 25 years of experience in higher education leadership.',
-    imageSrc: '/images/team/elizabeth-wright.jpg',
-  },
-  {
-    name: 'Professor James Harrison',
-    role: 'Academic Director',
-    bio: 'PhD in Educational Psychology with expertise in curriculum development and educational technology integration.',
-    imageSrc: '/images/team/james-harrison.jpg',
-  },
-  {
-    name: 'Victoria Chen',
-    role: 'Chief Operating Officer',
-    bio: 'MBA from London Business School with 15+ years of experience in educational institution management.',
-    imageSrc: '/images/team/victoria-chen.jpg',
-  },
-  {
-    name: 'Dr. Michael Reynolds',
-    role: 'Director of Research',
-    bio: 'Renowned researcher in business innovation with numerous published papers in leading academic journals.',
-    imageSrc: '/images/team/michael-reynolds.jpg',
-  },
-];
-
-const stats = [
-  { label: 'Founded', value: '1998' },
-  { label: 'Students Enrolled', value: '15,000+' },
-  { label: 'Courses Offered', value: '200+' },
-  { label: 'Expert Instructors', value: '120+' },
-  { label: 'Countries Represented', value: '65+' },
-  { label: 'Completion Rate', value: '94%' },
-];
-
-const campusImages = [
-  {
-    src: '/images/campus/campus-1.jpg',
-    alt: 'UK Institute main building',
-    caption: 'Our modern London campus in the heart of the city'
-  },
-  {
-    src: '/images/campus/campus-2.jpg',
-    alt: 'UK Institute library',
-    caption: 'Our comprehensive library with digital and physical resources'
-  },
-  {
-    src: '/images/campus/campus-3.jpg',
-    alt: 'UK Institute classroom',
-    caption: 'State-of-the-art classrooms with advanced technology'
-  },
-  {
-    src: '/images/campus/campus-4.jpg',
-    alt: 'UK Institute student lounge',
-    caption: 'Comfortable student spaces designed for collaboration'
-  },
-];
-
-const testimonials = [
-  {
-    quote: "UK Institute transformed my understanding of educational leadership. The faculty are truly world-class, and the networking opportunities were invaluable for my career progression.",
-    name: "Dr. Sarah Johnson",
-    title: "School Principal, Graduated 2018",
-    imageSrc: "/images/testimonials/sarah.jpg",
-    rating: 5
-  },
-  {
-    quote: "As an international student, I found UK Institute to be incredibly welcoming. The inclusive environment and comprehensive support services helped me thrive far from home.",
-    name: "Ahmed Hassan",
-    title: "Digital Marketing Specialist, Graduated 2020",
-    imageSrc: "/images/testimonials/ahmed.jpg",
-    rating: 5
-  },
-  {
-    quote: "The industry connections at UK Institute are unparalleled. Before graduation, I already had three job offers thanks to the career development program and industry partnerships.",
-    name: "Emma Thompson",
-    title: "Business Analyst, Graduated 2021",
-    imageSrc: "/images/testimonials/emma.jpg",
-    rating: 5
+    id: 4,
+    name: 'Sarah Johnson',
+    title: 'Chief Operating Officer',
+    image: '/images/team/coo.jpg',
+    bio: 'Sarah ensures the efficient operation of all institute functions with her background in organizational management.',
   }
 ];
 
-export default function AboutPage() {
-  return (
-    <>
-      {/* Hero Section */}
-      <section className="hero-enhanced">
-        <div className="pattern-overlay"></div>
-        <div className="hero-particles">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="hero-particle"
-              style={{
-                width: `${Math.random() * 20 + 5}px`,
-                height: `${Math.random() * 20 + 5}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDuration: `${Math.random() * 20 + 10}s`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            />
-          ))}
-        </div>
-        <div className="highlight-circle"></div>
-        <div className="highlight-circle"></div>
-        <div className="highlight-circle"></div>
-        <div className="container hero-content">
-          <div className="text-center">
-            <h1 className="text-uk-white animate-bounceIn">
-              About <span className="text-gold text-shadow-gold shimmer">UK Institute</span>
-            </h1>
-            <p className="text-xl text-uk-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
-              Transforming lives through quality education and innovative learning experiences since 1998.
-            </p>
-            <div className="mt-8 animate-scaleIn" style={{ animationDelay: '0.6s' }}>
-              <Button 
-                href="#our-story" 
-                variant="gold"
-                className="btn-hoverglow"
-                icon={<FaGraduationCap />}
-              >
-                Discover Our Story
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="scroll-indicator animate-fadeIn" style={{ animationDelay: '1.2s' }}>
-          <div className="mouse"></div>
-          <p>Scroll Down</p>
-        </div>
-      </section>
+// Sample timeline data
+const HISTORY_TIMELINE = [
+  {
+    year: '2005',
+    title: 'Foundation',
+    description: 'Greenwich was founded with a mission to provide world-class education accessible to students worldwide.',
+  },
+  {
+    year: '2008',
+    title: 'First International Campus',
+    description: 'Expanded with our first international campus, establishing a global presence in education.',
+  },
+  {
+    year: '2012',
+    title: 'Online Learning Launch',
+    description: 'Pioneered our digital learning platform, bringing quality education to remote students around the world.',
+  },
+  {
+    year: '2016',
+    title: 'Industry Partnerships',
+    description: 'Formed strategic partnerships with leading global companies to enhance our career-focused curriculum.',
+  },
+  {
+    year: '2020',
+    title: 'Global Recognition',
+    description: 'Achieved accreditation from international education bodies, recognizing our commitment to excellence.',
+  },
+  {
+    year: '2023',
+    title: 'Innovation Hub',
+    description: 'Launched our Innovation Hub, fostering entrepreneurship and technological advancement in education.',
+  }
+];
 
-      {/* Breadcrumbs */}
-      <div className="bg-gray-50 border-b border-gray-100">
-        <div className="container py-2">
-          <Breadcrumbs
-            items={[{ label: 'About Us' }]}
-          />
-        </div>
-      </div>
+// Sample values data
+const VALUES = [
+  {
+    id: 'excellence',
+    title: 'Academic Excellence',
+    icon: <FaAward className="text-4xl text-gold mb-4" />,
+    description: 'We maintain the highest standards in education, continuously striving to improve our teaching methods and curriculum.',
+  },
+  {
+    id: 'innovation',
+    title: 'Innovation',
+    icon: <FaBook className="text-4xl text-gold mb-4" />,
+    description: 'We embrace new technologies and pedagogical approaches to enhance the learning experience for our students.',
+  },
+  {
+    id: 'diversity',
+    title: 'Diversity & Inclusion',
+    icon: <FaGlobe className="text-4xl text-gold mb-4" />,
+    description: 'We celebrate diversity and create an inclusive environment where all students can thrive regardless of background.',
+  },
+  {
+    id: 'integrity',
+    title: 'Integrity',
+    icon: <FaMedal className="text-4xl text-gold mb-4" />,
+    description: 'We uphold the highest ethical standards in all our operations, fostering trust with our students and partners.',
+  },
+  {
+    id: 'community',
+    title: 'Community Engagement',
+    icon: <FaUsers className="text-4xl text-gold mb-4" />,
+    description: 'We believe in giving back to society and actively engage with local and global communities.',
+  },
+  {
+    id: 'student-success',
+    title: 'Student Success',
+    icon: <FaUserGraduate className="text-4xl text-gold mb-4" />,
+    description: 'Our primary focus is the success of our students, both academically and in their future careers.',
+  }
+];
+
+// Animation variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.1, duration: 0.5, ease: "easeOut" }
+  })
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { delay: custom * 0.1, duration: 0.5, ease: "easeOut" }
+  })
+};
+
+export default function AboutPage() {
+  const { t, language } = useLanguage();
+  const isRtl = language === 'ar';
+  const [activeTab, setActiveTab] = useState('mission');
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    setIsVisible(true);
+    
+    // Check for hash in URL to determine which tab to show
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const tabMap: Record<string, string> = {
+        'story': 'history',
+        'mission': 'mission',
+        'leadership': 'team',
+        'campus': 'facilities'
+      };
       
-      {/* Our Story Section */}
-      <section id="our-story" className="section bg-uk-white">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-slideRight">
-              <span className="badge badge-primary animate-scaleIn">Our Journey</span>
-              <h2 className="text-3xl font-serif font-bold text-uk-blue mb-6 gradient-text">Our Story</h2>
-              <p className="mb-6 leading-relaxed">
-                UK Institute was founded in 1998 with a vision to provide accessible, high-quality education that adapts to the changing needs of students and industry. What began as a small training center in London has grown into a leading educational institution with global reach.
-              </p>
-              <p className="mb-6 leading-relaxed">
-                Our journey has been marked by continuous innovation and an unwavering commitment to educational excellence. We pioneered blended learning approaches in the early 2000s and were among the first institutions to offer fully accredited online courses in business and technology.
-              </p>
-              <p className="leading-relaxed">
-                Today, UK Institute stands as a beacon of educational innovation, offering diverse learning pathways that combine academic rigor with practical skills development. Our graduates are sought after by employers worldwide for their comprehensive knowledge and adaptable skills.
-              </p>
-            </div>
-            <div className="rounded-lg overflow-hidden shadow-xl transform hover:rotate-1 transition-all duration-500 animate-slideLeft uk-border-gradient p-2">
-              <Image 
-                src="/images/about/institute-history.jpg" 
-                alt="UK Institute campus over the years"
-                width={600}
-                height={400}
-                className="w-full h-auto rounded-lg"
-              />
+      if (tabMap[hash]) {
+        setActiveTab(tabMap[hash]);
+      }
+    }
+    
+    // Listen for hash changes
+    const handleHashChange = () => {
+      const newHash = window.location.hash.replace('#', '');
+      const tabMap: Record<string, string> = {
+        'story': 'history',
+        'mission': 'mission',
+        'leadership': 'team',
+        'campus': 'facilities'
+      };
+      
+      if (tabMap[newHash]) {
+        setActiveTab(tabMap[newHash]);
+      }
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+  
+  // Function to change tab and update URL hash
+  const changeTab = (tab: string) => {
+    setActiveTab(tab);
+    const hashMap: Record<string, string> = {
+      'history': 'story',
+      'mission': 'mission',
+      'team': 'leadership',
+      'facilities': 'campus'
+    };
+    
+    if (hashMap[tab]) {
+      window.history.pushState(null, '', `#${hashMap[tab]}`);
+    }
+  };
+  
+  return (
+    <div className={`min-h-screen ${isRtl ? 'rtl' : 'ltr'}`}>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white relative overflow-hidden">
+        {/* Particle Effects */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 left-0 w-full h-full">
+              {Array.from({ length: 20 }).map((_, index) => (
+                <div 
+                  key={index}
+                  className="absolute rounded-full bg-gold/30"
+                  style={{
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    width: `${Math.random() * 8 + 2}px`,
+                    height: `${Math.random() * 8 + 2}px`,
+                    animationDuration: `${Math.random() * 10 + 10}s`,
+                    animationDelay: `${Math.random() * 5}s`,
+                    animation: `float-particle ${Math.random() * 10 + 15}s infinite ease-in-out`
+                  }}
+                ></div>
+              ))}
             </div>
           </div>
+        </div>
+        
+        {/* Background Gradient Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gold/20 blur-3xl"></div>
+          <div className="absolute top-1/2 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
+          <div className="absolute -bottom-24 left-1/4 w-96 h-96 rounded-full bg-dark-blue/30 blur-3xl"></div>
+        </div>
+        
+        {/* 3D Polygons */}
+        <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="max-w-4xl mx-auto text-center"
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={fadeIn}
+            custom={0}
+          >
+            <motion.h1 
+              className="text-4xl md:text-6xl font-serif font-bold mb-6"
+              variants={fadeIn}
+              custom={1}
+            >
+              {t('about')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Greenwich</span>
+            </motion.h1>
+            <motion.p 
+              className="text-xl text-white/80 mb-8"
+              variants={fadeIn}
+              custom={2}
+            >
+              <span className="relative">
+                <span className="absolute -left-8 -top-4 text-4xl text-gold/20">❝</span>
+                Empowering minds, transforming lives, and building futures through world-class education since 2005.
+                <span className="absolute -right-8 -bottom-3 text-4xl text-gold/20">❞</span>
+              </span>
+            </motion.p>
+            <motion.div 
+              className="flex flex-wrap justify-center gap-4"
+              variants={fadeIn}
+              custom={3}
+            >
+              <Link 
+                href="/courses" 
+                className="relative group overflow-hidden bg-gradient-to-r from-gold to-amber-500 text-dark-blue px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-[0_20px_40px_-15px_rgba(240,198,116,0.5)]"
+              >
+                <span className="relative z-10 flex items-center">
+                  {t('explore_courses')}
+                  <FaArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+              </Link>
+              <Link 
+                href="/contact" 
+                className="relative overflow-hidden bg-transparent border border-white/30 backdrop-blur-sm text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:border-white/60 hover:bg-white/10 transform hover:translate-y-[-2px]"
+              >
+                <span className="relative z-10">
+                  {t('contact_us')}
+                </span>
+              </Link>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2"
+            >
+              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center animate-bounce border border-white/20 cursor-pointer shadow-xl" onClick={() => window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' })}>
+                <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L10 9L19 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
       
-      {/* Mission & Vision Section */}
-      <section className="section bg-gray-50">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="section-title text-uk-blue">Our <span className="text-shadow-gold">Mission & Vision</span></h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              Guided by clear purpose and forward-thinking aspirations
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="card-conic-gradient animate-fadeIn">
-              <div className="card-inner">
-                <div className="flex items-center mb-4">
-                  <div className="mr-4 bg-uk-blue rounded-full p-3 text-gold">
-                    <FaGraduationCap size={30} />
-                  </div>
-                  <h3 className="text-2xl font-serif font-bold text-uk-blue">Our Mission</h3>
-                </div>
-                <p className="leading-relaxed">
-                  To empower individuals through exceptional education that combines theoretical knowledge with practical skills, fostering personal growth and professional success in a rapidly evolving global landscape.
+      {/* Tabs Navigation - enhanced version */}
+      <section className="bg-white py-4 border-b border-gray-200 sticky top-0 z-20 shadow-md backdrop-blur-lg bg-white/90">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex overflow-x-auto scrollbar-hide justify-center"
+          >
+            <div className="inline-flex p-1 bg-light-gray/50 backdrop-blur-sm rounded-full border border-gray-200/50 shadow-inner">
+              {[
+                { id: 'mission', label: t('mission_values') },
+                { id: 'history', label: t('our_story') },
+                { id: 'team', label: t('leadership_team') },
+                { id: 'facilities', label: t('campus_facilities') }
+              ].map((tab) => (
+                <button 
+                  key={tab.id}
+                  onClick={() => changeTab(tab.id)}
+                  className={`relative px-5 py-2 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap ${
+                    activeTab === tab.id ? 'text-dark-blue' : 'text-gray'
+                  }`}
+                >
+                  {activeTab === tab.id && (
+                    <motion.div
+                      layoutId="activeTabBg"
+                      className="absolute inset-0 bg-white rounded-full shadow-md"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center justify-center">
+                    {tab.id === 'mission' && (
+                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
+                        <FaBook className="inline-block" size={14} />
+                      </span>
+                    )}
+                    {tab.id === 'history' && (
+                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
+                        <FaUniversity className="inline-block" size={14} />
+                      </span>
+                    )}
+                    {tab.id === 'team' && (
+                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
+                        <FaUsers className="inline-block" size={14} />
+                      </span>
+                    )}
+                    {tab.id === 'facilities' && (
+                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
+                        <FaGlobe className="inline-block" size={14} />
+                      </span>
+                    )}
+                    {tab.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      
+      {/* Mission & Values Tab */}
+      {activeTab === 'mission' && (
+        <section className="py-16 bg-light-gray">
+          <div className="container mx-auto px-4">
+            {/* Mission Statement */}
+            <motion.div 
+              className="max-w-4xl mx-auto mb-16 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={0}
+            >
+              <motion.h2 
+                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                variants={fadeIn}
+                custom={1}
+              >
+                Our Mission
+              </motion.h2>
+              <motion.div 
+                className="relative p-8 glass-morphism rounded-lg shadow-xl"
+                variants={scaleIn}
+                custom={2}
+              >
+                <FaQuoteLeft className="text-gold/20 text-6xl absolute top-6 left-6" />
+                <p className="text-xl text-dark-blue z-10 relative italic">
+                  To provide accessible, innovative, and high-quality education that empowers students to make meaningful contributions to society and achieve their full potential in a rapidly changing global landscape.
                 </p>
-                <ul className="mt-6 space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-uk-blue mr-2">•</span>
-                    <span>Deliver innovative, industry-relevant education</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-uk-blue mr-2">•</span>
-                    <span>Nurture critical thinking and problem-solving skills</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-uk-blue mr-2">•</span>
-                    <span>Foster a diverse and inclusive learning community</span>
-                  </li>
-                </ul>
+              </motion.div>
+            </motion.div>
+            
+            {/* Values Grid */}
+            <motion.h2 
+              className="text-3xl font-serif font-bold text-dark-blue mb-10 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={3}
+            >
+              Our Core Values
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {VALUES.map((value, index) => (
+                <motion.div 
+                  key={value.id}
+                  className="glass-morphism p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 transform text-center card-3d cursor-pointer"
+                  initial="hidden"
+                  animate="visible"
+                  variants={scaleIn}
+                  custom={index + 4}
+                  whileHover={{ y: -10 }}
+                >
+                  {value.icon}
+                  <h3 className="text-xl font-bold text-dark-blue mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray">
+                    {value.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* History & Timeline Tab - enhanced with advanced animations */}
+      {activeTab === 'history' && (
+        <section className="py-16 relative overflow-hidden">
+          {/* Background Gradient with advanced effects */}
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
+          <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div 
+              className="max-w-4xl mx-auto mb-16 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={0}
+            >
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-accent-blue/10 text-dark-blue text-sm font-medium mb-3"
+              >
+                {t('since_2005')}
+              </motion.span>
+              <motion.h2 
+                className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
+                variants={fadeIn}
+                custom={1}
+              >
+                Our <span className="text-gold relative">
+                  Journey
+                  <span className="absolute bottom-0 left-0 w-full h-2 bg-gold/10 -z-10"></span>
+                </span>
+              </motion.h2>
+              <motion.p 
+                className="text-gray text-lg"
+                variants={fadeIn}
+                custom={2}
+              >
+                From our humble beginnings to becoming a globally recognized educational institution, our journey has been defined by innovation, excellence, and a commitment to student success.
+              </motion.p>
+            </motion.div>
+            
+            <div className="relative">
+              {/* Glowing vertical line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-gold/30 via-gold/50 to-gold/30 neon-glow"></div>
+              
+              {/* Timeline items with enhanced animations */}
+              <div className="space-y-24">
+                {HISTORY_TIMELINE.map((item, index) => (
+                  <motion.div 
+                    key={item.year} 
+                    className={`relative flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ 
+                      duration: 0.7,
+                      delay: index * 0.1,
+                      ease: [0.215, 0.61, 0.355, 1.0]
+                    }}
+                  >
+                    {/* Year Circle with glow effect */}
+                    <motion.div 
+                      className="absolute left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-r from-gold to-amber-500 flex items-center justify-center text-dark-blue font-bold z-10 shadow-[0_0_15px_rgba(240,198,116,0.5)]"
+                      whileHover={{ 
+                        scale: 1.2, 
+                        boxShadow: "0 0 25px rgba(240,198,116,0.7)"
+                      }}
+                    >
+                      {item.year}
+                    </motion.div>
+                    
+                    {/* Content with improved styling */}
+                    <motion.div 
+                      className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-16' : 'text-left pl-16'}`}
+                      whileHover={{ 
+                        scale: 1.05, 
+                        transition: { duration: 0.3 } 
+                      }}
+                    >
+                      <div className="glass-morphism p-6 rounded-xl shadow-xl border border-white backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <h3 className="text-2xl font-bold text-dark-blue mb-2 flex items-center">
+                          {index % 2 === 0 ? (
+                            <>
+                              <span className="text-gold">{item.title}</span>
+                              <span className="ml-2 text-gold">&rarr;</span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="mr-2 text-gold">&larr;</span>
+                              <span className="text-gold">{item.title}</span>
+                            </>
+                          )}
+                        </h3>
+                        <p className="text-gray">{item.description}</p>
+                        
+                        {/* Decorative corner accent */}
+                        <div className={`absolute ${index % 2 === 0 ? 'top-0 right-0' : 'top-0 left-0'} w-8 h-8 border-t-2 ${index % 2 === 0 ? 'border-r-2' : 'border-l-2'} border-gold/20 rounded-tr-lg`}></div>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Empty space for the other side */}
+                    <div className="w-5/12"></div>
+                  </motion.div>
+                ))}
               </div>
+              
+              {/* Final dot at the end of timeline */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.7 }}
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-12 w-6 h-6 rounded-full bg-gold shadow-[0_0_15px_rgba(240,198,116,0.5)]"
+              ></motion.div>
             </div>
             
-            <div className="card-conic-gradient animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-              <div className="card-inner">
-                <div className="flex items-center mb-4">
-                  <div className="mr-4 bg-uk-red rounded-full p-3 text-uk-white">
-                    <FaBullseye size={30} />
+            {/* Floating decorations */}
+            <div className="absolute top-1/4 right-10 w-24 h-24 border border-gold/10 rounded-full rotate-45 opacity-40 animate-float-slow"></div>
+            <div className="absolute bottom-1/3 left-20 w-16 h-16 border border-gold/10 rounded-full -rotate-12 opacity-30 animate-float-slow animation-delay-1000"></div>
+          </div>
+        </section>
+      )}
+      
+      {/* Leadership Team Tab */}
+      {activeTab === 'team' && (
+        <section className="py-16 bg-light-gray relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div 
+              className="max-w-4xl mx-auto mb-16 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={0}
+            >
+              <motion.h2 
+                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                variants={fadeIn}
+                custom={1}
+              >
+                Our Leadership Team
+              </motion.h2>
+              <motion.p 
+                className="text-gray"
+                variants={fadeIn}
+                custom={2}
+              >
+                Meet the dedicated professionals leading our institution with vision, expertise, and a passion for education.
+              </motion.p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+              {LEADERSHIP_TEAM.map((member, index) => (
+                <motion.div 
+                  key={member.id}
+                  className="glass-morphism rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer transform perspective-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={scaleIn}
+                  custom={index + 3}
+                  whileHover={{ y: -10, scale: 1.03 }}
+                >
+                  <div className="relative h-64 w-full overflow-hidden">
+                    <Image 
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover transition-transform hover:scale-110 duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/80 to-transparent opacity-70"></div>
                   </div>
-                  <h3 className="text-2xl font-serif font-bold text-uk-blue">Our Vision</h3>
-                </div>
-                <p className="leading-relaxed">
-                  To be recognized globally as a leader in innovative education that bridges academic excellence with real-world application, creating transformative learning experiences that prepare students to thrive in an ever-changing world.
+                  
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-dark-blue mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-gold font-medium mb-4 neon-text">
+                      {member.title}
+                    </p>
+                    <p className="text-gray text-sm">
+                      {member.bio}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* Campus Facilities Tab */}
+      {activeTab === 'facilities' && (
+        <section className="py-16 relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
+          <div className="absolute bottom-20 left-0 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div 
+              className="max-w-4xl mx-auto mb-16 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={0}
+            >
+              <motion.h2 
+                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                variants={fadeIn}
+                custom={1}
+              >
+                World-Class Facilities
+              </motion.h2>
+              <motion.p 
+                className="text-gray"
+                variants={fadeIn}
+                custom={2}
+              >
+                Our state-of-the-art campuses provide the perfect environment for learning, innovation, and personal growth.
+              </motion.p>
+            </motion.div>
+            
+            <motion.div 
+              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={3}
+            >
+              <div className="order-2 lg:order-1">
+                <h3 className="text-2xl font-bold text-dark-blue mb-4">
+                  Modern Learning Spaces
+                </h3>
+                <p className="text-gray mb-6">
+                  Our classrooms and lecture halls are equipped with the latest technology and designed to facilitate interactive learning and collaboration.
                 </p>
-                <ul className="mt-6 space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-uk-red mr-2">•</span>
-                    <span>Lead in educational innovation and technology integration</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-uk-red mr-2">•</span>
-                    <span>Create a global network of successful alumni and partners</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-uk-red mr-2">•</span>
-                    <span>Set new standards for accessible, high-quality education</span>
-                  </li>
+                <ul className="space-y-3">
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={4}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Interactive smart boards and projection systems</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={5}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Flexible seating arrangements for various teaching methodologies</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={6}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>High-speed internet and digital resources available throughout</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={7}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Recording capabilities for lecture capture and review</span>
+                  </motion.li>
                 </ul>
               </div>
-            </div>
+              
+              <motion.div 
+                className="order-1 lg:order-2 relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
+                variants={scaleIn}
+                custom={4}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Image 
+                  src="/images/facilities/classrooms.jpg"
+                  alt="Modern classrooms"
+                  fill
+                  className="object-cover rounded-xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
+              </motion.div>
+            </motion.div>
+            
+            <motion.div 
+              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={8}
+            >
+              <motion.div 
+                className="relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
+                variants={scaleIn}
+                custom={9}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Image 
+                  src="/images/facilities/library.jpg"
+                  alt="Library and research center"
+                  fill
+                  className="object-cover rounded-xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
+              </motion.div>
+              
+              <div>
+                <h3 className="text-2xl font-bold text-dark-blue mb-4">
+                  Library & Research Center
+                </h3>
+                <p className="text-gray mb-6">
+                  Our extensive library houses thousands of books, journals, and digital resources, providing a quiet environment for study and research.
+                </p>
+                <ul className="space-y-3">
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={10}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Over 50,000 physical volumes and extensive digital collections</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={11}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Subscription to major academic journals and databases</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={12}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Private study rooms and collaborative spaces</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={13}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Professional librarians to assist with research needs</span>
+                  </motion.li>
+                </ul>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              custom={14}
+            >
+              <div className="order-2 lg:order-1">
+                <h3 className="text-2xl font-bold text-dark-blue mb-4">
+                  Innovation Hub & Technology Labs
+                </h3>
+                <p className="text-gray mb-6">
+                  Our innovation hub provides students with access to cutting-edge technology and equipment for practical learning and project development.
+                </p>
+                <ul className="space-y-3">
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={15}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Computer labs with industry-standard software</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={16}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>3D printing and prototyping facilities</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={17}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Virtual reality and simulation equipment</span>
+                  </motion.li>
+                  <motion.li 
+                    className="flex items-start"
+                    variants={fadeIn}
+                    custom={18}
+                  >
+                    <span className="text-gold mr-2 neon-text">•</span>
+                    <span>Spaces for startups and entrepreneurial ventures</span>
+                  </motion.li>
+                </ul>
+              </div>
+              
+              <motion.div 
+                className="order-1 lg:order-2 relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
+                variants={scaleIn}
+                custom={19}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Image 
+                  src="/images/facilities/tech-lab.jpg"
+                  alt="Technology labs"
+                  fill
+                  className="object-cover rounded-xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       
-      {/* Values Section */}
-      <section className="section bg-uk-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-gold animate-flipIn">Our Guiding Principles</span>
-            <h2 className="section-title text-uk-blue mt-4">Our Core <span className="text-gold">Values</span></h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              The principles that guide everything we do
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <div key={index} className="card-3d animate-fadeIn" style={{ animationDelay: `${index * 0.1}s` }}>
-                <Card 
-                  variant="default" 
-                  hoverEffect={true}
-                  className="text-center h-full"
-                >
-                  <div className="flex justify-center mb-4">
-                    {value.icon}
+      {/* Policies Section */}
+      <section className="py-20 bg-light-gray">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-4">
+                <span className="text-gold neon-text">{t('our_policies')}</span> {t('and_guidelines')}
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto">
+                {t('policies_description')}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="bg-white rounded-xl overflow-hidden shadow-lg"
+              >
+                <div className="relative h-48">
+                  <div className="absolute inset-0 bg-dark-blue">
+                    <div className="absolute inset-0 opacity-20" style={{ 
+                      backgroundImage: 'url(/images/patterns/pattern1.png)',
+                      backgroundSize: 'cover'
+                    }}></div>
                   </div>
-                  <h3 className="text-uk-blue text-xl font-bold mb-3">{value.title}</h3>
-                  <p>{value.description}</p>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Stats Section */}
-      <section className="py-16 bg-uk-blue text-uk-white pattern-grid">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif font-bold text-gold text-shadow-gold mb-4">UK Institute at a Glance</h2>
-            <p className="text-lg text-uk-white/90 max-w-3xl mx-auto">
-              Our impact in numbers
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {stats.map((stat, index) => (
-              <div 
-                key={index} 
-                className="glass text-center p-6 rounded-lg animate-flipIn"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="text-gold text-3xl font-bold mb-2 animate-pulse shimmer">{stat.value}</div>
-                <div className="text-uk-white/80 text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Wave Separator */}
-      <div className="wave-separator white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-          <path d="M0,50 C150,100 350,0 500,50 C650,100 800,0 1000,50 C1200,100 1350,0 1440,50 L1440,100 L0,100 Z"></path>
-        </svg>
-      </div>
-      
-      {/* Leadership Team Section */}
-      <section className="section bg-uk-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-primary animate-dropIn">Meet Our Team</span>
-            <h2 className="section-title text-uk-blue mt-4">Our <span className="text-gold">Leadership Team</span></h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              Meet the experienced professionals guiding our institution
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {leadershipTeam.map((member, index) => (
-              <div key={index} className="animate-scaleIn" style={{ animationDelay: `${index * 0.15}s` }}>
-                <Card 
-                  variant="bordered"
-                  withImage={true}
-                  imageSrc={member.imageSrc || "/images/team/placeholder.jpg"}
-                  imageAlt={member.name}
-                  className="uk-border-gradient"
-                >
-                  <h3 className="text-uk-blue font-bold text-xl mb-1">{member.name}</h3>
-                  <p className="text-uk-red font-medium mb-3">{member.role}</p>
-                  <p className="text-gray-600">{member.bio}</p>
-                </Card>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12 animate-fadeIn" style={{ animationDelay: '0.8s' }}>
-            <Button href="/team" variant="outline" className="btn-3d">
-              View Full Team
-            </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* Campus Section */}
-      <section className="section bg-gray-50 pattern-dots">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-secondary animate-flipIn">Our Facilities</span>
-            <h2 className="section-title text-uk-blue mt-4">Our <span className="text-gold text-shadow-gold">Campus</span></h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              State-of-the-art facilities designed for optimal learning
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden animate-fadeIn uk-border-gradient p-2">
-            <ImageCarousel images={campusImages} />
-          </div>
-          
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="animate-slideUp" style={{ animationDelay: '0.1s' }}>
-              <Card 
-                variant="gradient" 
-                color="blue" 
-              >
-                <div className="corner-dots top-right"></div>
-                <h3 className="text-xl font-bold mb-3">Central Location</h3>
-                <p>Our campus is located in the heart of London, easily accessible by public transportation and close to major cultural attractions.</p>
-              </Card>
-            </div>
-            <div className="animate-slideUp" style={{ animationDelay: '0.3s' }}>
-              <Card 
-                variant="gradient" 
-                color="gold" 
-              >
-                <div className="corner-dots top-right"></div>
-                <h3 className="text-xl font-bold mb-3">Modern Facilities</h3>
-                <p>Every classroom is equipped with the latest technology, and our learning spaces are designed to foster collaboration and innovation.</p>
-              </Card>
-            </div>
-            <div className="animate-slideUp" style={{ animationDelay: '0.5s' }}>
-              <Card 
-                variant="gradient" 
-                color="red" 
-              >
-                <div className="corner-dots top-right"></div>
-                <h3 className="text-xl font-bold mb-3">Student Resources</h3>
-                <p>From our extensive library to dedicated study spaces and career centers, we provide everything students need to succeed.</p>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonials Section */}
-      <section className="section bg-uk-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-gold animate-flipIn">Success Stories</span>
-            <h2 className="section-title text-uk-blue mt-4">Student <span className="text-gold">Testimonials</span></h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              Hear from our alumni about their experiences
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="animate-fadeIn" style={{ animationDelay: `${index * 0.2}s` }}>
-                <div className="testimonial shimmer">
-                  <div className="testimonial-content">
-                    {testimonial.quote}
-                  </div>
-                  <div className="testimonial-author">
-                    <div className="testimonial-avatar">
-                      <Image 
-                        src={testimonial.imageSrc || "/images/testimonials/placeholder.jpg"} 
-                        alt={testimonial.name}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="testimonial-info">
-                      <h4>{testimonial.name}</h4>
-                      <p>{testimonial.title}</p>
-                    </div>
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
+                    <FaShieldAlt className="text-5xl text-gold mb-4" />
+                    <h3 className="text-2xl font-bold text-white">{t('privacy_policy')}</h3>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12 animate-fadeIn" style={{ animationDelay: '0.8s' }}>
-            <Button 
-              href="/testimonials" 
-              variant="primary"
-              className="btn-hoverglow"
-              icon={<FaUsers />}
-            >
-              Read More Stories
-            </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="py-16 bg-uk-blue">
-        <div className="container">
-          <div className="callout-ribbon rounded-xl p-12 text-center">
-            <div className="content">
-              <h2 className="text-3xl font-serif font-bold text-gold text-shadow-gold mb-6">Join Our Educational Community</h2>
-              <p className="text-xl text-uk-white mb-8 max-w-3xl mx-auto">
-                Discover how UK Institute can help you achieve your educational and career goals through our diverse range of programs and supportive learning environment.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scaleIn">
-                <Button href="/courses" variant="gold" className="btn-3d">
-                  Explore Our Courses
-                </Button>
-                <Button href="/contact" variant="white" className="btn-3d">
-                  Contact Us
-                </Button>
-              </div>
+                <div className="p-6">
+                  <p className="text-gray-600 mb-6">
+                    {t('privacy_policy_brief')}
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('data_collection')}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('data_use')}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('your_rights')}</span>
+                    </li>
+                  </ul>
+                  <Link 
+                    href="/privacy-policy"
+                    className="flex items-center justify-center w-full bg-dark-blue hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300"
+                  >
+                    {t('read_privacy_policy')}
+                    <FaArrowRight className="ml-2" />
+                  </Link>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="bg-white rounded-xl overflow-hidden shadow-lg"
+              >
+                <div className="relative h-48">
+                  <div className="absolute inset-0 bg-dark-blue">
+                    <div className="absolute inset-0 opacity-20" style={{ 
+                      backgroundImage: 'url(/images/patterns/pattern2.png)',
+                      backgroundSize: 'cover'
+                    }}></div>
+                  </div>
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
+                    <FaFileInvoiceDollar className="text-5xl text-gold mb-4" />
+                    <h3 className="text-2xl font-bold text-white">{t('refund_policy')}</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-gray-600 mb-6">
+                    {t('refund_policy_brief')}
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('refund_eligibility')}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('refund_process')}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gold mr-2 neon-text">•</span>
+                      <span>{t('special_circumstances')}</span>
+                    </li>
+                  </ul>
+                  <Link 
+                    href="/refund-policy"
+                    className="flex items-center justify-center w-full bg-dark-blue hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300"
+                  >
+                    {t('read_refund_policy')}
+                    <FaArrowRight className="ml-2" />
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 } 

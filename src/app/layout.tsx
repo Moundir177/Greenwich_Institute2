@@ -1,40 +1,43 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import "./styles.css";
-import SimpleHeader from "@/components/SimpleHeader";
-import SimpleFooter from "@/components/SimpleFooter";
+import type { Metadata } from 'next';
+import './globals.css';
+import { Inter, Playfair_Display } from 'next/font/google';
+import { LanguageProvider } from './contexts/LanguageContext';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
 });
 
 export const metadata: Metadata = {
-  title: "UK Institute - Excellence in Education",
-  description: "Leading educational institute in the United Kingdom offering a wide range of courses and certifications",
+  title: 'Greenwich | World-Class Learning',
+  description: 'Transform your career with Greenwich accredited courses, expert instructors, and global learning community. Discover a world of opportunities.',
+  keywords: 'education, online courses, learning, professional development, career growth, certification',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${playfair.variable} antialiased bg-gray-50`}
-      >
-        <div className="flex flex-col min-h-screen">
-          <SimpleHeader />
-          <main className="flex-grow">{children}</main>
-          <SimpleFooter />
-        </div>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`} suppressHydrationWarning>
+        <LanguageProvider>
+          <Navbar />
+          <div className="pt-20">
+            {children}
+          </div>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -1,176 +1,335 @@
 "use client";
 
-import { motion, useAnimation } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { FaQuoteLeft } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
-import Button from '@/components/ui/Button';
+import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../../app/contexts/LanguageContext';
 
 const testimonials = [
   {
     id: 1,
-    name: 'Sarah Johnson',
-    role: 'Business Management Graduate',
-    testimonial: 'The Business Management course provided me with practical knowledge and skills that I immediately applied to my career. The instructors were industry professionals who shared real-world experiences.',
-    imageSrc: '/images/testimonials/sarah.jpg',
+    name: "Emily Johnson",
+    role: "MBA Graduate",
+    image: "/testimonials/student1.jpg",
+    content: "The UK Institute transformed my career prospects. The professors were incredibly supportive and the curriculum was directly applicable to real-world business scenarios.",
+    rating: 5,
   },
   {
     id: 2,
-    name: 'James Wilson',
-    role: 'Computer Science Student',
-    testimonial: 'As someone transitioning into tech, the Computer Science program gave me a solid foundation and hands-on experience that employers value. I secured a developer role before even finishing the course.',
-    imageSrc: '/images/testimonials/james.jpg',
+    name: "Michael Chen",
+    role: "Software Engineering Student",
+    image: "/testimonials/student2.jpg",
+    content: "I enrolled in their professional certification program and was impressed by the cutting-edge technology and hands-on approach. Within weeks of graduating, I landed my dream job!",
+    rating: 5,
   },
   {
     id: 3,
-    name: 'Emma Thompson',
-    role: 'Graphic Design Professional',
-    testimonial: 'The Graphic Design course transformed my creative process and gave me the confidence to start my own design studio. The portfolio I built during the program helped me attract my first clients.',
-    imageSrc: '/images/testimonials/emma.jpg',
+    name: "Sarah Williams",
+    role: "Healthcare Professional",
+    image: "/testimonials/student3.jpg",
+    content: "The flexible schedule allowed me to continue working while pursuing my advanced degree. The knowledge I gained has been invaluable for my career progression.",
+    rating: 4,
+  },
+  {
+    id: 4,
+    name: "David Oyelowo",
+    role: "Finance Certificate Holder",
+    image: "/testimonials/student4.jpg",
+    content: "The international perspective provided by UK Institute gave me a competitive edge in the global financial market. Their career support services were exceptional.",
+    rating: 5,
   },
 ];
 
-export default function Testimonials() {
-  const [isLoading, setIsLoading] = useState(true);
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
+interface TestimonialsProps {
+  isStandalone?: boolean;
+}
+
+export default function Testimonials({ isStandalone = false }: TestimonialsProps) {
+  const { t, language } = useLanguage();
+  const isRtl = language === 'ar';
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startAutoPlay = () => {
+    intervalRef.current = setInterval(() => {
+      setDirection(1);
+      setActiveIndex((current) => (current + 1) % testimonials.length);
+    }, 8000);
+  };
+
+  const stopAutoPlay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const handlePrev = () => {
+    stopAutoPlay();
+    setDirection(-1);
+    setActiveIndex((current) => 
+      current === 0 ? testimonials.length - 1 : current - 1
+    );
+    startAutoPlay();
+  };
+
+  const handleNext = () => {
+    stopAutoPlay();
+    setDirection(1);
+    setActiveIndex((current) => 
+      (current + 1) % testimonials.length
+    );
+    startAutoPlay();
+  };
 
   useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-      // Simulate loading time
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [controls, inView]);
+    startAutoPlay();
+    return () => stopAutoPlay();
+  }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 200 : -200,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
     },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -200 : 200,
+      opacity: 0,
+    }),
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-serif font-bold text-uk-blue"
+  // If this is a standalone page, we'll show more testimonials and a different layout
+  if (isStandalone) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {testimonials.map((testimonial, index) => (
+          <motion.div 
+            key={testimonial.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="bg-white rounded-xl shadow-card overflow-hidden h-full"
           >
-            Student Success Stories
-          </motion.h2>
-          <motion.p 
-            className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Hear from our graduates about how our courses have helped them achieve their career goals 
-            and transform their professional lives.
-          </motion.p>
-        </div>
-        
-        <motion.div 
-          ref={ref}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate={controls}
-        >
-          {isLoading ? (
-            // Loading skeleton
-            Array(3).fill(0).map((_, index) => (
-              <div 
-                key={index}
-                className="bg-gray-50 p-8 rounded-lg shadow-sm relative border border-gray-100 animate-pulse"
-              >
-                <div className="absolute -top-5 -left-5 bg-gray-200 rounded-full p-3 shadow-md w-12 h-12"></div>
-                <div className="mb-6 mt-4 space-y-3">
-                  <div className="h-4 bg-gray-200 rounded w-full"></div>
-                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                  <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+            <div className="p-8 flex flex-col h-full">
+              <FaQuoteLeft className="text-gold/30 text-4xl mb-4" />
+              <div className="flex mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <FaStar key={i} className="text-gold" />
+                ))}
+                {[...Array(5 - testimonial.rating)].map((_, i) => (
+                  <FaStar key={i + testimonial.rating} className="text-gray-200" />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-6 italic flex-grow">"{testimonial.content}"</p>
+              <div className="flex items-center mt-auto">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden mr-4 ring-2 ring-gold/30 ring-offset-2">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <div className="flex items-center">
-                  <div className="mr-4 bg-gray-200 rounded-full w-12 h-12"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-24"></div>
-                    <div className="h-3 bg-gray-200 rounded w-32"></div>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-dark-blue">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-600">{testimonial.role}</p>
                 </div>
               </div>
-            ))
-          ) : (
-            testimonials.map((testimonial) => (
-              <motion.div
-                key={testimonial.id}
-                className="bg-gray-50 p-8 rounded-lg shadow-sm relative border border-gray-100"
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="absolute -top-5 -left-5 bg-uk-blue rounded-full p-3 shadow-md">
-                  <FaQuoteLeft className="text-uk-white" size={20} />
-                </div>
-                <div className="mb-6 mt-4">
-                  <p className="text-gray-600 italic">"{testimonial.testimonial}"</p>
-                </div>
-                <div className="flex items-center">
-                  <div className="mr-4 relative h-12 w-12 overflow-hidden rounded-full border-2 border-gold">
-                    <div className="absolute inset-0 bg-gray-300"></div>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-uk-blue">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))
-          )}
-        </motion.div>
-        
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <section className="py-24 relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-light-gray to-white"></div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-gold opacity-10 mix-blend-overlay filter blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 rounded-full bg-accent-blue opacity-10 mix-blend-overlay filter blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }}></div>
+      </div>
+      
+      {/* Geometric patterns */}
+      <div className="absolute top-10 left-10 w-40 h-40 border border-gold/10 transform rotate-45 rounded-3xl opacity-20"></div>
+      <div className="absolute bottom-20 right-10 w-20 h-20 border border-dark-blue/10 transform -rotate-12 rounded-xl opacity-20"></div>
+      
+      <div className="absolute inset-0 bg-noise-pattern opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
+      
+      <div className="container max-w-7xl mx-auto px-4 relative z-10">
         <motion.div 
-          className="mt-16 p-8 bg-uk-blue rounded-lg shadow-lg text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-20"
         >
-          <h3 className="text-2xl font-serif font-bold text-white mb-4">Ready to Start Your Journey?</h3>
-          <p className="text-uk-white/80 mb-6 max-w-2xl mx-auto">
-            Join thousands of successful students who have transformed their careers with our courses.
+          <span className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-dark-blue text-sm font-medium mb-3">
+            {t('testimonials')}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-dark-blue mb-5">
+            {t('what_students_say')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">{t('about_us')}</span>
+          </h2>
+          <p className="text-gray max-w-3xl mx-auto text-lg">
+            {t('testimonials_description')}
           </p>
-          <Button href="/courses" variant="secondary" size="lg">
-            Enroll Today
-          </Button>
         </motion.div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-5 order-2 lg:order-1"
+          >
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-gold/10 to-accent-blue/10 rounded-2xl blur-xl opacity-70"></div>
+              
+              <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-card relative h-full border border-white/50 card-3d overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-b from-gold/10 to-gold/0 rounded-bl-full"></div>
+                <FaQuoteLeft className="text-gold/30 text-6xl absolute top-6 left-6" />
+                
+                <div className="relative z-10 pt-10">
+                  <AnimatePresence custom={direction} initial={false} mode="wait">
+                    <motion.div
+                      key={activeIndex}
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      className="min-h-[250px] flex flex-col"
+                    >
+                      <div className="flex mb-4">
+                        {[...Array(testimonials[activeIndex].rating)].map((_, i) => (
+                          <FaStar key={i} className="text-gold" />
+                        ))}
+                        {[...Array(5 - testimonials[activeIndex].rating)].map((_, i) => (
+                          <FaStar key={i + testimonials[activeIndex].rating} className="text-gray-200" />
+                        ))}
+                      </div>
+                      <p className="text-gray-700 mb-6 italic flex-grow">
+                        "{testimonials[activeIndex].content}"
+                      </p>
+                      <div className="flex items-center mt-auto">
+                        <div className="relative w-14 h-14 rounded-full overflow-hidden mr-4 ring-2 ring-gold/30 ring-offset-2">
+                          <Image
+                            src={testimonials[activeIndex].image}
+                            alt={testimonials[activeIndex].name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-dark-blue">{testimonials[activeIndex].name}</h4>
+                          <p className="text-sm text-gray-600">{testimonials[activeIndex].role}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                
+                {/* Navigation buttons */}
+                <div className="flex justify-between mt-8">
+                  <button 
+                    onClick={handlePrev}
+                    className="w-10 h-10 rounded-full bg-light-gray flex items-center justify-center hover:bg-gold hover:text-white transition-all duration-300 text-gray"
+                  >
+                    <FaArrowLeft className={`${isRtl ? 'transform rotate-180' : ''} text-sm`} />
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    {testimonials.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          stopAutoPlay();
+                          setDirection(index > activeIndex ? 1 : -1);
+                          setActiveIndex(index);
+                          startAutoPlay();
+                        }}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          activeIndex === index 
+                            ? 'bg-gold w-6' 
+                            : 'bg-gray-300 hover:bg-gold/50'
+                        }`}
+                        aria-label={`View testimonial ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <button 
+                    onClick={handleNext}
+                    className="w-10 h-10 rounded-full bg-light-gray flex items-center justify-center hover:bg-gold hover:text-white transition-all duration-300 text-gray"
+                  >
+                    <FaArrowRight className={`${isRtl ? 'transform rotate-180' : ''} text-sm`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-7 order-1 lg:order-2"
+          >
+            <div className="relative">
+              {/* 3D effects for image */}
+              <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_80px_-15px_rgba(0,0,0,0.3)] border border-white/10 transform hover:scale-[1.02] transition-all duration-500">
+                <Image
+                  src="/images/students-campus.jpg"
+                  alt={t('students_campus_alt')}
+                  width={800}
+                  height={500}
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-dark-blue/80 to-transparent flex flex-col justify-end p-8">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    className="glass-morphism p-6 rounded-xl max-w-md backdrop-blur-sm"
+                  >
+                    <h3 className="text-white font-bold text-2xl mb-2">{t('join_community')}</h3>
+                    <p className="text-white/90">{t('join_community_description')}</p>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="mt-4 px-6 py-2 bg-gradient-to-r from-gold to-amber-500 text-dark-blue font-medium rounded-full flex items-center gap-2 shiny-button"
+                    >
+                      {t('learn_more')}
+                      <FaArrowRight />
+                    </motion.button>
+                  </motion.div>
+                </div>
+                
+                {/* Glare effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
+              </div>
+              
+              {/* Floating decorative elements */}
+              <div className="absolute -top-6 -right-6 w-16 h-16 rounded-full bg-gradient-to-r from-gold/30 to-amber-500/30 backdrop-blur-md border border-white/20 shadow-xl animate-float z-10"></div>
+              <div className="absolute -bottom-10 -left-10 w-24 h-24 rounded-lg bg-gradient-to-r from-dark-blue/20 to-accent-blue/20 backdrop-blur-md border border-white/10 shadow-lg animate-float-slow z-10" style={{ animationDelay: "1.5s" }}></div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

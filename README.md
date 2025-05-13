@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Global Education Institute Website
+
+A modern, responsive, multi-language website for an educational institution built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **Responsive Design**: Optimized for all device sizes from mobile to desktop
+- **Multi-language Support**: English, French, and Arabic with RTL support
+- **Modern UI**: Clean, professional design with smooth animations and transitions
+- **Course Management**: Browse courses, view detailed course information
+- **Authentication System**: User login and registration functionality
+- **Interactive Components**: Testimonials carousel, statistics counters, and more
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: React Icons
+- **Internationalization**: Custom language context
+- **Deployment**: Ready for deployment on Vercel, Netlify, or other platforms
+
+## Project Structure
+
+```
+/src
+  /app                  # Next.js App Router
+    /about              # About page
+    /contact            # Contact page
+    /courses            # Courses pages
+      /[id]             # Course detail page
+    /login              # Authentication pages
+    /components         # Reusable UI components
+    /contexts           # React contexts (including LanguageContext)
+    /styles             # Global styles
+  /components           # Shared components
+    /courses            # Course-related components
+    /ui                 # UI components
+  /public               # Static assets
+    /images             # Image assets
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/global-education-institute.git
+   cd global-education-institute
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Customization
+
+### Adding New Languages
+
+1. Edit the `src/app/contexts/LanguageContext.tsx` file
+2. Add your new language to the `Language` type
+3. Add translations for all keys in the `translations` object
+
+### Adding New Pages
+
+1. Create a new directory in the `src/app` folder with the page name
+2. Create a `page.tsx` file within that directory
+3. Import the `useLanguage` hook for multi-language support
+
+### Modifying Styles
+
+- Global styles are in `src/app/globals.css`
+- Tailwind configuration is in `tailwind.config.js`
+
+## Deployment
+
+This application can be easily deployed to Vercel with zero configuration:
 
 ```bash
-npm run dev
+npm run build
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+vercel deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-To learn more about Next.js, take a look at the following resources:
+## Acknowledgements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Icons provided by [React Icons](https://react-icons.github.io/react-icons/)
+- Design inspiration from various educational platforms

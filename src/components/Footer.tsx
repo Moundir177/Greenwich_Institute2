@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-uk-blue text-uk-white">
+    <footer className="bg-dark-blue text-white">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Column 1 - About */}
@@ -15,11 +15,11 @@ export default function Footer() {
               A premier educational institution committed to excellence in academic and professional development.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-uk-white hover:text-gold"><FaFacebook size={20} /></a>
-              <a href="#" className="text-uk-white hover:text-gold"><FaTwitter size={20} /></a>
-              <a href="#" className="text-uk-white hover:text-gold"><FaInstagram size={20} /></a>
-              <a href="#" className="text-uk-white hover:text-gold"><FaLinkedin size={20} /></a>
-              <a href="#" className="text-uk-white hover:text-gold"><FaYoutube size={20} /></a>
+              <a href="#" className="text-white hover:text-gold"><FaFacebook size={20} /></a>
+              <a href="#" className="text-white hover:text-gold"><FaTwitter size={20} /></a>
+              <a href="#" className="text-white hover:text-gold"><FaInstagram size={20} /></a>
+              <a href="#" className="text-white hover:text-gold"><FaLinkedin size={20} /></a>
+              <a href="#" className="text-white hover:text-gold"><FaYoutube size={20} /></a>
             </div>
           </div>
           
@@ -59,10 +59,10 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-300">&copy; {currentYear} UK Institute. All rights reserved.</p>
+        <div className="border-t border-gray mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-light-gray">&copy; {currentYear} UK Institute. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
-            <div className="flex flex-wrap justify-center md:justify-end space-x-4 text-xs text-gray-300">
+            <div className="flex flex-wrap justify-center md:justify-end space-x-4 text-xs text-light-gray">
               <Link href="/privacy-policy" className="hover:text-gold">Privacy</Link>
               <Link href="/refund-policy" className="hover:text-gold">Refunds</Link>
               <Link href="/terms" className="hover:text-gold">Terms</Link>
