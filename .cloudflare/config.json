@@ -1,0 +1,35 @@
+{
+  "build": {
+    "command": "npm run cloudflare",
+    "output": "out",
+    "environment": {
+      "NODE_VERSION": "18"
+    }
+  },
+  "routes": [
+    {
+      "pattern": "/_next/static/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "pattern": "/images/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "pattern": "/fonts/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "pattern": "/*.*",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate"
+      }
+    }
+  ]
+} 

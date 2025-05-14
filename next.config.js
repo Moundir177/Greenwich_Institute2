@@ -2,6 +2,12 @@
 const nextConfig = {
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
@@ -13,7 +19,9 @@ const nextConfig = {
     // your project has TypeScript errors.
     ignoreBuildErrors: true,
   },
-  output: 'standalone',
+  output: 'export',
+  distDir: 'out',
+  trailingSlash: true,
 };
 
 module.exports = nextConfig; 

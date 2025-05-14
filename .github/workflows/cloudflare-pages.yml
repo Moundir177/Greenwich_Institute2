@@ -2,8 +2,8 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [ master ]
-  workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -11,13 +11,12 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    name: Deploy to Cloudflare Pages
+    name: Deploy
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
@@ -28,25 +27,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Prepare for Cloudflare Pages
+      - name: Copy _routes.json
         run: |
-          mkdir -p .next/standalone/public
-          cp -r .next/static .next/standalone/.next/
-          cp -r public/* .next/standalone/public/
-          echo '{"version":1,"include":["/*"],"exclude":["/images/*","/fonts/*","/_next/*"]}' > .next/standalone/_routes.json
+          if [ -f "public/_routes.json" ]; then
+            cp public/_routes.json out/
+          fi
 
-      - name: Check prepared files
-        run: |
-          ls -la .next/standalone
-          ls -la .next/standalone/.next
-          ls -la .next/standalone/public
-          cat .next/standalone/_routes.json
-
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.PROJECT_NAME || 'greenwich-institute-new' }}
-          directory: .next/standalone
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }} 
+          command: pages deploy ./out --project-name=greenwich-institute-website 
