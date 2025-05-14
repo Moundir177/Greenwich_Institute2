@@ -8,11 +8,6 @@ import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
-export const metadata = {
-  title: 'Student Dashboard | UK Institute',
-  description: 'Access your courses, certificates, and learning progress in your personalized student dashboard.',
-};
-
 const enrolledCourses = [
   {
     id: 1,

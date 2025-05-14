@@ -282,74 +282,74 @@ export default function ContactPage() {
                 <div className="inline-block bg-blue-100 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">Connect With Us</div>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
                   Get in <span className="bg-clip-text text-transparent bg-gradient-to-r from-uk-blue via-uk-blue-light to-uk-blue">Touch</span>
-                </h2>
+              </h2>
               </div>
               
               <div className="bg-white p-8 rounded-xl shadow-xl border border-gray-100 h-full">
-                <div className="space-y-6 mb-8">
-                  <div className="flex items-start">
+              <div className="space-y-6 mb-8">
+                <div className="flex items-start">
                     <div className="mt-1 w-12 h-12 flex-shrink-0 rounded-full bg-uk-blue flex items-center justify-center text-gold">
                       <FaHeadset className="w-5 h-5" />
-                    </div>
+                  </div>
                     <div className="ml-4">
                       <h3 className="font-bold text-uk-blue">General Inquiries</h3>
                       <p className="text-gray-600 mb-1">For general questions and information</p>
                       <a href="mailto:info@greenwich.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
                         info@greenwich.edu
-                      </a>
-                    </div>
+                    </a>
                   </div>
-                  
-                  <div className="flex items-start">
+                </div>
+                
+                <div className="flex items-start">
                     <div className="mt-1 w-12 h-12 flex-shrink-0 rounded-full bg-uk-blue flex items-center justify-center text-gold">
                       <FaGlobe className="w-5 h-5" />
-                    </div>
+                  </div>
                     <div className="ml-4">
                       <h3 className="font-bold text-uk-blue">International Students</h3>
                       <p className="text-gray-600 mb-1">For international admissions and visa inquiries</p>
                       <a href="mailto:international@greenwich.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
                         international@greenwich.edu
-                      </a>
-                    </div>
+                    </a>
                   </div>
-                  
-                  <div className="flex items-start">
+                </div>
+                
+                <div className="flex items-start">
                     <div className="mt-1 w-12 h-12 flex-shrink-0 rounded-full bg-uk-blue flex items-center justify-center text-gold">
                       <FaPhone className="w-5 h-5" />
-                    </div>
+                  </div>
                     <div className="ml-4">
                       <h3 className="font-bold text-uk-blue">Call Us</h3>
                       <p className="text-gray-600 mb-1">Our team is available Monday-Friday, 9am-5pm</p>
                       <a href="tel:+442071234567" className="text-uk-blue font-medium hover:text-gold transition-colors">
-                        +44 20 7123 4567
-                      </a>
-                    </div>
+                      +44 20 7123 4567
+                    </a>
                   </div>
                 </div>
-                
+              </div>
+              
                 <div className="pt-6 border-t border-gray-200">
                   <h3 className="text-xl font-bold text-uk-blue mb-4">
-                    Connect With Us
-                  </h3>
+                Connect With Us
+              </h3>
                   <p className="text-gray-600 mb-4">
-                    Follow us on social media for updates, events, and educational content.
-                  </p>
-                  <div className="flex space-x-4">
+                Follow us on social media for updates, events, and educational content.
+              </p>
+              <div className="flex space-x-4">
                     <a href="#" className="w-10 h-10 bg-gradient-to-br from-uk-blue to-uk-blue-dark text-white flex items-center justify-center rounded-full hover:from-gold hover:to-amber-500 transition-all duration-300">
-                      <FaFacebook />
-                    </a>
+                  <FaFacebook />
+                </a>
                     <a href="#" className="w-10 h-10 bg-gradient-to-br from-uk-blue to-uk-blue-dark text-white flex items-center justify-center rounded-full hover:from-gold hover:to-amber-500 transition-all duration-300">
-                      <FaTwitter />
-                    </a>
+                  <FaTwitter />
+                </a>
                     <a href="#" className="w-10 h-10 bg-gradient-to-br from-uk-blue to-uk-blue-dark text-white flex items-center justify-center rounded-full hover:from-gold hover:to-amber-500 transition-all duration-300">
-                      <FaInstagram />
-                    </a>
+                  <FaInstagram />
+                </a>
                     <a href="#" className="w-10 h-10 bg-gradient-to-br from-uk-blue to-uk-blue-dark text-white flex items-center justify-center rounded-full hover:from-gold hover:to-amber-500 transition-all duration-300">
-                      <FaLinkedin />
-                    </a>
+                  <FaLinkedin />
+                </a>
                     <a href="#" className="w-10 h-10 bg-gradient-to-br from-uk-blue to-uk-blue-dark text-white flex items-center justify-center rounded-full hover:from-gold hover:to-amber-500 transition-all duration-300">
-                      <FaYoutube />
-                    </a>
+                  <FaYoutube />
+                </a>
                   </div>
                 </div>
               </div>
@@ -361,133 +361,133 @@ export default function ContactPage() {
                 <div className="inline-block bg-gold/20 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">Send Message</div>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
                   Send Us a <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Message</span>
-                </h2>
+              </h2>
               </div>
               
               <div className="bg-white p-8 rounded-xl shadow-xl border border-gray-100">
-                {formSuccess ? (
+              {formSuccess ? (
                   <div className="bg-green-50 border border-green-200 text-green-700 px-6 py-8 rounded-lg flex items-start">
                     <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
                       <FaCheck className="text-green-600 w-6 h-6" />
                     </div>
-                    <div>
+                  <div>
                       <h3 className="text-xl font-bold text-green-800 mb-2">Message Sent Successfully!</h3>
                       <p className="text-green-700">
                         Thank you for contacting us! Our team will review your message and get back to you as soon as possible.
                       </p>
-                    </div>
                   </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                          Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                           className={`w-full px-4 py-3 rounded-lg border ${formErrors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
                           placeholder="Enter your full name"
-                        />
-                        {formErrors.name && (
+                      />
+                      {formErrors.name && (
                           <p className="mt-1 text-sm text-red-500">{formErrors.name}</p>
-                        )}
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                          Email Address <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${formErrors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
-                          placeholder="Enter your email address"
-                        />
-                        {formErrors.email && (
-                          <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                          Phone Number (Optional)
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent"
-                          placeholder="Enter your phone number"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                          Subject <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          id="subject"
-                          name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${formErrors.subject ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
-                        >
-                          <option value="">Select a subject</option>
-                          <option value="General Inquiry">General Inquiry</option>
-                          <option value="Admissions">Admissions</option>
-                          <option value="Course Information">Course Information</option>
-                          <option value="Technical Support">Technical Support</option>
-                          <option value="Financial Aid">Financial Aid</option>
-                          <option value="Other">Other</option>
-                        </select>
-                        {formErrors.subject && (
-                          <p className="mt-1 text-sm text-red-500">{formErrors.subject}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                        Message <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        rows={5}
-                        className={`w-full px-4 py-3 rounded-lg border ${formErrors.message ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
-                        placeholder="Enter your message here"
-                      ></textarea>
-                      {formErrors.message && (
-                        <p className="mt-1 text-sm text-red-500">{formErrors.message}</p>
                       )}
                     </div>
                     
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${formErrors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
+                          placeholder="Enter your email address"
+                      />
+                      {formErrors.email && (
+                          <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                          Phone Number (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent"
+                          placeholder="Enter your phone number"
+                      />
+                    </div>
+                    
+                    <div>
+                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                        Subject <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${formErrors.subject ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
+                      >
+                        <option value="">Select a subject</option>
+                          <option value="General Inquiry">General Inquiry</option>
+                          <option value="Admissions">Admissions</option>
+                          <option value="Course Information">Course Information</option>
+                        <option value="Technical Support">Technical Support</option>
+                          <option value="Financial Aid">Financial Aid</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      {formErrors.subject && (
+                          <p className="mt-1 text-sm text-red-500">{formErrors.subject}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Message <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                        rows={5}
+                        className={`w-full px-4 py-3 rounded-lg border ${formErrors.message ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-uk-blue focus:border-transparent`}
+                        placeholder="Enter your message here"
+                    ></textarea>
+                    {formErrors.message && (
+                        <p className="mt-1 text-sm text-red-500">{formErrors.message}</p>
+                    )}
+                  </div>
+                  
                     <div className="mt-6">
                       <Button
-                        type="submit"
+                    type="submit"
                         variant="primary"
                         effect="3d"
                         className="w-full md:w-auto px-8 py-3"
-                      >
-                        Send Message
+                  >
+                    Send Message
                       </Button>
                     </div>
-                  </form>
-                )}
+                </form>
+              )}
               </div>
             </div>
           </div>
@@ -520,7 +520,7 @@ export default function ContactPage() {
                 }`}
               >
                 <h3 className={`text-xl font-bold mb-2 ${activeLocation === location.id ? 'text-gold' : 'text-uk-blue'}`}>
-                  {location.name}
+                {location.name}
                 </h3>
                 <div className="flex items-start mt-4">
                   <FaMapMarkerAlt className={`mt-1 mr-3 ${activeLocation === location.id ? 'text-gold' : 'text-uk-blue'}`} />
@@ -539,17 +539,17 @@ export default function ContactPage() {
           </div>
           
           <div className="bg-gray-50 p-2 rounded-xl shadow-lg overflow-hidden">
-            <iframe
-              src={currentLocation.mapUrl}
-              width="100%"
+                <iframe
+                  src={currentLocation.mapUrl}
+                  width="100%"
               height="450"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
               title={`Map of ${currentLocation.name}`}
               className="rounded-lg"
-            ></iframe>
+                ></iframe>
           </div>
         </div>
       </section>
@@ -580,7 +580,7 @@ export default function ContactPage() {
                   </summary>
                   <div className="px-6 pb-6 pt-2 text-gray-600">
                     <p>{faq.answer}</p>
-                  </div>
+                </div>
                 </details>
               ))}
             </div>
@@ -617,7 +617,7 @@ export default function ContactPage() {
                   href="/courses" 
                   variant="gold"
                   effect="3d"
-                >
+              >
                   Browse Courses
                 </Button>
                 <Button 

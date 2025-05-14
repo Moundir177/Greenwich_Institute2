@@ -189,35 +189,35 @@ export default function TestimonialsPage() {
             {[1, 2, 3].map((index) => (
               <div key={index} className="transform transition-all duration-300 hover:-translate-y-2">
                 <div className="bg-white rounded-xl shadow-xl overflow-hidden group h-full border border-gray-100">
-                  <div className="relative aspect-video bg-gray-100 overflow-hidden">
-                    <Image 
-                      src={`/images/testimonials/video-${index}.jpg`} 
-                      alt={`Video testimonial ${index}`}
-                      width={600}
-                      height={400}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-dark-blue/50 flex items-center justify-center group-hover:bg-dark-blue/30 transition-all duration-300">
-                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transform transition-all duration-300">
+                <div className="relative aspect-video bg-gray-100 overflow-hidden">
+                  <Image 
+                    src={`/images/testimonials/video-${index}.jpg`} 
+                    alt={`Video testimonial ${index}`}
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-dark-blue/50 flex items-center justify-center group-hover:bg-dark-blue/30 transition-all duration-300">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transform transition-all duration-300">
                         <div className="w-14 h-14 rounded-full bg-gradient-to-r from-gold to-amber-500 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                       </div>
                     </div>
                   </div>
-                  <div className="p-6">
+                </div>
+                <div className="p-6">
                     <h3 className="text-xl font-bold text-uk-blue mb-2">
                       {`Student Name ${index}`}
-                    </h3>
-                    <p className="text-gray-500 mb-4">
+                  </h3>
+                  <p className="text-gray-500 mb-4">
                       {`Program ${index}`} • Class of 202{index}
-                    </p>
+                  </p>
                     <p className="text-gray-600">
                       "The education and support I received at this institute has been truly transformative. The faculty and resources helped me achieve my goals."
-                    </p>
+                  </p>
                   </div>
                 </div>
               </div>
@@ -234,15 +234,15 @@ export default function TestimonialsPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="backdrop-blur-md bg-white/5 rounded-xl p-8 md:p-12 border border-white/10 shadow-2xl animate-fadeIn">
             <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Ready to Start Your Educational Journey?</span>
-              </h2>
+            </h2>
               <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto animate-slideUpFade">
                 Join thousands of successful students who have transformed their lives through our educational programs.
-              </p>
+            </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scaleIn">
                 <Button 
-                  href="/courses" 
+                href="/courses" 
                   variant="gold"
                   effect="3d"
                   icon={<FaGraduationCap />}
@@ -250,10 +250,10 @@ export default function TestimonialsPage() {
                   Explore Courses
                 </Button>
                 <Button 
-                  href="/contact" 
+                href="/contact" 
                   variant="white"
                   effect="hoverglow"
-                >
+              >
                   Contact Us
                 </Button>
               </div>
