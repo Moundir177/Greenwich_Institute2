@@ -33,14 +33,14 @@ jobs:
           mkdir -p .next/standalone/public
           cp -r .next/static .next/standalone/.next/
           cp -r public/* .next/standalone/public/
-          
-      - name: Create routes.json file
+          echo '{"version":1,"include":["/*"],"exclude":["/images/*","/fonts/*","/_next/*"]}' > .next/standalone/_routes.json
+
+      - name: Check prepared files
         run: |
-          echo '{
-            "version": 1,
-            "include": ["/*"],
-            "exclude": ["/images/*", "/fonts/*", "/_next/*"]
-          }' > .next/standalone/_routes.json
+          ls -la .next/standalone
+          ls -la .next/standalone/.next
+          ls -la .next/standalone/public
+          cat .next/standalone/_routes.json
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
