@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import OurCredibility from '../components/OurCredibility';
 
 // Sample team data
 const LEADERSHIP_TEAM = [
@@ -358,68 +359,73 @@ export default function AboutPage() {
       
       {/* Mission & Values Tab */}
       {activeTab === 'mission' && (
-        <section className="py-16 bg-light-gray">
-          <div className="container mx-auto px-4">
-            {/* Mission Statement */}
-            <motion.div 
-              className="max-w-4xl mx-auto mb-16 text-center"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={0}
-            >
-              <motion.h2 
-                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
-                variants={fadeIn}
-                custom={1}
-              >
-                Our Mission
-              </motion.h2>
+        <>
+          <section className="py-16 bg-light-gray">
+            <div className="container mx-auto px-4">
+              {/* Mission Statement */}
               <motion.div 
-                className="relative p-8 glass-morphism rounded-lg shadow-xl"
-                variants={scaleIn}
-                custom={2}
+                className="max-w-4xl mx-auto mb-16 text-center"
+                initial="hidden"
+                animate="visible"
+                variants={fadeIn}
+                custom={0}
               >
-                <FaQuoteLeft className="text-gold/20 text-6xl absolute top-6 left-6" />
-                <p className="text-xl text-dark-blue z-10 relative italic">
-                  To provide accessible, innovative, and high-quality education that empowers students to make meaningful contributions to society and achieve their full potential in a rapidly changing global landscape.
-                </p>
-              </motion.div>
-            </motion.div>
-            
-            {/* Values Grid */}
-            <motion.h2 
-              className="text-3xl font-serif font-bold text-dark-blue mb-10 text-center"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={3}
-            >
-              Our Core Values
-            </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {VALUES.map((value, index) => (
-                <motion.div 
-                  key={value.id}
-                  className="glass-morphism p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 transform text-center card-3d cursor-pointer"
-                  initial="hidden"
-                  animate="visible"
-                  variants={scaleIn}
-                  custom={index + 4}
-                  whileHover={{ y: -10 }}
+                <motion.h2 
+                  className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                  variants={fadeIn}
+                  custom={1}
                 >
-                  {value.icon}
-                  <h3 className="text-xl font-bold text-dark-blue mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray">
-                    {value.description}
+                  Our Mission
+                </motion.h2>
+                <motion.div 
+                  className="relative p-8 glass-morphism rounded-lg shadow-xl"
+                  variants={scaleIn}
+                  custom={2}
+                >
+                  <FaQuoteLeft className="text-gold/20 text-6xl absolute top-6 left-6" />
+                  <p className="text-xl text-dark-blue z-10 relative italic">
+                    To provide accessible, innovative, and high-quality education that empowers students to make meaningful contributions to society and achieve their full potential in a rapidly changing global landscape.
                   </p>
                 </motion.div>
-              ))}
+              </motion.div>
+              
+              {/* Values Grid */}
+              <motion.h2 
+                className="text-3xl font-serif font-bold text-dark-blue mb-10 text-center"
+                initial="hidden"
+                animate="visible"
+                variants={fadeIn}
+                custom={3}
+              >
+                Our Core Values
+              </motion.h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {VALUES.map((value, index) => (
+                  <motion.div 
+                    key={value.id}
+                    className="glass-morphism p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 transform text-center card-3d cursor-pointer"
+                    initial="hidden"
+                    animate="visible"
+                    variants={scaleIn}
+                    custom={index + 4}
+                    whileHover={{ y: -10 }}
+                  >
+                    {value.icon}
+                    <h3 className="text-xl font-bold text-dark-blue mb-3">
+                      {value.title}
+                    </h3>
+                    <p className="text-gray">
+                      {value.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+          
+          {/* Add Our Credibility section here */}
+          <OurCredibility />
+        </>
       )}
       
       {/* History & Timeline Tab - enhanced with advanced animations */}

@@ -8,6 +8,7 @@ import Testimonials from '@/components/home/Testimonials';
 import HeroSection from './components/HeroSection';
 import FeaturedCourses from './components/FeaturedCourses';
 import StatsSection from './components/StatsSection';
+import TrustBadges from './components/TrustBadges';
 import CallToAction from './components/CallToAction';
 import { useLanguage } from './contexts/LanguageContext';
 
@@ -25,6 +26,7 @@ export default function Home() {
       <main>
         <HeroSection />
         <StatsSection />
+        <TrustBadges />
         <FeaturedCourses />
         <Testimonials />
         <CallToAction />

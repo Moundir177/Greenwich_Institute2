@@ -117,7 +117,7 @@ export default function LoginPage() {
           <Link href="/" className="inline-block">
             <Image 
               src="/images/logo-light.png" 
-              alt="Greenwich" 
+              alt="Greenwich HSTC" 
               width={180}
               height={50}
               className="h-10 w-auto mx-auto"

@@ -15,7 +15,7 @@ const OFFICE_LOCATIONS = [
     name: 'Main Campus',
     address: '123 Education Street, London, UK, W1 8XX',
     phone: '+44 20 7123 4567',
-    email: 'info@greenwich.edu',
+    email: 'info@greenwichhstc.edu',
     hours: 'Monday - Friday: 8:30 AM - 5:30 PM',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9932.398555375457!2d-0.12882563022465!3d51.50747993490577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ce3941eb1f%3A0x1a5342fdf089c627!2sTrafalgar%20Square!5e0!3m2!1sen!2suk!4v1687527104706!5m2!1sen!2suk'
   },
@@ -24,7 +24,7 @@ const OFFICE_LOCATIONS = [
     name: 'City Campus',
     address: '45 Financial Avenue, London, UK, EC3V 3QT',
     phone: '+44 20 7123 8910',
-    email: 'city@greenwich.edu',
+    email: 'city@greenwichhstc.edu',
     hours: 'Monday - Friday: 9:00 AM - 6:00 PM',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9930.923753766622!2d-0.08941284022465!3d51.51349243438634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876034d1a7b9929%3A0x790260713d1d350!2sBank%20of%20England!5e0!3m2!1sen!2suk!4v1687527202943!5m2!1sen!2suk'
   },
@@ -33,7 +33,7 @@ const OFFICE_LOCATIONS = [
     name: 'International Office',
     address: '78 Global Street, Dubai, UAE',
     phone: '+971 4 123 4567',
-    email: 'international@greenwich.edu',
+    email: 'international@greenwichhstc.edu',
     hours: 'Sunday - Thursday: 8:00 AM - 5:00 PM',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14439.547330156347!2d55.27180388665771!3d25.197201836453582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sae!4v1687527253421!5m2!1sen!2sae'
   }
@@ -294,8 +294,8 @@ export default function ContactPage() {
                     <div className="ml-4">
                       <h3 className="font-bold text-uk-blue">General Inquiries</h3>
                       <p className="text-gray-600 mb-1">For general questions and information</p>
-                      <a href="mailto:info@greenwich.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
-                        info@greenwich.edu
+                      <a href="mailto:info@greenwichhstc.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
+                        info@greenwichhstc.edu
                     </a>
                   </div>
                 </div>
@@ -307,8 +307,8 @@ export default function ContactPage() {
                     <div className="ml-4">
                       <h3 className="font-bold text-uk-blue">International Students</h3>
                       <p className="text-gray-600 mb-1">For international admissions and visa inquiries</p>
-                      <a href="mailto:international@greenwich.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
-                        international@greenwich.edu
+                      <a href="mailto:international@greenwichhstc.edu" className="text-uk-blue font-medium hover:text-gold transition-colors">
+                        international@greenwichhstc.edu
                     </a>
                   </div>
                 </div>

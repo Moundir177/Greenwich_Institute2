@@ -126,9 +126,10 @@ const Navbar = () => {
     { name: 'about', path: '/about' },
     { name: 'courses', path: '/courses' },
     { name: 'services', path: '/services' },
+    { name: 'certifications', path: '/certifications' },
     { name: 'testimonials', path: '/testimonials' },
     { name: 'news_events', path: '/news-events' },
-    { name: 'certificates', path: '/certificates' },
+    { name: 'partnerships', path: '/partnerships' },
     { name: 'faq', path: '/faq' },
     { name: 'contact', path: '/contact' },
   ];
@@ -146,7 +147,7 @@ const Navbar = () => {
     { id: 'career-counseling', name: t('career_counseling'), path: '/services#support-services', icon: <FaUserGraduate /> },
     { id: 'academic-support', name: t('academic_support'), path: '/services#academic-services', icon: <FaGraduationCap /> },
     { id: 'international-students', name: t('international_students'), path: '/services#support-services', icon: <FaGlobe /> },
-    { id: 'certificates', name: t('certificates'), path: '/certificates', icon: <FaCertificate /> },
+    { id: 'certifications', name: t('certifications'), path: '/certifications', icon: <FaCertificate /> },
     { id: 'online-learning', name: t('online_learning'), path: '/services#academic-services', icon: <FaLaptop /> },
   ];
   
@@ -196,22 +197,22 @@ const Navbar = () => {
                   <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
                   <img 
                     src="/logo-dark.svg" 
-                      alt="Greenwich"
+                      alt="Greenwich HSTC"
                     className="h-full w-auto"
                   />
                   </div>
-                  <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich</span>
+                  <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich HSTC</span>
                 </div>
               ) : (
                 <div className="flex items-center">
                   <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
                   <img 
                     src="/logo-light.svg" 
-                      alt="Greenwich"
+                      alt="Greenwich HSTC"
                     className="h-full w-auto"
                   />
                   </div>
-                  <span className="font-serif font-bold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Greenwich</span>
+                  <span className="font-serif font-bold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Greenwich HSTC</span>
                 </div>
               )}
             </div>
@@ -349,22 +350,22 @@ const Navbar = () => {
                           <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
                             <img 
                               src="/logo-dark.svg" 
-                              alt="Greenwich"
+                              alt="Greenwich HSTC"
                               className="h-full w-auto"
                             />
               </div>
-                          <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich</span>
+                          <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich HSTC</span>
           </div>
                       ) : (
                         <div className="flex items-center">
                           <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
                             <img 
                               src="/logo-light.svg" 
-                              alt="Greenwich"
+                              alt="Greenwich HSTC"
                               className="h-full w-auto"
                       />
                           </div>
-                          <span className="font-serif font-bold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Greenwich</span>
+                          <span className="font-serif font-bold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Greenwich HSTC</span>
                         </div>
                       )}
                     </div>

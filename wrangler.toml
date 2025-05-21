@@ -1,4 +1,4 @@
-name = "greenwich-institute-website"
+name = "greenwich-hstc-website"
 
 # Configure build settings for Next.js
 main = "./.next/server/pages/index.js"
@@ -14,7 +14,7 @@ bucket = "./.next/static"
 
 # Configure custom domain
 routes = [
-  { pattern = "greenwich-institute.com", custom_domain = true }
+  { pattern = "greenwich-hstc.com", custom_domain = true }
 ]
 
 [env.production]

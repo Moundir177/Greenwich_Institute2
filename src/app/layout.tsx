@@ -18,8 +18,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Greenwich | World-Class Learning',
-  description: 'Transform your career with Greenwich accredited courses, expert instructors, and global learning community. Discover a world of opportunities.',
+  title: 'Greenwich HSTC | World-Class Learning',
+  description: 'Transform your career with Greenwich HSTC accredited courses, expert instructors, and global learning community. Discover a world of opportunities.',
   keywords: 'education, online courses, learning, professional development, career growth, certification',
 };
 

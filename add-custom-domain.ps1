@@ -1,7 +1,7 @@
 # Replace these variables with your actual values
 $AccountId = "5c617c0534a05bec0b5b2a0ecbe32064"
-$ProjectName = "greenwich-institute-new"
-$CustomDomain = "greenwich-institute.com"
+$ProjectName = "greenwich-hstc-new"
+$CustomDomain = "greenwich-hstc.com"
 $ApiToken = "YOUR_API_TOKEN"
 
 # API endpoint

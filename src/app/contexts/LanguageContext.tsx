@@ -43,6 +43,7 @@ const translations: Record<Language, Record<string, string>> = {
     'courses': 'Courses',
     'services': 'Services',
     'certificates': 'Certificates',
+    'certifications': 'Certifications',
     'contact': 'Contact',
     'our_story': 'Our Story',
     'mission_values': 'Mission & Values',
@@ -61,6 +62,8 @@ const translations: Record<Language, Record<string, string>> = {
     'search_placeholder': 'Search...',
     'login': 'Login',
     'menu': 'Menu',
+    'news_events': 'News & Events',
+    'partnerships': 'Partnerships',
     
     // Tabs
     'overview': 'Overview',
@@ -259,6 +262,7 @@ const translations: Record<Language, Record<string, string>> = {
     'courses': 'Cours',
     'services': 'Services',
     'certificates': 'Certificats',
+    'certifications': 'Accréditations',
     'contact': 'Contact',
     'our_story': 'Notre Histoire',
     'mission_values': 'Mission & Valeurs',
@@ -277,6 +281,8 @@ const translations: Record<Language, Record<string, string>> = {
     'search_placeholder': 'Rechercher...',
     'login': 'Connexion',
     'menu': 'Menu',
+    'news_events': 'Actualités & Événements',
+    'partnerships': 'Partenariats',
     
     // Tabs
     'overview': 'Aperçu',
@@ -471,10 +477,11 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Navigation
     'home': 'الرئيسية',
-    'about': 'من نحن',
+    'about': 'حول',
     'courses': 'الدورات',
     'services': 'الخدمات',
     'certificates': 'الشهادات',
+    'certifications': 'الاعتمادات',
     'contact': 'اتصل بنا',
     'our_story': 'قصتنا',
     'mission_values': 'المهمة والقيم',
@@ -493,6 +500,8 @@ const translations: Record<Language, Record<string, string>> = {
     'search_placeholder': 'ابحث...',
     'login': 'تسجيل الدخول',
     'menu': 'القائمة',
+    'news_events': 'الأخبار والأحداث',
+    'partnerships': 'الشراكات',
     
     // Tabs
     'overview': 'نظرة عامة',

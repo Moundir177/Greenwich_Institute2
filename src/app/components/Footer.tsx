@@ -20,7 +20,7 @@ const Footer = () => {
             <div className="mb-6">
               <Image 
                 src="/images/logo-light.png" 
-                alt="Greenwich" 
+                alt="Greenwich HSTC" 
                 width={180}
                 height={50}
                 className="h-12 w-auto"
@@ -56,7 +56,7 @@ const Footer = () => {
                 { label: 'about', path: '/about' },
                 { label: 'courses', path: '/courses' },
                 { label: 'services', path: '/services' },
-                { label: 'certificates', path: '/certificates' },
+                { label: 'certifications', path: '/certifications' },
                 { label: 'contact', path: '/contact' },
               ].map((link, index) => (
                 <li key={index}>
@@ -112,19 +112,74 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <FaEnvelope className={`text-gold ${isRtl ? 'ml-3' : 'mr-3'}`} />
-                <a href="mailto:info@greenwich.edu" className="text-white/80 hover:text-gold transition-colors">
-                  info@greenwich.edu
+                <a href="mailto:info@greenwichhstc.edu" className="text-white/80 hover:text-gold transition-colors">
+                  info@greenwichhstc.edu
                 </a>
               </li>
             </ul>
           </div>
         </div>
         
-        {/* Copyright */}
-        <div className="border-t border-white/10 py-8 text-center">
-          <p className="text-white/70">
-            &copy; {currentYear} {t('copyright')}
-          </p>
+        {/* Copyright and Accreditation Logos */}
+        <div className="border-t border-white/10 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white/70 mb-4 md:mb-0">
+              &copy; {currentYear} {t('copyright')}
+            </p>
+            
+            {/* Accreditation Logos */}
+            <div className="flex items-center space-x-6">
+              <span className="text-white/70 text-sm hidden md:inline-block">Accredited by:</span>
+              <a 
+                href="https://www.ilo.org/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <Image 
+                  src="/images/logos/ilo-logo.png" 
+                  alt="International Labour Organization" 
+                  width={80}
+                  height={40}
+                  className="h-8 w-auto object-contain"
+                />
+              </a>
+              <a 
+                href="https://www.unpaf.info/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <Image 
+                  src="/images/logos/peace-ambassadors-logo.png" 
+                  alt="U.N. Peace Ambassador Foundation" 
+                  width={80}
+                  height={40}
+                  className="h-8 w-auto object-contain"
+                />
+              </a>
+              <a 
+                href="https://www.sindibad.org" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <Image 
+                  src="/images/logos/sindibad-logo.png" 
+                  alt="Sindibad Foundation" 
+                  width={80}
+                  height={40}
+                  className="h-8 w-auto object-contain"
+                />
+              </a>
+              <Link 
+                href="/certifications"
+                className="text-white/70 text-xs hover:text-gold hover:underline transition-colors"
+              >
+                View all accreditations
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

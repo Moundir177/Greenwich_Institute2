@@ -79,8 +79,8 @@ export default function NewsEventsPage() {
   }, []);
   
   // Format date for display
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(language === 'fr' ? 'fr-FR' : language === 'ar' ? 'ar-SA' : 'en-US', options);
   };
   
@@ -236,7 +236,7 @@ export default function NewsEventsPage() {
                 } else if (block.type === 'list') {
                   return (
                     <ul key={index} className="space-y-3 mb-8">
-                      {block.items?.map((item, i) => (
+                      {block.items.map((item, i) => (
                         <li key={i} className="flex items-start">
                           <span className="text-gold mr-2 mt-1">•</span>
                           <span dangerouslySetInnerHTML={{ __html: item }}></span>
@@ -260,14 +260,14 @@ export default function NewsEventsPage() {
               <h3 className="text-xl font-bold text-uk-blue mb-4">Learn More About Our Partnerships</h3>
               <div className="flex flex-wrap gap-4">
                 <Button 
-                  href="/partenariats"
+                  href="/partnerships"
                   variant="primary"
                   size="lg"
                 >
                   View Our Partnerships
                 </Button>
                 <Button 
-                  href="/accréditations"
+                  href="/certifications"
                   variant="outline"
                   size="lg"
                 >
@@ -314,4 +314,4 @@ export default function NewsEventsPage() {
       </section>
     </div>
   );
-}
+} 
