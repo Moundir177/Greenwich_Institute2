@@ -1,6 +1,6 @@
 # Replace these variables with your actual values
 $AccountId = "5c617c0534a05bec0b5b2a0ecbe32064"
-$ProjectName = "greenwich-hstc-new"
+$ProjectName = "greenwich-hstc-website"
 $CustomDomain = "greenwich-hstc.com"
 $ApiToken = "YOUR_API_TOKEN"
 
