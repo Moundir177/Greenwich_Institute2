@@ -5,14 +5,16 @@ main = "./.next/server/pages/index.js"
 compatibility_date = "2024-05-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Build configuration
 [build]
 command = "npm run build"
 output_directory = "out"
 
+# Site configuration
 [site]
 bucket = "./out"
 
-# Pages configuration
+# Pages configuration - required for Cloudflare Pages
 pages_build_output_dir = "out"
 
 # Configure custom domain
