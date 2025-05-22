@@ -1,15 +1,98 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaCheck, FaHandshake, FaGlobeAmericas, FaAward, FaFileAlt, FaUserGraduate, FaChalkboardTeacher } from 'react-icons/fa';
+import { FaCheck, FaHandshake, FaGlobeAmericas, FaAward, FaFileAlt, FaUserGraduate, FaChalkboardTeacher, FaArrowRight, FaShieldAlt, FaBriefcase, FaUniversity, FaTrophy } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
+
+// Certification data
+const CERTIFICATIONS = [
+  {
+    id: 'ilo',
+    name: 'International Labor Organization (ILO)',
+    logo: '/images/logos/ilo-logo.png',
+    description: 'We are an accredited partner of the ILO, confirming our commitment to implementing best labor and vocational training practices globally.',
+    benefits: [
+      'Adherence to international labor standards',
+      'Vocational training excellence certification',
+      'Global employment best practices'
+    ],
+    status: 'Official Accreditation',
+    icon: <FaAward className="text-gold" />,
+    color: 'from-blue-900 to-blue-700',
+    learnMoreUrl: '/certifications/ilo'
+  },
+  {
+    id: 'peace-ambassadors',
+    name: 'Peace Ambassadors Foundation',
+    logo: '/images/logos/peace-ambassadors-logo.png',
+    description: 'We hold the Peace Ambassadors certification in recognition of our efforts to promote social dialogue and build sustainable communities.',
+    benefits: [
+      'Promoting peace through education',
+      'Community engagement initiatives',
+      'Social dialogue facilitation'
+    ],
+    status: 'Certified Partner',
+    icon: <FaHandshake className="text-gold" />,
+    color: 'from-green-800 to-green-600',
+    learnMoreUrl: '/certifications/peace-ambassadors'
+  },
+  {
+    id: 'sindibad',
+    name: 'Sindibad Foundation',
+    logo: '/images/logos/sindibad-logo.png',
+    description: 'As founders of Sindibad Investment and Entrepreneurship, we work to empower youth and entrepreneurs through providing resources and smart investments.',
+    benefits: [
+      'Supporting emerging entrepreneurs',
+      'Providing investment opportunities',
+      'Mentorship and resource allocation'
+    ],
+    status: 'Founding Organization',
+    icon: <FaBriefcase className="text-gold" />,
+    color: 'from-amber-700 to-amber-500',
+    learnMoreUrl: '/certifications/sindibad'
+  },
+  {
+    id: 'pioneers',
+    name: 'Pioneers of Intellectual Development',
+    logo: '/images/logos/pioneers-logo.png',
+    description: 'Our strategic partnership strengthens our presence in the UAE, enabling us to collaborate on pioneering educational projects across the region.',
+    benefits: [
+      'Regional educational leadership',
+      'Innovative curriculum development',
+      'Cross-border educational initiatives'
+    ],
+    status: 'Strategic Partner',
+    icon: <FaUniversity className="text-gold" />,
+    color: 'from-purple-800 to-purple-600',
+    learnMoreUrl: '/certifications/pioneers'
+  }
+];
+
+// Additional accreditations and recognitions
+const ADDITIONAL_ACCREDITATIONS = [
+  { name: 'International Association of Universities', logo: '/images/logos/iau-logo.png' },
+  { name: 'Quality Assurance Agency for Higher Education', logo: '/images/logos/qaa-logo.png' },
+  { name: 'European Association for Quality Assurance', logo: '/images/logos/eaqa-logo.png' },
+  { name: 'UNESCO Institute for Lifelong Learning', logo: '/images/logos/unesco-logo.png' },
+  { name: 'International Network for Quality Assurance', logo: '/images/logos/inqa-logo.png' },
+  { name: 'Association of Arab Universities', logo: '/images/logos/aau-logo.png' }
+];
+
+// Impact statistics
+const IMPACT_STATS = [
+  { number: '15+', label: 'International Accreditations', icon: <FaTrophy className="text-gold text-4xl" /> },
+  { number: '120', label: 'Countries Recognizing Our Certifications', icon: <FaGlobeAmericas className="text-gold text-4xl" /> },
+  { number: '50k+', label: 'Graduates with Accredited Certificates', icon: <FaUserGraduate className="text-gold text-4xl" /> },
+  { number: '94%', label: 'Employer Satisfaction Rate', icon: <FaShieldAlt className="text-gold text-4xl" /> }
+];
 
 const CertificationsPage = () => {
   const { t, language } = useLanguage();
   const isRtl = language === 'ar';
+  const [selectedCertification, setSelectedCertification] = useState<string | null>(null);
 
   // Animation variants
   const fadeIn = {
@@ -19,6 +102,25 @@ const CertificationsPage = () => {
       y: 0,
       transition: { delay: custom * 0.1, duration: 0.5, ease: "easeOut" }
     })
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+  
+  const itemVariant = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.5 }
+    }
   };
 
   return (
@@ -36,29 +138,101 @@ const CertificationsPage = () => {
         <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1 
-              className="text-4xl md:text-6xl font-serif font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              className="text-left"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
             >
-              Our International <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Accreditations</span> and Partners
-            </motion.h1>
-            <motion.p 
-              className="text-xl text-white/80 mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              <motion.span 
+                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-gold text-sm font-medium mb-4"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                Global Standards
+              </motion.span>
+              <motion.h1 
+                className="text-4xl md:text-6xl font-serif font-bold mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Our International <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Accreditations</span> and Partners
+              </motion.h1>
+              <motion.p 
+                className="text-xl text-white/80 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Greenwich HSTC's commitment to excellence is recognized by prestigious international organizations, ensuring our graduates receive globally respected qualifications.
+              </motion.p>
+              <motion.div
+                className="flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <a
+                  href="#certifications" 
+                  className="bg-gold text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-white transition-colors inline-flex items-center"
+                >
+                  View Certifications
+                  <FaArrowRight className="ml-2" />
+                </a>
+                <Link 
+                  href="/contact" 
+                  className="bg-transparent border-2 border-white/50 text-white px-6 py-3 rounded-lg font-medium hover:border-white transition-colors"
+                >
+                  Verify a Certificate
+                </Link>
+              </motion.div>
+            </motion.div>
+            
+            <motion.div
+              className="hidden lg:block"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
             >
-              Our commitment to excellence is recognized by prestigious international organizations
-            </motion.p>
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gold/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="relative bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 shadow-2xl">
+                  <div className="grid grid-cols-2 gap-4">
+                    {CERTIFICATIONS.slice(0, 4).map((cert, index) => (
+                      <motion.div 
+                        key={cert.id}
+                        className="bg-dark-blue/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-center border border-white/10 hover:border-gold/50 transition-all transform hover:-translate-y-1 cursor-pointer"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <div className="relative h-16 w-full">
+                          <Image 
+                            src={cert.logo} 
+                            alt={cert.name} 
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <div className="text-center mt-4 bg-dark-blue/50 rounded-lg py-2 px-4 backdrop-blur-sm">
+                    <span className="text-gold text-sm font-medium">Globally Recognized Certifications</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16 bg-light-gray">
+      <section id="certifications" className="py-20 bg-gradient-to-b from-light-gray to-white">
         <div className="container mx-auto px-4">
           <motion.div 
             className="max-w-4xl mx-auto mb-16 text-center"
@@ -78,359 +252,214 @@ const CertificationsPage = () => {
             </p>
           </motion.div>
 
-          {/* Certifications Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {/* ILO Certification */}
-            <motion.div 
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            >
-              <div className="h-64 relative">
-                <div className="absolute inset-0 bg-dark-blue/5 flex items-center justify-center p-6">
-                  <Image 
-                    src="/images/logos/ilo-logo.png" 
-                    alt="International Labour Organization" 
-                    width={200}
-                    height={120}
-                    className="object-contain mx-auto max-h-full"
-                  />
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">International Labor Organization (ILO)</h3>
-                <p className="text-gray-600 mb-6">
-                  "We are an accredited partner of the ILO, confirming our commitment to implementing best labor and vocational training practices globally."
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Adherence to international labor standards</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Vocational training excellence certification</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Global employment best practices</p>
-                  </div>
-                </div>
+          {/* Certifications Cards - Interactive */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            {CERTIFICATIONS.map((cert, index) => (
+              <motion.div 
+                key={cert.id}
+                className={`bg-gradient-to-br ${cert.color} rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white relative group`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full -ml-16 -mb-16"></div>
                 
-                <div className="flex items-center pt-4 border-t border-gray-100">
-                  <FaAward className="text-gold mr-2" />
-                  <span className="text-sm font-medium text-dark-blue">Official Accreditation</span>
+                <div className="p-8">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
+                    <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl w-24 h-24 flex items-center justify-center shrink-0">
+                      <Image 
+                        src={cert.logo} 
+                        alt={cert.name} 
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2">{cert.name}</h3>
+                      <div className="inline-flex items-center bg-white/20 px-3 py-1 rounded-full text-sm">
+                        {cert.icon}
+                        <span className="ml-2">{cert.status}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="mb-6 text-white/90 leading-relaxed">
+                    "{cert.description}"
+                  </p>
+                  
+                  <div className="space-y-2 mb-8">
+                    {cert.benefits.map((benefit, i) => (
+                      <div key={i} className="flex items-start">
+                        <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
+                        <p className="text-white/90">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="pt-4 border-t border-white/20 flex justify-between items-center">
+                    <div className="text-white/80 text-sm">
+                      Globally Recognized
+                    </div>
+                    <Link 
+                      href={cert.learnMoreUrl}
+                      className="inline-flex items-center bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors"
+                    >
+                      Learn More
+                      <FaArrowRight className="ml-2 text-sm" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Peace Ambassadors Certification */}
-            <motion.div 
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Impact Statistics */}
+          <div className="bg-dark-blue rounded-2xl p-10 mb-24 shadow-xl">
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="h-64 relative">
-                <div className="absolute inset-0 bg-dark-blue/5 flex items-center justify-center p-6">
-                  <Image 
-                    src="/images/logos/peace-ambassadors-logo.png" 
-                    alt="Peace Ambassadors Foundation" 
-                    width={200}
-                    height={120}
-                    className="object-contain mx-auto max-h-full"
-                  />
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">Peace Ambassadors Foundation</h3>
-                <p className="text-gray-600 mb-6">
-                  "We hold the Peace Ambassadors certification in recognition of our efforts to promote social dialogue and build sustainable communities."
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Promoting peace through education</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Community engagement initiatives</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Social dialogue facilitation</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center pt-4 border-t border-gray-100">
-                  <FaAward className="text-gold mr-2" />
-                  <span className="text-sm font-medium text-dark-blue">Certified Partner</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Sindibad Foundation */}
-            <motion.div 
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            >
-              <div className="h-64 relative">
-                <div className="absolute inset-0 bg-dark-blue/5 flex items-center justify-center p-6">
-                  <Image 
-                    src="/images/logos/sindibad-logo.png" 
-                    alt="Sindibad Foundation" 
-                    width={200}
-                    height={120}
-                    className="object-contain mx-auto max-h-full"
-                  />
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">Sindibad Foundation</h3>
-                <p className="text-gray-600 mb-6">
-                  "As founders of Sindibad Investment and Entrepreneurship, we work to empower youth and entrepreneurs through providing resources and smart investments."
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Supporting emerging entrepreneurs</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Providing investment opportunities</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Mentorship and resource allocation</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center pt-4 border-t border-gray-100">
-                  <FaAward className="text-gold mr-2" />
-                  <span className="text-sm font-medium text-dark-blue">Founding Organization</span>
-                </div>
-              </div>
+              <h2 className="text-3xl font-serif font-bold text-white mb-2">
+                Our Global Impact
+              </h2>
+              <p className="text-white/70 max-w-2xl mx-auto">
+                The reach and recognition of our accreditations and certifications
+              </p>
             </motion.div>
             
-            {/* Pioneers of Intellectual Development */}
             <motion.div 
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
             >
-              <div className="h-64 relative">
-                <div className="absolute inset-0 bg-dark-blue/5 flex items-center justify-center p-6">
-                  <div className="bg-blue-50 p-6 rounded-lg">
-                    <h3 className="text-dark-blue text-2xl font-serif font-bold">Pioneers of Intellectual Development</h3>
-                    <p className="text-gray-600 text-sm mt-2">UAE Partnership</p>
+              {IMPACT_STATS.map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center transform transition-transform hover:scale-105"
+                  variants={itemVariant}
+                >
+                  <div className="flex justify-center mb-4">
+                    {stat.icon}
                   </div>
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">Pioneers of Intellectual Development</h3>
-                <p className="text-gray-600 mb-6">
-                  "Our strategic partnership strengthens our presence in the UAE, enabling us to collaborate on pioneering educational projects across the region."
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Regional educational leadership</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Innovative learning initiatives</p>
-                  </div>
-                  <div className="flex items-start">
-                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">Expanding our reach in the UAE and GCC region</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center pt-4 border-t border-gray-100">
-                  <FaAward className="text-gold mr-2" />
-                  <span className="text-sm font-medium text-dark-blue">Strategic Partner</span>
-                </div>
-              </div>
+                  <h3 className="text-4xl font-bold text-white mb-2">{stat.number}</h3>
+                  <p className="text-white/80">{stat.label}</p>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="max-w-4xl mx-auto mb-16 text-center"
+          
+          {/* Additional Accreditations */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-serif font-bold text-dark-blue mb-4">
+                Additional Recognitions
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                We are also recognized by these prestigious organizations worldwide
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+              {ADDITIONAL_ACCREDITATIONS.map((item, index) => (
+                <motion.div 
+                  key={index}
+                  className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all flex items-center justify-center h-32"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="relative w-full h-16">
+                    <Image 
+                      src={item.logo} 
+                      alt={item.name} 
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          
+          {/* CTA Section */}
+          <motion.div
+            className="bg-gradient-to-r from-gold/10 to-amber-500/10 rounded-2xl p-10 border border-gold/20 relative overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-blue-500/10 text-dark-blue text-sm font-medium mb-3">
-              Value to Students
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6">
-              How Our Accreditations Benefit You
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Our international accreditations and partnerships translate into real advantages for our students and graduates.
-            </p>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full -ml-48 -mb-48"></div>
+            
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div>
+                <h2 className="text-3xl font-serif font-bold text-dark-blue mb-4">
+                  Verify Your Certificate
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Employers and institutions can verify the authenticity of certificates issued by Greenwich HSTC using our secure verification system.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link 
+                    href="/verify-certificate" 
+                    className="bg-dark-blue text-white px-6 py-3 rounded-lg font-medium hover:bg-gold hover:text-dark-blue transition-colors inline-flex items-center"
+                  >
+                    Verify a Certificate
+                    <FaFileAlt className="ml-2" />
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="bg-transparent border-2 border-dark-blue text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-dark-blue hover:text-white transition-colors"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-dark-blue mb-4">Quick Certificate Verification</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Certificate ID</label>
+                    <input 
+                      type="text" 
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-blue"
+                      placeholder="Enter certificate ID"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Student Name</label>
+                    <input 
+                      type="text" 
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-blue"
+                      placeholder="Enter student name"
+                    />
+                  </div>
+                  <button className="w-full bg-gold text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-dark-blue hover:text-white transition-colors">
+                    Verify Now
+                  </button>
+                </div>
+              </div>
+            </div>
           </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaGlobeAmericas className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Global Recognition</h3>
-              <p className="text-gray-600">
-                Qualifications and certifications that are recognized worldwide, enhancing your international mobility and career prospects.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaFileAlt className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Quality Assurance</h3>
-              <p className="text-gray-600">
-                Curriculum and teaching methodologies that meet stringent international standards, ensuring you receive a high-quality education.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaUserGraduate className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Employment Advantages</h3>
-              <p className="text-gray-600">
-                Credentials that are valued by employers worldwide, giving you a competitive edge in the job market.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaHandshake className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Industry Connections</h3>
-              <p className="text-gray-600">
-                Access to our network of international partners, providing opportunities for internships, projects, and employment.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaChalkboardTeacher className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Specialized Training</h3>
-              <p className="text-gray-600">
-                Access to specialized training programs and resources developed in collaboration with our international partners.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="p-6 bg-light-gray rounded-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                <FaAward className="text-dark-blue text-2xl" />
-              </div>
-              <h3 className="text-xl font-bold text-dark-blue mb-3">Ethical Education</h3>
-              <p className="text-gray-600">
-                Education that integrates ethical principles and social responsibility, preparing you to be a positive force in society.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-dark-blue to-blue-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h2 
-              className="text-3xl md:text-4xl font-serif font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Experience the <span className="text-gold">Greenwich HSTC</span> Difference
-            </motion.h2>
-            <motion.p 
-              className="text-xl text-white/80 mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Join us and benefit from our internationally recognized programs and extensive global network.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Link 
-                href="/courses" 
-                className="bg-gold hover:bg-amber-500 text-dark-blue font-bold py-3 px-8 rounded-full inline-flex items-center transition-all duration-300 transform hover:translate-y-[-2px]"
-              >
-                Explore Our Programs
-              </Link>
-            </motion.div>
-          </div>
         </div>
       </section>
     </div>

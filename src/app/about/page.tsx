@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar } from 'react-icons/fa';
@@ -8,40 +9,84 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { motion } from 'framer-motion';
 import OurCredibility from '../components/OurCredibility';
 
+// Interfaces for typed data
+interface TeamMember {
+  id: number;
+  name: string;
+  title: string;
+  image: string;
+  bio: string;
+  expertise?: string[];
+}
+
+interface TimelineEvent {
+  year: string;
+  title: string;
+  description: string;
+}
+
+interface Value {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  examples?: string[];
+}
+
 // Sample team data
-const LEADERSHIP_TEAM = [
+const LEADERSHIP_TEAM: TeamMember[] = [
   {
     id: 1,
     name: 'Dr. Jonathan Hughes',
     title: 'President & CEO',
     image: '/images/team/president.jpg',
-    bio: 'Dr. Hughes has over 25 years of experience in higher education and previously served as Dean of Business at Oxford University.',
+    bio: 'Dr. Hughes has over 25 years of experience in higher education and previously served as Dean of Business at Oxford University. He holds a PhD in Educational Leadership and has published numerous research papers on global education standards. His vision for Greenwich HSTC focuses on bridging traditional academic excellence with innovative learning approaches.',
+    expertise: ['Educational Leadership', 'International Education Standards', 'Strategic Planning']
   },
   {
     id: 2,
     name: 'Prof. Maria Rodriguez',
     title: 'Academic Director',
     image: '/images/team/academic-director.jpg',
-    bio: 'Prof. Rodriguez leads our academic programs with her extensive background in curriculum development and educational innovation.',
+    bio: 'Prof. Rodriguez leads our academic programs with her extensive background in curriculum development and educational innovation. With over 20 years in academia, she has pioneered several groundbreaking educational methodologies that have been adopted by leading institutions worldwide. Her commitment to pedagogical excellence ensures our programs remain at the cutting edge of educational practices.',
+    expertise: ['Curriculum Development', 'Pedagogical Innovation', 'Assessment Design']
   },
   {
     id: 3,
     name: 'Dr. David Chen',
     title: 'Director of Technology',
     image: '/images/team/tech-director.jpg',
-    bio: 'Dr. Chen oversees our technology infrastructure and digital learning initiatives, bringing 15 years of EdTech experience.',
+    bio: 'Dr. Chen oversees our technology infrastructure and digital learning initiatives, bringing 15 years of EdTech experience. His previous work at MIT and Silicon Valley startups has given him unique insights into how technology can transform educational experiences. Under his leadership, Greenwich HSTC has developed state-of-the-art digital learning platforms that combine AI-driven personalization with human-centered teaching approaches.',
+    expertise: ['Educational Technology', 'AI in Education', 'Digital Learning Platforms']
   },
   {
     id: 4,
     name: 'Sarah Johnson',
     title: 'Chief Operating Officer',
     image: '/images/team/coo.jpg',
-    bio: 'Sarah ensures the efficient operation of all institute functions with her background in organizational management.',
+    bio: 'Sarah ensures the efficient operation of all institute functions with her background in organizational management. Her expertise in operational excellence has helped Greenwich HSTC achieve unprecedented growth while maintaining the highest quality standards. Previously, she held executive positions at multinational education companies, bringing global best practices to our operations. Her focus on student experience has resulted in consistent excellence in satisfaction ratings.',
+    expertise: ['Operational Excellence', 'Organizational Development', 'Student Experience Management']
+  },
+  {
+    id: 5,
+    name: 'Dr. Amina Ndiaye',
+    title: 'Director of International Programs',
+    image: '/images/team/international-director.jpg',
+    bio: 'Dr. Ndiaye manages our global partnerships and international student programs with distinction. With experience spanning four continents and fluency in five languages, she brings a truly global perspective to Greenwich HSTC. Her doctoral research on cross-cultural educational practices informs our approach to creating inclusive learning environments for students from diverse backgrounds.',
+    expertise: ['Global Education Partnerships', 'Cross-Cultural Teaching', 'International Student Support']
+  },
+  {
+    id: 6,
+    name: 'Prof. James Wilson',
+    title: 'Research Director',
+    image: '/images/team/research-director.jpg',
+    bio: 'Prof. Wilson leads our research initiatives, connecting academic exploration with practical applications. His work has been recognized with multiple awards and grants from prestigious organizations. Under his guidance, Greenwich HSTC has established research centers focusing on future-oriented educational approaches and workforce development strategies that respond to emerging global challenges.',
+    expertise: ['Educational Research', 'Future of Work Studies', 'Research Grant Management']
   }
 ];
 
 // Sample timeline data
-const HISTORY_TIMELINE = [
+const HISTORY_TIMELINE: TimelineEvent[] = [
   {
     year: '2005',
     title: 'Foundation',
@@ -75,42 +120,94 @@ const HISTORY_TIMELINE = [
 ];
 
 // Sample values data
-const VALUES = [
+const VALUES: Value[] = [
   {
     id: 'excellence',
     title: 'Academic Excellence',
     icon: <FaAward className="text-4xl text-gold mb-4" />,
-    description: 'We maintain the highest standards in education, continuously striving to improve our teaching methods and curriculum.',
+    description: 'We maintain the highest standards in education, continuously striving to improve our teaching methods and curriculum. Our faculty consists of industry experts and academic leaders who bring real-world experience to the classroom. We regularly update our programs to incorporate the latest research and industry developments, ensuring our students receive education that is both rigorous and relevant.',
+    examples: [
+      'Curriculum developed in partnership with industry leaders',
+      'Regular academic review by international education experts',
+      'Comprehensive quality assurance processes'
+    ]
   },
   {
     id: 'innovation',
     title: 'Innovation',
     icon: <FaBook className="text-4xl text-gold mb-4" />,
-    description: 'We embrace new technologies and pedagogical approaches to enhance the learning experience for our students.',
+    description: 'We embrace new technologies and pedagogical approaches to enhance the learning experience for our students. Our innovation hub serves as an incubator for new educational methodologies and technologies. We believe that education must evolve to meet the changing needs of society and the workplace, and we are committed to leading that evolution rather than simply responding to it.',
+    examples: [
+      'AI-enhanced learning platforms tailored to individual student needs',
+      'Virtual reality labs for immersive learning experiences',
+      'Blockchain-verified credentials for secure certification'
+    ]
   },
   {
     id: 'diversity',
     title: 'Diversity & Inclusion',
     icon: <FaGlobe className="text-4xl text-gold mb-4" />,
-    description: 'We celebrate diversity and create an inclusive environment where all students can thrive regardless of background.',
+    description: 'We celebrate diversity and create an inclusive environment where all students can thrive regardless of background. Our campus welcomes students from over 120 countries, creating a rich multicultural learning environment. We actively work to eliminate barriers to education and ensure that our programs are accessible to qualified students from all backgrounds. Cultural exchange is not just encouraged but integrated into our educational philosophy.',
+    examples: [
+      'Scholarship programs targeting underrepresented communities',
+      'Curriculum that incorporates diverse global perspectives',
+      'Cultural competency training for all faculty and staff'
+    ]
   },
   {
     id: 'integrity',
     title: 'Integrity',
     icon: <FaMedal className="text-4xl text-gold mb-4" />,
-    description: 'We uphold the highest ethical standards in all our operations, fostering trust with our students and partners.',
+    description: 'We uphold the highest ethical standards in all our operations, fostering trust with our students and partners. Transparency in our processes, honesty in our communications, and fairness in our assessments are non-negotiable principles. We believe that education built on a foundation of integrity produces graduates who will bring those same values to their professional lives, contributing to a more ethical society.',
+    examples: [
+      'Transparent admission and assessment processes',
+      'Clear policies on academic integrity with zero tolerance for violations',
+      'Ethical decision-making frameworks integrated into all courses'
+    ]
   },
   {
     id: 'community',
     title: 'Community Engagement',
     icon: <FaUsers className="text-4xl text-gold mb-4" />,
-    description: 'We believe in giving back to society and actively engage with local and global communities.',
+    description: 'We believe in giving back to society and actively engage with local and global communities. Through service-learning projects, community partnerships, and outreach programs, we extend our educational mission beyond our campus. Our students and faculty participate in initiatives addressing social challenges, environmental sustainability, and economic development, applying their knowledge to create positive change.',
+    examples: [
+      'Annual service-learning projects in local communities',
+      'Partnerships with NGOs for global development initiatives',
+      'Pro bono consulting services for community organizations'
+    ]
   },
   {
     id: 'student-success',
     title: 'Student Success',
     icon: <FaUserGraduate className="text-4xl text-gold mb-4" />,
-    description: 'Our primary focus is the success of our students, both academically and in their future careers.',
+    description: 'Our primary focus is the success of our students, both academically and in their future careers. We provide comprehensive support services, career guidance, and networking opportunities to ensure that our graduates are well-prepared for professional success. Our definition of student success goes beyond grades to encompass personal growth, professional development, and lifelong learning capabilities.',
+    examples: [
+      'Personalized career coaching and job placement services',
+      'Lifetime access to alumni network and resources',
+      'Industry mentorship programs connecting students with professionals'
+    ]
+  },
+  {
+    id: 'adaptability',
+    title: 'Adaptability',
+    icon: <FaShieldAlt className="text-4xl text-gold mb-4" />,
+    description: 'We cultivate resilience and adaptability in our educational approach, preparing students for a rapidly changing world. Our curriculum emphasizes not just current knowledge but the skills to continuously learn and adapt throughout one\'s career. We teach students to be comfortable with uncertainty, to embrace change as opportunity, and to develop the agility needed in today\'s dynamic professional environments.',
+    examples: [
+      'Scenario-based learning simulating real-world challenges',
+      'Cross-disciplinary programs developing versatile skill sets',
+      'Future-focused curriculum anticipating industry changes'
+    ]
+  },
+  {
+    id: 'affordability',
+    title: 'Accessibility & Affordability',
+    icon: <FaFileInvoiceDollar className="text-4xl text-gold mb-4" />,
+    description: 'We are committed to making quality education accessible through innovative financing options and scholarship programs. We believe that financial constraints should not be a barrier to educational opportunity, and we work creatively to ensure that qualified students can access our programs regardless of their economic circumstances. Our flexible learning formats also accommodate students with diverse life situations and responsibilities.',
+    examples: [
+      'Flexible payment plans tailored to individual circumstances',
+      'Need-based and merit-based scholarship programs',
+      'Partnerships with employers for tuition assistance programs'
+    ]
   }
 ];
 

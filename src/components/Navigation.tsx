@@ -93,11 +93,8 @@ export default function Navigation() {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
-              <div className="bg-gold text-dark-blue flex items-center justify-center rounded-full w-10 h-10 mr-3 font-bold transition-all group-hover:scale-110 group-hover:rotate-3">
-                UK
-              </div>
               <div>
-                <h1 className="text-gold m-0 text-2xl font-bold transition-all group-hover:translate-x-1">UK Institute</h1>
+                <h1 className="text-gold m-0 text-2xl font-bold transition-all group-hover:translate-x-1">Greenwich HSTC</h1>
                 <p className="text-white m-0 text-xs">Excellence in Education</p>
               </div>
             </Link>
