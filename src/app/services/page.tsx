@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import PageLayout from '../components/PageLayout';
 import { FaUserGraduate, FaBriefcase, FaLaptop, FaGlobe, FaChalkboardTeacher, FaUsers, FaBook, FaHandshake, FaArrowRight, FaBuilding, FaChevronDown, FaChartLine, FaPalette, FaTheaterMasks, FaLanguage, FaPhoneAlt, FaChevronRight } from 'react-icons/fa';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -8,6 +9,7 @@ import Image from 'next/image';
 import Particles from 'react-particles';
 import { loadSlim } from "tsparticles-slim";
 import { Engine } from 'tsparticles-engine';
+import PageHeroSection from '../components/PageHeroSection';
 
 // Metadata for the page
 const pageMetadata = {
@@ -183,135 +185,16 @@ export default function ServicesPage() {
   }, []);
 
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white py-20 overflow-hidden">
-        {/* Particle Effects Background */}
-        <div className="absolute inset-0 z-0">
-          <Particles
-            id="tsparticles"
-            init={particlesInit}
-            options={{
-              background: {
-                color: {
-                  value: "transparent",
-                },
-              },
-              particles: {
-                number: {
-                  value: 70,
-                  density: {
-                    enable: true,
-                    value_area: 800,
-                  },
-                },
-                color: {
-                  value: "#f0c674",
-                },
-                shape: {
-                  type: "circle",
-                },
-                opacity: {
-                  value: 0.2,
-                  random: true,
-                  anim: {
-                    enable: true,
-                    speed: 0.5,
-                    opacity_min: 0.1,
-                    sync: false,
-                  },
-                },
-                size: {
-                  value: 3,
-                  random: true,
-                  anim: {
-                    enable: true,
-                    speed: 2,
-                    size_min: 0.3,
-                    sync: false,
-                  },
-                },
-                line_linked: {
-                  enable: true,
-                  distance: 150,
-                  color: "#ffffff",
-                  opacity: 0.1,
-                  width: 1,
-                },
-                move: {
-                  enable: true,
-                  speed: 0.7,
-                  direction: "none",
-                  random: true,
-                  straight: false,
-                  out_mode: "out",
-                  bounce: false,
-                },
-              },
-              interactivity: {
-                detect_on: "canvas",
-                events: {
-                  onhover: {
-                    enable: true,
-                    mode: "grab",
-                  },
-                  onclick: {
-                    enable: true,
-                    mode: "push",
-                  },
-                  resize: true,
-                },
-                modes: {
-                  grab: {
-                    distance: 140,
-                    line_linked: {
-                      opacity: 0.3,
-                    },
-                  },
-                  push: {
-                    particles_nb: 3,
-                  },
-                },
-              },
-              retina_detect: true,
-            }}
-          />
-        </div>
-        
-        {/* Decorative Blurs */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gold opacity-20 rounded-full filter blur-[100px] animate-pulse z-0"></div>
-        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-blue-500 opacity-20 rounded-full filter blur-[100px] animate-pulse z-0" style={{ animationDelay: "2s" }}></div>
-
-        {/* 3D Polygons */}
-        <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
-        <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 animate-bounceIn">
-              Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Services</span>
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
-              Comprehensive educational services designed to support your learning journey from enrollment to graduation and beyond.
-            </p>
-            <div className="mt-8 animate-scaleIn" style={{ animationDelay: '0.6s' }}>
-              <Button 
-                href="#academic-services" 
-                variant="gold"
-                effect="hoverglow"
-                icon={<FaArrowRight />}
-              >
-                Explore Our Services
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center animate-fadeIn" style={{ animationDelay: '1.2s' }}>
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1">
-            <div className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style={{ animationDuration: '1.5s' }}></div>
-          </div>
-        </div>
-      </section>
+    <PageLayout>
+      <PageHeroSection 
+        title="Our" 
+        titleHighlight="Services"
+        description="Comprehensive educational services designed to support your learning journey from enrollment to graduation and beyond."
+        buttonText="Explore Our Services"
+        buttonLink="#academic-services"
+        imageSrc="/images/services/hero-image.jpg"
+        imageAlt="Greenwich Institute Services"
+      />
       
       {/* Introduction */}
       <section className="py-16 bg-white">
@@ -654,7 +537,7 @@ export default function ServicesPage() {
                 <p className="text-white/90 mb-4">Our support team is committed to helping you navigate your educational journey with confidence.</p>
                 <Button 
                   href="/contact" 
-                  variant="red" 
+                  variant="primary" 
                   size="sm"
                   icon={<FaPhoneAlt />}
                 >
@@ -692,10 +575,10 @@ export default function ServicesPage() {
       </section>
       
       {/* Wave Separator */}
-      <div className="wave-separator uk-blue">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-          <path d="M0,50 C150,100 350,0 500,50 C650,100 800,0 1000,50 C1200,100 1350,0 1440,50 L1440,100 L0,100 Z"></path>
-        </svg>
+      <div className="wave-separator-container blue">
+        <div className="blue-outline-top"></div>
+        <div className="wave-shape blue"></div>
+        <div className="blue-outline-bottom"></div>
       </div>
       
       {/* Custom Programs */}
@@ -1040,7 +923,7 @@ export default function ServicesPage() {
                     <div className="mt-6 pt-4 border-t border-white/10">
                       <Button 
                         href="/register" 
-                        variant="glass"
+                        variant="outline"
                         className="w-full justify-center"
                       >
                         Apply Now
@@ -1053,6 +936,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-    </>
+    </PageLayout>
   );
 } 

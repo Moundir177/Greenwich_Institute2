@@ -136,7 +136,7 @@ const Navbar = () => {
   
   // Dropdown items
   const courseItems = [
-    { id: 'all-courses', name: t('all_courses'), path: '/courses', icon: <FaBook /> },
+    { id: 'all-courses', name: t('all_courses'), path: '/courses/all', icon: <FaBook /> },
     { id: 'business', name: t('business'), path: '/courses/business', icon: <FaBriefcase /> },
     { id: 'technology', name: t('technology'), path: '/courses/technology', icon: <FaLaptop /> },
     { id: 'design', name: t('design'), path: '/courses/design', icon: <FaPencilRuler /> },
@@ -183,7 +183,7 @@ const Navbar = () => {
     <header 
       className={`fixed w-full top-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/90 backdrop-blur-md shadow-lg py-2 text-dark-blue border-b border-gray-100' 
+          ? 'bg-white/90 backdrop-blur-md py-2 text-dark-blue border-b border-gray-100' 
           : 'bg-dark-blue/40 backdrop-blur-sm py-4 text-white'
       } ${isRtl ? 'rtl' : 'ltr'}`}
     >
@@ -194,25 +194,11 @@ const Navbar = () => {
             <div className="flex items-center overflow-hidden">
               {isScrolled ? (
                 <div className="flex items-center">
-                  <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
-                  <img 
-                    src="/logo-dark.svg" 
-                      alt="Greenwich HSTC"
-                    className="h-full w-auto"
-                  />
-                  </div>
-                  <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich HSTC</span>
+                  <span className="font-serif font-bold text-2xl text-dark-blue">Greenwich HSTC LTD</span>
                 </div>
               ) : (
                 <div className="flex items-center">
-                  <div className="h-10 w-auto transform transition-transform duration-300 group-hover:scale-105 mr-3">
-                  <img 
-                    src="/logo-light.svg" 
-                      alt="Greenwich HSTC"
-                    className="h-full w-auto"
-                  />
-                  </div>
-                  <span className="font-serif font-bold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Greenwich HSTC</span>
+                  <span className="font-serif font-bold text-2xl text-white">Greenwich HSTC LTD</span>
                 </div>
               )}
             </div>
@@ -220,14 +206,15 @@ const Navbar = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
                 <Link 
                   key={link.name} 
                   href={link.path}
                   className={`font-medium text-base transition-all duration-300 hover:text-gold py-2 relative
-                  ${isScrolled ? 'text-dark-blue' : 'text-white drop-shadow-sm'}
+                  ${isScrolled ? 'text-dark-blue' : 'text-white'}
                     after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-gold after:to-gold/50 
-                    after:transition-all after:duration-300 hover:after:w-full`}
+                    after:transition-all after:duration-300 hover:after:w-full
+                    ${index < 4 ? 'nav-link-outlined' : ''}`}
                 >
                   {t(link.name)}
                 </Link>
@@ -242,7 +229,7 @@ const Navbar = () => {
                 className={`p-2 hover:text-gold transition-all duration-300 rounded-full ${
                   isScrolled 
                     ? 'text-dark-blue hover:bg-gray-100' 
-                    : 'text-white drop-shadow-sm hover:bg-white/10 backdrop-blur-sm'
+                    : 'text-white hover:bg-white/10 backdrop-blur-sm'
                 }`}
                 aria-label="Search"
               >
@@ -252,7 +239,7 @@ const Navbar = () => {
               <AnimatePresence>
                 {searchOpen && (
                   <motion.div
-                    className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl shadow-lg overflow-hidden z-50 border border-gray-100"
+                    className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl overflow-hidden z-50 border border-gray-100"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -287,7 +274,7 @@ const Navbar = () => {
                 className={`flex items-center gap-1 font-medium text-base hover:text-gold transition-all duration-300 py-1 px-2 rounded-md ${
                   isScrolled 
                     ? 'text-dark-blue hover:bg-gray-50' 
-                    : 'text-white drop-shadow-sm hover:bg-white/5'
+                    : 'text-white hover:bg-white/5'
                 }`}
                 aria-expanded={isLanguageOpen}
               >
@@ -299,7 +286,7 @@ const Navbar = () => {
               <AnimatePresence>
                 {isLanguageOpen && (
                   <motion.div 
-                    className="absolute top-full right-0 mt-1 w-40 bg-white/95 backdrop-blur-md rounded-xl shadow-lg overflow-hidden z-50 border border-gray-100"
+                    className="absolute top-full right-0 mt-1 w-40 bg-white/95 backdrop-blur-md rounded-xl overflow-hidden z-50 border border-gray-100"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -339,7 +326,7 @@ const Navbar = () => {
               className={`p-2 hover:text-gold transition-all duration-300 rounded-full z-50 ${
                 isScrolled 
                   ? 'text-dark-blue hover:bg-gray-100' 
-                  : 'text-white drop-shadow-sm hover:bg-white/10 backdrop-blur-sm'
+                  : 'text-white hover:bg-white/10 backdrop-blur-sm'
               }`}
               aria-label="Toggle menu"
             >
@@ -356,7 +343,7 @@ const Navbar = () => {
                 className={`p-2 hover:text-gold transition-all duration-300 rounded-full ${
                   isScrolled 
                     ? 'text-dark-blue hover:bg-gray-100' 
-                    : 'text-white drop-shadow-sm hover:bg-white/10 backdrop-blur-sm'
+                    : 'text-white hover:bg-white/10 backdrop-blur-sm'
                 }`}
                 aria-label="Search"
               >
@@ -366,7 +353,7 @@ const Navbar = () => {
               <AnimatePresence>
                 {searchOpen && (
                   <motion.div
-                    className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl shadow-lg overflow-hidden z-50 border border-gray-100"
+                    className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl overflow-hidden z-50 border border-gray-100"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -402,7 +389,7 @@ const Navbar = () => {
                 className={`flex items-center gap-1 font-medium text-base hover:text-gold transition-all duration-300 py-2 px-2 rounded-md ${
                   isScrolled 
                     ? 'text-dark-blue hover:bg-gray-50' 
-                    : 'text-white drop-shadow-sm hover:bg-white/5'
+                    : 'text-white hover:bg-white/5'
                 }`}
                 aria-expanded={isLanguageOpen}
               >
@@ -414,7 +401,7 @@ const Navbar = () => {
               <AnimatePresence>
                 {isLanguageOpen && (
                   <motion.div 
-                    className="absolute top-full right-0 mt-1 w-40 bg-white/95 backdrop-blur-md rounded-xl shadow-lg overflow-hidden z-50 border border-gray-100"
+                    className="absolute top-full right-0 mt-1 w-40 bg-white/95 backdrop-blur-md rounded-xl overflow-hidden z-50 border border-gray-100"
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -463,7 +450,7 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             <motion.div 
-              className="absolute top-0 right-0 h-screen w-4/5 max-w-sm bg-white overflow-y-auto shadow-2xl" 
+              className="absolute top-0 right-0 h-screen w-4/5 max-w-sm bg-white overflow-y-auto border-l border-gray-100" 
               initial="hidden"
               animate="visible"
               exit="exit"

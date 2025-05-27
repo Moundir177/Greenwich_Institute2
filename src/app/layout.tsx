@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './styles/navbar-fix.css';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';

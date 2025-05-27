@@ -1,0 +1,26 @@
+/* CSS to remove all shadows from navbar */
+header.fixed {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+header.fixed * {
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.absolute.top-full.right-0.mt-2,
+.absolute.top-full.right-0.mt-1 {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+.absolute.top-0.right-0.h-screen {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+} 

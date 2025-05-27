@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaCheck, FaHandshake, FaGlobeAmericas, FaAward, FaFileAlt, FaUserGraduate, FaChalkboardTeacher, FaArrowRight, FaShieldAlt, FaBriefcase, FaUniversity, FaTrophy } from 'react-icons/fa';
+import { FaCheck, FaHandshake, FaGlobeAmericas, FaAward, FaFileAlt, FaUserGraduate, FaChalkboardTeacher, FaArrowRight, FaShieldAlt, FaBriefcase, FaUniversity, FaTrophy, FaSearch } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
+import Particles from 'react-particles';
+import { loadSlim } from "tsparticles-slim";
+import { Engine } from 'tsparticles-engine';
+import PageLayout from '../components/PageLayout';
 
 // Certification data
 const CERTIFICATIONS = [
@@ -26,18 +30,19 @@ const CERTIFICATIONS = [
   },
   {
     id: 'peace-ambassadors',
-    name: 'Peace Ambassadors Foundation',
+    name: 'Pioneers of Intellectual Development Training Center (PIDTC)',
     logo: '/images/logos/peace-ambassadors-logo.png',
-    description: 'We hold the Peace Ambassadors certification in recognition of our efforts to promote social dialogue and build sustainable communities.',
+    description: 'We are officially recognized by the Pioneers of Intellectual Development Training Center, promoting educational excellence and intellectual development across the Arab region.',
     benefits: [
-      'Promoting peace through education',
-      'Community engagement initiatives',
-      'Social dialogue facilitation'
+      'Educational excellence certification',
+      'Professional development programs',
+      'Training and certification standards',
+      'Regional educational leadership'
     ],
-    status: 'Certified Partner',
+    status: 'Official Partner',
     icon: <FaHandshake className="text-gold" />,
-    color: 'from-green-800 to-green-600',
-    learnMoreUrl: '/certifications/peace-ambassadors'
+    color: 'from-blue-700 to-blue-500',
+    learnMoreUrl: '/certifications/pidtc'
   },
   {
     id: 'sindibad',
@@ -94,6 +99,11 @@ const CertificationsPage = () => {
   const isRtl = language === 'ar';
   const [selectedCertification, setSelectedCertification] = useState<string | null>(null);
 
+  // Initialize particles
+  const particlesInit = async (engine: Engine) => {
+    await loadSlim(engine);
+  };
+
   // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -124,153 +134,211 @@ const CertificationsPage = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isRtl ? 'rtl' : 'ltr'}`}>
+    <PageLayout>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-          <div className="absolute -top-24 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-gold/30 to-gold/10 blur-3xl"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-blue-500/30 to-accent-blue/10 blur-3xl"></div>
+      <section className="relative min-h-[80vh] bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white py-20 overflow-hidden">
+        {/* Particle Effects Background */}
+        <div className="absolute inset-0 z-0">
+          <Particles
+            id="tsparticles"
+            init={particlesInit}
+            options={{
+              background: {
+                color: {
+                  value: "transparent",
+                },
+              },
+              particles: {
+                number: {
+                  value: 70,
+                  density: {
+                    enable: true,
+                    value_area: 800,
+                  },
+                },
+                color: {
+                  value: "#f0c674",
+                },
+                shape: {
+                  type: "circle",
+                },
+                opacity: {
+                  value: 0.2,
+                  random: true,
+                  anim: {
+                    enable: true,
+                    speed: 0.5,
+                    opacity_min: 0.1,
+                    sync: false,
+                  },
+                },
+                size: {
+                  value: 3,
+                  random: true,
+                  anim: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.3,
+                    sync: false,
+                  },
+                },
+                line_linked: {
+                  enable: true,
+                  distance: 150,
+                  color: "#ffffff",
+                  opacity: 0.1,
+                  width: 1,
+                },
+                move: {
+                  enable: true,
+                  speed: 0.7,
+                  direction: "none",
+                  random: true,
+                  straight: false,
+                  out_mode: "out",
+                  bounce: false,
+                }
+              },
+              interactivity: {
+                detect_on: "canvas",
+                events: {
+                  onhover: {
+                    enable: true,
+                    mode: "grab",
+                  },
+                  onclick: {
+                    enable: true,
+                    mode: "push",
+                  },
+                  resize: true,
+                },
+                modes: {
+                  grab: {
+                    distance: 140,
+                    line_linked: {
+                      opacity: 0.3,
+                    },
+                  },
+                  push: {
+                    particles_nb: 3,
+                  },
+                },
+              },
+              retina_detect: true,
+            }}
+          />
         </div>
-
-        {/* 3D Polygons */}
-        <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
-        <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div 
-              className="text-left"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              <motion.span 
-                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-gold text-sm font-medium mb-4"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                Global Standards
-              </motion.span>
-              <motion.h1 
-                className="text-4xl md:text-6xl font-serif font-bold mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Our International <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Accreditations</span> and Partners
-              </motion.h1>
-              <motion.p 
-                className="text-xl text-white/80 mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                Greenwich HSTC's commitment to excellence is recognized by prestigious international organizations, ensuring our graduates receive globally respected qualifications.
-              </motion.p>
-              <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <a
-                  href="#certifications" 
-                  className="bg-gold text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-white transition-colors inline-flex items-center"
-                >
-                  View Certifications
-                  <FaArrowRight className="ml-2" />
-                </a>
-                <Link 
-                  href="/contact" 
-                  className="bg-transparent border-2 border-white/50 text-white px-6 py-3 rounded-lg font-medium hover:border-white transition-colors"
-                >
-                  Verify a Certificate
-                </Link>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div
-              className="hidden lg:block"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-            >
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gold/20 rounded-full blur-3xl animate-pulse"></div>
-                <div className="relative bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 shadow-2xl">
-                  <div className="grid grid-cols-2 gap-4">
-                    {CERTIFICATIONS.slice(0, 4).map((cert, index) => (
-                      <motion.div 
-                        key={cert.id}
-                        className="bg-dark-blue/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-center border border-white/10 hover:border-gold/50 transition-all transform hover:-translate-y-1 cursor-pointer"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        <div className="relative h-16 w-full">
-                          <Image 
-                            src={cert.logo} 
-                            alt={cert.name} 
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                  <div className="text-center mt-4 bg-dark-blue/50 rounded-lg py-2 px-4 backdrop-blur-sm">
-                    <span className="text-gold text-sm font-medium">Globally Recognized Certifications</span>
-                  </div>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            {/* Left side - Main heading */}
+            <div className="w-full lg:w-1/2">
+              <div className="mb-4">
+                <span className="bg-white/10 text-white text-sm font-medium px-4 py-1.5 rounded-full">Trusted Credentials</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">
+                Verify <span className="text-gold">Your</span><br />
+                Greenwich <span className="text-white/80">Certificates</span>
+              </h1>
+              <p className="text-xl text-white/80 mb-8 max-w-lg">
+                Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich.
+              </p>
+              
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+                <div className="text-center">
+                  <h3 className="text-4xl font-bold text-gold">50K+</h3>
+                  <p className="text-white/70 text-sm mt-1">Certificates Issued</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-4xl font-bold text-gold">100%</h3>
+                  <p className="text-white/70 text-sm mt-1">Verification Accuracy</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-4xl font-bold text-gold">24/7</h3>
+                  <p className="text-white/70 text-sm mt-1">Online Verification</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-4xl font-bold text-gold">Global</h3>
+                  <p className="text-white/70 text-sm mt-1">Recognition</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
+            
+            {/* Right side - Verification form */}
+            <div className="w-full lg:w-5/12 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+              <h2 className="text-2xl font-bold mb-6">Verify Certificate</h2>
+              <p className="text-white/80 mb-6">
+                Enter your Certificate ID to verify its authenticity and access your certificate details.
+              </p>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">Certificate ID</label>
+                  <input 
+                    type="text" 
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-gold"
+                    placeholder="e.g., RA-2023-00123"
+                  />
+                  <p className="text-white/60 text-xs mt-2">Try demo IDs: RA-2023-00123 or 2023-MBA-00456</p>
+                        </div>
+                
+                <button className="w-full bg-gold text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-amber-500 transition-colors flex items-center justify-center">
+                  <FaSearch className="mr-2" /> Verify Certificate
+                </button>
+                
+                <div className="flex items-center justify-between pt-4">
+                  <div className="flex items-center text-white/70 text-sm">
+                    <FaShieldAlt className="mr-2 text-gold" /> Secure Verification
+                  </div>
+                  <Link href="/verification-faq" className="text-gold text-sm hover:underline flex items-center">
+                    Learn more <FaArrowRight className="ml-1 text-xs" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section id="certifications" className="py-20 bg-gradient-to-b from-light-gray to-white">
+      {/* Rest of the sections */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
+          {/* Accreditations Section - Keep existing */}
           <motion.div 
-            className="max-w-4xl mx-auto mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            className="mb-24"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-dark-blue text-sm font-medium mb-3">
-              Global Recognition
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6">
-              Committed to Global Standards
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-serif font-bold text-dark-blue mb-4">
+                Our International Accreditations
             </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              At Greenwich HSTC, we maintain the highest international standards through our partnerships with leading global organizations. These accreditations reflect our dedication to excellence in education, ethical practices, and social responsibility.
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Greenwich HSTC is proud to be recognized by these prestigious accrediting bodies worldwide
             </p>
-          </motion.div>
+            </div>
 
-          {/* Certifications Cards - Interactive */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            <div id="certifications" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {CERTIFICATIONS.map((cert, index) => (
-              <motion.div 
+            <motion.div 
                 key={cert.id}
                 className={`bg-gradient-to-br ${cert.color} rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white relative group`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              >
+              whileHover={{ y: -10, transition: { duration: 0.3 } }}
+            >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full -ml-16 -mb-16"></div>
                 
                 <div className="p-8">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
                     <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl w-24 h-24 flex items-center justify-center shrink-0">
-                      <Image 
+                  <Image 
                         src={cert.logo} 
                         alt={cert.name} 
                         width={80}
@@ -283,8 +351,8 @@ const CertificationsPage = () => {
                       <div className="inline-flex items-center bg-white/20 px-3 py-1 rounded-full text-sm">
                         {cert.icon}
                         <span className="ml-2">{cert.status}</span>
-                      </div>
-                    </div>
+                </div>
+              </div>
                   </div>
                   
                   <p className="mb-6 text-white/90 leading-relaxed">
@@ -294,16 +362,16 @@ const CertificationsPage = () => {
                   <div className="space-y-2 mb-8">
                     {cert.benefits.map((benefit, i) => (
                       <div key={i} className="flex items-start">
-                        <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
+                    <FaCheck className="text-gold mt-1 mr-3 flex-shrink-0" />
                         <p className="text-white/90">{benefit}</p>
-                      </div>
-                    ))}
                   </div>
-                  
+                    ))}
+                </div>
+                
                   <div className="pt-4 border-t border-white/20 flex justify-between items-center">
                     <div className="text-white/80 text-sm">
                       Globally Recognized
-                    </div>
+                </div>
                     <Link 
                       href={cert.learnMoreUrl}
                       className="inline-flex items-center bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors"
@@ -315,11 +383,12 @@ const CertificationsPage = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
-          
-          {/* Impact Statistics */}
+              </div>
+          </motion.div>
+
+          {/* Impact Statistics - Keep existing */}
           <div className="bg-dark-blue rounded-2xl p-10 mb-24 shadow-xl">
-            <motion.div
+            <motion.div 
               className="text-center mb-12"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -356,9 +425,9 @@ const CertificationsPage = () => {
               ))}
             </motion.div>
           </div>
-          
-          {/* Additional Accreditations */}
-          <motion.div
+
+          {/* Additional Accreditations - Keep existing */}
+          <motion.div 
             className="mb-20"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -368,23 +437,23 @@ const CertificationsPage = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-serif font-bold text-dark-blue mb-4">
                 Additional Recognitions
-              </h2>
+            </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 We are also recognized by these prestigious organizations worldwide
               </p>
-            </div>
-            
+              </div>
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
               {ADDITIONAL_ACCREDITATIONS.map((item, index) => (
-                <motion.div 
+            <motion.div 
                   key={index}
                   className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all flex items-center justify-center h-32"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   whileHover={{ y: -5 }}
-                >
+            >
                   <div className="relative w-full h-16">
                     <Image 
                       src={item.logo} 
@@ -392,77 +461,14 @@ const CertificationsPage = () => {
                       fill
                       className="object-contain"
                     />
-                  </div>
-                </motion.div>
+              </div>
+            </motion.div>
               ))}
             </div>
-          </motion.div>
-          
-          {/* CTA Section */}
-          <motion.div
-            className="bg-gradient-to-r from-gold/10 to-amber-500/10 rounded-2xl p-10 border border-gold/20 relative overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full -ml-48 -mb-48"></div>
-            
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-              <div>
-                <h2 className="text-3xl font-serif font-bold text-dark-blue mb-4">
-                  Verify Your Certificate
-                </h2>
-                <p className="text-gray-600 mb-6">
-                  Employers and institutions can verify the authenticity of certificates issued by Greenwich HSTC using our secure verification system.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Link 
-                    href="/verify-certificate" 
-                    className="bg-dark-blue text-white px-6 py-3 rounded-lg font-medium hover:bg-gold hover:text-dark-blue transition-colors inline-flex items-center"
-                  >
-                    Verify a Certificate
-                    <FaFileAlt className="ml-2" />
-                  </Link>
-                  <Link 
-                    href="/contact" 
-                    className="bg-transparent border-2 border-dark-blue text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-dark-blue hover:text-white transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-dark-blue mb-4">Quick Certificate Verification</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-gray-700 text-sm font-medium mb-2">Certificate ID</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-blue"
-                      placeholder="Enter certificate ID"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700 text-sm font-medium mb-2">Student Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-blue"
-                      placeholder="Enter student name"
-                    />
-                  </div>
-                  <button className="w-full bg-gold text-dark-blue px-6 py-3 rounded-lg font-medium hover:bg-dark-blue hover:text-white transition-colors">
-                    Verify Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 };
 

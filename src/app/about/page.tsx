@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar } from 'react-icons/fa';
+import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar, FaLinkedin, FaTwitter, FaCertificate, FaMapMarkerAlt, FaCalendarAlt, FaHandshake, FaCheck } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import OurCredibility from '../components/OurCredibility';
+import PageHeroSection from '../components/PageHeroSection';
+import PageLayout from '../components/PageLayout';
 
 // Interfaces for typed data
 interface TeamMember {
@@ -214,20 +216,52 @@ const VALUES: Value[] = [
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: (custom: number) => ({
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: custom * 0.1, duration: 0.5, ease: "easeOut" }
+    transition: {
+      delay: i * 0.1,
+      duration: 0.8,
+      ease: [0.215, 0.61, 0.355, 1.0]
+    }
   })
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: (custom: number) => ({
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: (i: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { delay: custom * 0.1, duration: 0.5, ease: "easeOut" }
+    transition: {
+      delay: i * 0.1,
+      duration: 0.8,
+      ease: [0.215, 0.61, 0.355, 1.0]
+    }
   })
+};
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.215, 0.61, 0.355, 1.0]
+    }
+  })
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3
+    }
+  }
 };
 
 export default function AboutPage() {
@@ -289,112 +323,19 @@ export default function AboutPage() {
   };
   
   return (
-    <div className={`min-h-screen ${isRtl ? 'rtl' : 'ltr'}`}>
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white relative overflow-hidden">
-        {/* Particle Effects */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-0 left-0 w-full h-full">
-              {Array.from({ length: 20 }).map((_, index) => (
-                <div 
-                  key={index}
-                  className="absolute rounded-full bg-gold/30"
-                  style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`,
-                    width: `${Math.random() * 8 + 2}px`,
-                    height: `${Math.random() * 8 + 2}px`,
-                    animationDuration: `${Math.random() * 10 + 10}s`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animation: `float-particle ${Math.random() * 10 + 15}s infinite ease-in-out`
-                  }}
-                ></div>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Background Gradient Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gold/20 blur-3xl"></div>
-          <div className="absolute top-1/2 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
-          <div className="absolute -bottom-24 left-1/4 w-96 h-96 rounded-full bg-dark-blue/30 blur-3xl"></div>
-        </div>
-        
-        {/* 3D Polygons */}
-        <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
-        <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            className="max-w-4xl mx-auto text-center"
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            variants={fadeIn}
-            custom={0}
-          >
-            <motion.h1 
-              className="text-4xl md:text-6xl font-serif font-bold mb-6"
-              variants={fadeIn}
-              custom={1}
-            >
-              {t('about')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Greenwich</span>
-            </motion.h1>
-            <motion.p 
-              className="text-xl text-white/80 mb-8"
-              variants={fadeIn}
-              custom={2}
-            >
-              <span className="relative">
-                <span className="absolute -left-8 -top-4 text-4xl text-gold/20">❝</span>
-                Empowering minds, transforming lives, and building futures through world-class education since 2005.
-                <span className="absolute -right-8 -bottom-3 text-4xl text-gold/20">❞</span>
-              </span>
-            </motion.p>
-            <motion.div 
-              className="flex flex-wrap justify-center gap-4"
-              variants={fadeIn}
-              custom={3}
-            >
-              <Link 
-                href="/courses" 
-                className="relative group overflow-hidden bg-gradient-to-r from-gold to-amber-500 text-dark-blue px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-[0_20px_40px_-15px_rgba(240,198,116,0.5)]"
-              >
-                <span className="relative z-10 flex items-center">
-                  {t('explore_courses')}
-                  <FaArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
-              </Link>
-              <Link 
-                href="/contact" 
-                className="relative overflow-hidden bg-transparent border border-white/30 backdrop-blur-sm text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:border-white/60 hover:bg-white/10 transform hover:translate-y-[-2px]"
-              >
-                <span className="relative z-10">
-                  {t('contact_us')}
-                </span>
-              </Link>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2"
-            >
-              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center animate-bounce border border-white/20 cursor-pointer shadow-xl" onClick={() => window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' })}>
-                <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L10 9L19 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <PageLayout>
+      <PageHeroSection 
+        title="About Greenwich"
+        titleHighlight="Our Story & Mission"
+        description="Discover our history, mission, and values that inspire educational excellence."
+        buttonText="Contact Us"
+        buttonLink="/contact"
+        imageSrc="/images/about/about-hero-bg.jpg"
+        imageAlt="Greenwich Institute"
+      />
       
-      {/* Tabs Navigation - enhanced version */}
-      <section className="bg-white py-4 border-b border-gray-200 sticky top-0 z-20 shadow-md backdrop-blur-lg bg-white/90">
+      {/* Enhanced Tabs Navigation */}
+      <section className="bg-white py-4 border-b border-gray-200 sticky top-0 z-20 shadow-lg backdrop-blur-lg bg-white/90">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
@@ -402,18 +343,18 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="flex overflow-x-auto scrollbar-hide justify-center"
           >
-            <div className="inline-flex p-1 bg-light-gray/50 backdrop-blur-sm rounded-full border border-gray-200/50 shadow-inner">
+            <div className="inline-flex p-1.5 bg-gray-50/80 backdrop-blur-sm rounded-full border border-gray-200/50 shadow-inner">
               {[
-                { id: 'mission', label: t('mission_values') },
-                { id: 'history', label: t('our_story') },
-                { id: 'team', label: t('leadership_team') },
-                { id: 'facilities', label: t('campus_facilities') }
+                { id: 'mission', label: t('mission_values'), icon: <FaBook /> },
+                { id: 'history', label: t('our_story'), icon: <FaUniversity /> },
+                { id: 'team', label: t('leadership_team'), icon: <FaUsers /> },
+                { id: 'facilities', label: t('campus_facilities'), icon: <FaGlobe /> }
               ].map((tab) => (
                 <button 
                   key={tab.id}
                   onClick={() => changeTab(tab.id)}
-                  className={`relative px-5 py-2 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-dark-blue' : 'text-gray'
+                  className={`relative px-5 py-3 rounded-full font-medium text-sm md:text-base transition-all duration-300 whitespace-nowrap ${
+                    activeTab === tab.id ? 'text-dark-blue' : 'text-gray-500'
                   }`}
                 >
                   {activeTab === tab.id && (
@@ -424,27 +365,10 @@ export default function AboutPage() {
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10 flex items-center justify-center">
-                    {tab.id === 'mission' && (
-                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
-                        <FaBook className="inline-block" size={14} />
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray-400'}`}>
+                      {tab.icon}
                       </span>
-                    )}
-                    {tab.id === 'history' && (
-                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
-                        <FaUniversity className="inline-block" size={14} />
-                      </span>
-                    )}
-                    {tab.id === 'team' && (
-                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
-                        <FaUsers className="inline-block" size={14} />
-                      </span>
-                    )}
-                    {tab.id === 'facilities' && (
-                      <span className={`${activeTab === tab.id ? 'text-gold' : 'text-gray'} mr-2`}>
-                        <FaGlobe className="inline-block" size={14} />
-                      </span>
-                    )}
                     {tab.label}
                   </span>
                 </button>
@@ -454,69 +378,211 @@ export default function AboutPage() {
         </div>
       </section>
       
-      {/* Mission & Values Tab */}
+      {/* Enhanced Mission & Values Tab */}
       {activeTab === 'mission' && (
         <>
-          <section className="py-16 bg-light-gray">
-            <div className="container mx-auto px-4">
+          <section className="py-20 bg-gray-50 relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-gold/5 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-blue-500/5 to-transparent"></div>
+            
+            <div className="container mx-auto px-4 relative z-10">
               {/* Mission Statement */}
               <motion.div 
-                className="max-w-4xl mx-auto mb-16 text-center"
+                className="max-w-4xl mx-auto mb-20 text-center"
                 initial="hidden"
-                animate="visible"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
                 variants={fadeIn}
                 custom={0}
               >
+                <motion.span
+                  variants={fadeIn}
+                  custom={0.5}
+                  className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-gold text-sm font-semibold mb-3"
+                >
+                  Notre Mission
+                </motion.span>
+                
                 <motion.h2 
-                  className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                  className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
                   variants={fadeIn}
                   custom={1}
                 >
-                  Our Mission
+                  Excellence, Innovation, <span className="text-gold">Impact</span>
                 </motion.h2>
+                
                 <motion.div 
-                  className="relative p-8 glass-morphism rounded-lg shadow-xl"
+                  className="relative p-10 glass-morphism rounded-2xl shadow-xl border border-white"
                   variants={scaleIn}
                   custom={2}
+                  whileHover={{ y: -5 }}
                 >
-                  <FaQuoteLeft className="text-gold/20 text-6xl absolute top-6 left-6" />
-                  <p className="text-xl text-dark-blue z-10 relative italic">
-                    To provide accessible, innovative, and high-quality education that empowers students to make meaningful contributions to society and achieve their full potential in a rapidly changing global landscape.
+                  <FaQuoteLeft className="text-gold/20 text-8xl absolute top-6 left-6" />
+                  <p className="text-xl md:text-2xl text-dark-blue z-10 relative italic leading-relaxed">
+                    Fournir une éducation accessible, innovante et de haute qualité qui permet aux étudiants d'apporter des contributions significatives à la société et d'atteindre leur plein potentiel dans un paysage mondial en constante évolution.
                   </p>
                 </motion.div>
               </motion.div>
               
-              {/* Values Grid */}
-              <motion.h2 
-                className="text-3xl font-serif font-bold text-dark-blue mb-10 text-center"
-                initial="hidden"
-                animate="visible"
-                variants={fadeIn}
-                custom={3}
+              {/* Values Grid with Enhanced UI */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mb-16"
               >
-                Our Core Values
+                <div className="text-center mb-16">
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-blue-500/10 text-dark-blue text-sm font-semibold mb-3"
+                  >
+                    Ce qui nous définit
+                  </motion.span>
+                  
+              <motion.h2 
+                    className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    Nos Valeurs <span className="text-gold">Fondamentales</span>
               </motion.h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  
+                  <motion.p
+                    className="text-gray-600 max-w-3xl mx-auto text-lg"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    Ces principes fondamentaux guident chaque aspect de notre approche éducative et façonnent l'expérience que nous offrons à nos étudiants.
+                  </motion.p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                 {VALUES.map((value, index) => (
                   <motion.div 
                     key={value.id}
-                    className="glass-morphism p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 transform text-center card-3d cursor-pointer"
-                    initial="hidden"
-                    animate="visible"
-                    variants={scaleIn}
-                    custom={index + 4}
-                    whileHover={{ y: -10 }}
-                  >
+                      className="relative group rounded-xl overflow-hidden"
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                    >
+                      {/* Card with stacked effect */}
+                      <div className="absolute inset-1 bg-gray-100 rounded-xl transform translate-x-1 translate-y-1 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300"></div>
+                      <div className="glass-morphism p-8 rounded-xl shadow-lg border border-white backdrop-blur-sm hover:shadow-2xl transition-all transform card-3d h-full relative z-10">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-radial from-gold/10 to-transparent rounded-full -translate-x-5 -translate-y-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div className="flex flex-col h-full">
+                          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/20 text-gold mb-6">
                     {value.icon}
+                          </div>
+                          
                     <h3 className="text-xl font-bold text-dark-blue mb-3">
                       {value.title}
                     </h3>
-                    <p className="text-gray">
-                      {value.description}
-                    </p>
+                          
+                          <p className="text-gray-600 mb-6 text-base flex-grow">
+                            {value.description.length > 180 
+                              ? `${value.description.substring(0, 180)}...` 
+                              : value.description}
+                          </p>
+                          
+                          <div className="mt-auto">
+                            {value.examples && (
+                              <div className="mt-4">
+                                <span className="text-sm font-semibold text-dark-blue block mb-2">Exemples:</span>
+                                <ul className="space-y-1">
+                                  {value.examples.slice(0, 2).map((example, i) => (
+                                    <li key={i} className="flex items-start text-sm text-gray-600">
+                                      <span className="text-gold mr-2 flex-shrink-0 mt-1">•</span>
+                                      <span>{example}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            
+                            <button className="mt-4 text-gold hover:text-amber-600 font-medium flex items-center text-sm transition-colors duration-300">
+                              En savoir plus <FaArrowRight className="ml-1 text-xs" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                   </motion.div>
                 ))}
               </div>
+              </motion.div>
+              
+              {/* Value Impact Metrics */}
+              <motion.div 
+                className="rounded-2xl bg-gradient-to-br from-dark-blue to-blue-900 text-white p-8 md:p-12 shadow-xl mt-20"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <div className="text-center mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4">L'Impact de Nos Valeurs</h3>
+                  <p className="text-white/80 max-w-3xl mx-auto">
+                    Notre engagement envers ces valeurs fondamentales a généré des résultats significatifs pour nos étudiants et notre communauté.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+                  <motion.div 
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <div className="text-4xl md:text-5xl font-bold text-gold mb-2">98%</div>
+                    <div className="text-white/80 text-sm md:text-base">Taux de satisfaction des étudiants</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <div className="text-4xl md:text-5xl font-bold text-gold mb-2">92%</div>
+                    <div className="text-white/80 text-sm md:text-base">Taux d'emploi post-diplôme</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <div className="text-4xl md:text-5xl font-bold text-gold mb-2">120+</div>
+                    <div className="text-white/80 text-sm md:text-base">Pays représentés</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
+                    <div className="text-4xl md:text-5xl font-bold text-gold mb-2">15K+</div>
+                    <div className="text-white/80 text-sm md:text-base">Anciens élèves dans le monde</div>
+                  </motion.div>
+                </div>
+              </motion.div>
             </div>
           </section>
           
@@ -525,135 +591,288 @@ export default function AboutPage() {
         </>
       )}
       
-      {/* History & Timeline Tab - enhanced with advanced animations */}
+      {/* Enhanced History & Timeline Tab */}
       {activeTab === 'history' && (
-        <section className="py-16 relative overflow-hidden">
-          {/* Background Gradient with advanced effects */}
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
+        <section className="py-20 relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute top-0 right-0 w-full h-full overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
           <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          </div>
           
           <div className="container mx-auto px-4 relative z-10">
             <motion.div 
-              className="max-w-4xl mx-auto mb-16 text-center"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={0}
+              className="max-w-4xl mx-auto mb-20 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
             >
               <motion.span 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-accent-blue/10 text-dark-blue text-sm font-medium mb-3"
+                transition={{ duration: 0.5 }}
+                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-blue-500/10 text-dark-blue text-sm font-semibold mb-3"
               >
-                {t('since_2005')}
+                Depuis 2005
               </motion.span>
+              
               <motion.h2 
                 className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
-                variants={fadeIn}
-                custom={1}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                Our <span className="text-gold relative">
-                  Journey
-                  <span className="absolute bottom-0 left-0 w-full h-2 bg-gold/10 -z-10"></span>
+                Notre <span className="text-gold relative">
+                  Parcours
+                  <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 100 8" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,3 Q50,7 100,3" stroke="#F0C674" strokeWidth="2" fill="none" />
+                  </svg>
                 </span>
               </motion.h2>
+              
               <motion.p 
-                className="text-gray text-lg"
-                variants={fadeIn}
-                custom={2}
+                className="text-gray-600 text-lg max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                From our humble beginnings to becoming a globally recognized educational institution, our journey has been defined by innovation, excellence, and a commitment to student success.
+                De nos humbles débuts à notre statut d'institution éducative mondialement reconnue, notre parcours a été défini par l'innovation, l'excellence et un engagement envers la réussite des étudiants.
               </motion.p>
             </motion.div>
             
-            <div className="relative">
-              {/* Glowing vertical line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-gold/30 via-gold/50 to-gold/30 neon-glow"></div>
+            {/* Enhanced interactive timeline */}
+            <div className="relative mx-auto max-w-6xl">
+              {/* Glowing central line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1.5 bg-gradient-to-b from-gold/20 via-gold/50 to-gold/20 rounded-full shadow-[0_0_10px_rgba(240,198,116,0.3)]"></div>
               
               {/* Timeline items with enhanced animations */}
-              <div className="space-y-24">
+              <div className="space-y-28 md:space-y-32 relative pb-20">
                 {HISTORY_TIMELINE.map((item, index) => (
                   <motion.div 
                     key={item.year} 
-                    className={`relative flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                    className={`relative flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ 
                       duration: 0.7,
-                      delay: index * 0.1,
+                      delay: index * 0.15,
                       ease: [0.215, 0.61, 0.355, 1.0]
                     }}
                   >
-                    {/* Year Circle with glow effect */}
+                    {/* Center Dot */}
                     <motion.div 
-                      className="absolute left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-r from-gold to-amber-500 flex items-center justify-center text-dark-blue font-bold z-10 shadow-[0_0_15px_rgba(240,198,116,0.5)]"
-                      whileHover={{ 
-                        scale: 1.2, 
-                        boxShadow: "0 0 25px rgba(240,198,116,0.7)"
-                      }}
+                      className="absolute left-1/2 top-0 transform -translate-x-1/2 z-10"
+                      whileHover={{ scale: 1.2 }}
                     >
-                      {item.year}
+                      <div className="w-16 h-16 rounded-full bg-white border-4 border-gold flex items-center justify-center text-dark-blue font-bold shadow-[0_0_15px_rgba(240,198,116,0.5)]">
+                        <span className="text-xl">{item.year}</span>
+                      </div>
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-10 bg-gradient-to-b from-gold to-transparent opacity-40"></div>
                     </motion.div>
                     
                     {/* Content with improved styling */}
+                    <div className={`md:w-5/12 flex ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'} mt-20 md:mt-0`}>
                     <motion.div 
-                      className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-16' : 'text-left pl-16'}`}
+                        className={`glass-morphism p-8 rounded-xl shadow-xl border border-white max-w-lg ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}
                       whileHover={{ 
-                        scale: 1.05, 
+                          y: -5,
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
                         transition: { duration: 0.3 } 
                       }}
                     >
-                      <div className="glass-morphism p-6 rounded-xl shadow-xl border border-white backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                        <h3 className="text-2xl font-bold text-dark-blue mb-2 flex items-center">
-                          {index % 2 === 0 ? (
-                            <>
+                        <div className="relative">
+                          {/* Decorative accents */}
+                          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-radial from-gold/5 to-transparent rounded-full -translate-x-5 -translate-y-5"></div>
+                          
+                          <h3 className="text-2xl font-bold text-dark-blue mb-3 flex items-center">
                               <span className="text-gold">{item.title}</span>
-                              <span className="ml-2 text-gold">&rarr;</span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="mr-2 text-gold">&larr;</span>
-                              <span className="text-gold">{item.title}</span>
+                          </h3>
+                          
+                          <p className="text-gray-600 leading-relaxed relative z-10">{item.description}</p>
+                          
+                          {/* Milestone achievements - added details */}
+                          <div className="mt-4 pt-4 border-t border-gray-100">
+                            <h4 className="text-sm font-semibold text-dark-blue mb-2">Réalisations clés:</h4>
+                            <ul className="space-y-1">
+                              {index === 0 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Établissement de notre première campus avec 120 étudiants</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Développement de 5 programmes éducatifs initiaux</span>
+                                  </li>
+                                </>
+                              )}
+                              {index === 1 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Augmentation des inscriptions internationales de 250%</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Création d'un programme d'échange avec 10 universités</span>
+                                  </li>
                             </>
                           )}
-                        </h3>
-                        <p className="text-gray">{item.description}</p>
-                        
-                        {/* Decorative corner accent */}
-                        <div className={`absolute ${index % 2 === 0 ? 'top-0 right-0' : 'top-0 left-0'} w-8 h-8 border-t-2 ${index % 2 === 0 ? 'border-r-2' : 'border-l-2'} border-gold/20 rounded-tr-lg`}></div>
+                              {index === 2 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Plus de 5,000 étudiants inscrits aux programmes en ligne</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Intégration de la technologie LMS primée</span>
+                                  </li>
+                                </>
+                              )}
+                              {index === 3 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Partenariats avec 35 entreprises du Fortune 500</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Création de 150+ stages d'entreprise pour nos étudiants</span>
+                                  </li>
+                                </>
+                              )}
+                              {index === 4 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Accréditation par 5 organismes internationaux</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Classement parmi les 50 meilleures institutions mondiales</span>
+                                  </li>
+                                </>
+                              )}
+                              {index === 5 && (
+                                <>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Lancement de 12 startups étudiantes</span>
+                                  </li>
+                                  <li className="flex items-start text-sm text-gray-600">
+                                    <span className="text-gold mr-2 flex-shrink-0">•</span>
+                                    <span>Développement d'un incubateur de projets technologiques</span>
+                                  </li>
+                                </>
+                              )}
+                            </ul>
+                          </div>
                       </div>
                     </motion.div>
+                    </div>
                     
                     {/* Empty space for the other side */}
-                    <div className="w-5/12"></div>
+                    <div className="md:w-5/12 hidden md:block"></div>
                   </motion.div>
                 ))}
-              </div>
               
-              {/* Final dot at the end of timeline */}
+                {/* Future marker */}
               <motion.div
-                initial={{ opacity: 0, scale: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.7 }}
-                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-12 w-6 h-6 rounded-full bg-gold shadow-[0_0_15px_rgba(240,198,116,0.5)]"
-              ></motion.div>
+                  transition={{ duration: 0.7, delay: 0.6 }}
+                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center"
+                >
+                  <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(240,198,116,0.6)]">
+                    <FaArrowRight className="text-white" />
+                  </div>
+                  <p className="mt-3 text-dark-blue font-medium">Notre histoire continue...</p>
+                </motion.div>
+              </div>
             </div>
             
-            {/* Floating decorations */}
-            <div className="absolute top-1/4 right-10 w-24 h-24 border border-gold/10 rounded-full rotate-45 opacity-40 animate-float-slow"></div>
-            <div className="absolute bottom-1/3 left-20 w-16 h-16 border border-gold/10 rounded-full -rotate-12 opacity-30 animate-float-slow animation-delay-1000"></div>
+            {/* Key Milestones Section */}
+            <motion.div 
+              className="mt-32 bg-white rounded-2xl shadow-xl p-10 border border-gray-100 relative overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-gold/5 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+              </div>
+              
+              <div className="relative z-10">
+                <div className="text-center mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-dark-blue mb-4">Les Chiffres Clés de Notre Histoire</h3>
+                  <p className="text-gray-600 max-w-3xl mx-auto">
+                    Notre croissance et notre impact au fil des années démontrent notre engagement continu envers l'excellence éducative.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-amber-500/10 border border-gold/20">
+                      <FaUserGraduate className="text-gold text-2xl" />
+                    </div>
+                    <div className="text-3xl md:text-4xl font-bold text-dark-blue mb-2">30K+</div>
+                    <div className="text-gray-600">Diplômés</div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-amber-500/10 border border-gold/20">
+                      <FaGlobe className="text-gold text-2xl" />
+                    </div>
+                    <div className="text-3xl md:text-4xl font-bold text-dark-blue mb-2">15</div>
+                    <div className="text-gray-600">Campus Mondiaux</div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-amber-500/10 border border-gold/20">
+                      <FaUniversity className="text-gold text-2xl" />
+                    </div>
+                    <div className="text-3xl md:text-4xl font-bold text-dark-blue mb-2">50+</div>
+                    <div className="text-gray-600">Programmes Académiques</div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-amber-500/10 border border-gold/20">
+                      <FaHandshake className="text-gold text-2xl" />
+                    </div>
+                    <div className="text-3xl md:text-4xl font-bold text-dark-blue mb-2">200+</div>
+                    <div className="text-gray-600">Partenaires Institutionnels</div>
+                  </div>
+                </div>
+                
+                {/* Discover more button */}
+                <div className="flex justify-center mt-12">
+                  <Link 
+                    href="/our-history"
+                    className="inline-flex items-center justify-center px-8 py-3 bg-dark-blue text-white rounded-full hover:bg-gold hover:text-dark-blue transition-colors duration-300 font-medium"
+                  >
+                    Explorer notre histoire complète
+                    <FaArrowRight className="ml-2" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
       )}
       
-      {/* Leadership Team Tab */}
+      {/* Enhanced Leadership Team Tab */}
       {activeTab === 'team' && (
-        <section className="py-16 bg-light-gray relative overflow-hidden">
+        <section className="py-20 bg-gray-50 relative overflow-hidden">
           {/* Background Elements */}
           <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
@@ -662,296 +881,724 @@ export default function AboutPage() {
             <motion.div 
               className="max-w-4xl mx-auto mb-16 text-center"
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={fadeIn}
               custom={0}
             >
+              <motion.span
+                variants={fadeIn}
+                custom={0.5}
+                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-blue-500/10 text-dark-blue text-sm font-semibold mb-3"
+              >
+                Notre Équipe
+              </motion.span>
+              
               <motion.h2 
-                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
+                className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
                 variants={fadeIn}
                 custom={1}
               >
-                Our Leadership Team
+                L'Équipe de <span className="text-gold">Direction</span>
               </motion.h2>
+              
               <motion.p 
-                className="text-gray"
+                className="text-gray-600 text-lg max-w-3xl mx-auto"
                 variants={fadeIn}
                 custom={2}
               >
-                Meet the dedicated professionals leading our institution with vision, expertise, and a passion for education.
+                Rencontrez les professionnels dévoués qui dirigent notre institution avec vision, expertise et passion pour l'éducation.
               </motion.p>
             </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-              {LEADERSHIP_TEAM.map((member, index) => (
+            {/* Featured Leaders - First Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+              {LEADERSHIP_TEAM.slice(0, 2).map((member, index) => (
                 <motion.div 
                   key={member.id}
-                  className="glass-morphism rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer transform perspective-card"
-                  initial="hidden"
-                  animate="visible"
-                  variants={scaleIn}
-                  custom={index + 3}
-                  whileHover={{ y: -10, scale: 1.03 }}
+                  className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col md:flex-row"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  whileHover={{ y: -5, transition: { duration: 0.3 } }}
                 >
-                  <div className="relative h-64 w-full overflow-hidden">
+                  <div className="relative h-80 md:h-auto md:w-2/5 overflow-hidden">
                     <Image 
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover transition-transform hover:scale-110 duration-500"
+                      className="object-cover h-full w-full transition-transform hover:scale-110 duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/80 to-transparent opacity-70"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/70 to-transparent opacity-60"></div>
+                    <div className="absolute bottom-0 left-0 p-4 w-full">
+                      <div className="flex gap-2">
+                        <a href="#" className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gold hover:text-dark-blue transition-colors duration-300">
+                          <FaLinkedin size={14} />
+                        </a>
+                        <a href="#" className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gold hover:text-dark-blue transition-colors duration-300">
+                          <FaTwitter size={14} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-8 md:w-3/5 flex flex-col">
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold text-dark-blue mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-gold font-medium text-lg">
+                        {member.title}
+                      </p>
+                    </div>
+                    
+                    <p className="text-gray-600 text-base mb-4 flex-grow">
+                      {member.bio}
+                    </p>
+                    
+                    {member.expertise && (
+                      <div className="mt-auto">
+                        <h4 className="text-sm font-semibold text-dark-blue mb-2">Domaines d'expertise:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {member.expertise.map((skill, i) => (
+                            <span 
+                              key={i} 
+                              className="px-3 py-1 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 text-xs font-medium rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Rest of the team - Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+              {LEADERSHIP_TEAM.slice(2).map((member, index) => (
+                <motion.div 
+                  key={member.id}
+                  className="group"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * (index + 2) }}
+                >
+                  <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 h-full relative">
+                    <div className="relative h-72 w-full overflow-hidden">
+                    <Image 
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                        className="object-cover transition-transform group-hover:scale-105 duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/70 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+                      
+                      <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="flex gap-2">
+                          <a href="#" className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gold hover:text-dark-blue transition-colors duration-300">
+                            <FaLinkedin size={14} />
+                          </a>
+                          <a href="#" className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gold hover:text-dark-blue transition-colors duration-300">
+                            <FaTwitter size={14} />
+                          </a>
+                        </div>
+                      </div>
                   </div>
                   
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-dark-blue mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-gold font-medium mb-4 neon-text">
+                      <p className="text-gold font-medium mb-3">
                       {member.title}
                     </p>
-                    <p className="text-gray text-sm">
+                      
+                      <div className="relative overflow-hidden">
+                        <p className="text-gray-600 text-sm line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
                       {member.bio}
                     </p>
+                        <div className="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-white to-transparent group-hover:opacity-0 transition-opacity duration-300"></div>
+                      </div>
+                      
+                      {member.expertise && (
+                        <div className="mt-4 pt-4 border-t border-gray-100">
+                          <div className="flex flex-wrap gap-1">
+                            {member.expertise.slice(0, 2).map((skill, i) => (
+                              <span 
+                                key={i} 
+                                className="px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               ))}
             </div>
+            
+            {/* Team Statistics */}
+            <motion.div 
+              className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="rounded-xl bg-gradient-to-br from-dark-blue to-blue-800 p-8 text-white shadow-lg">
+                <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-white/10 mx-auto">
+                  <FaCertificate className="text-gold text-2xl" />
+                </div>
+                <h3 className="text-2xl font-bold text-center mb-2">25+</h3>
+                <p className="text-white/80 text-center">Années d'expérience moyenne</p>
+              </div>
+              
+              <div className="rounded-xl bg-gradient-to-br from-gold/90 to-amber-500 p-8 text-dark-blue shadow-lg">
+                <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-dark-blue/10 mx-auto">
+                  <FaGlobe className="text-dark-blue text-2xl" />
+                </div>
+                <h3 className="text-2xl font-bold text-center mb-2">12</h3>
+                <p className="text-dark-blue/80 text-center">Nationalités représentées</p>
+              </div>
+              
+              <div className="rounded-xl bg-gradient-to-br from-dark-blue to-blue-800 p-8 text-white shadow-lg">
+                <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-white/10 mx-auto">
+                  <FaAward className="text-gold text-2xl" />
+                </div>
+                <h3 className="text-2xl font-bold text-center mb-2">30+</h3>
+                <p className="text-white/80 text-center">Prix et distinctions reçus</p>
+              </div>
+            </motion.div>
+            
+            {/* Join the Team CTA */}
+            <motion.div 
+              className="mt-20 bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100 text-center relative overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-gold/5 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+              </div>
+              
+              <div className="relative z-10">
+                <h3 className="text-2xl md:text-3xl font-bold text-dark-blue mb-4">Rejoignez Notre Équipe</h3>
+                <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+                  Nous sommes toujours à la recherche de talents exceptionnels pour rejoindre notre équipe dédiée. Découvrez les opportunités actuelles et faites partie de notre mission éducative.
+                </p>
+                <Link 
+                  href="/careers"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-dark-blue text-white rounded-full hover:bg-gold hover:text-dark-blue transition-colors duration-300 font-medium"
+                >
+                  Voir les opportunités
+                  <FaArrowRight className="ml-2" />
+                </Link>
+                
+                <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <FaMapMarkerAlt className="text-gold mr-2" />
+                    <span>Emplacements mondiaux</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <FaCalendarAlt className="text-gold mr-2" />
+                    <span>Horaires flexibles</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <FaGlobe className="text-gold mr-2" />
+                    <span>Environnement diversifié</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
       )}
       
-      {/* Campus Facilities Tab */}
+      {/* Enhanced Campus Facilities Tab */}
       {activeTab === 'facilities' && (
-        <section className="py-16 relative overflow-hidden">
+        <section className="py-20 relative overflow-hidden bg-gray-50">
           {/* Background Elements */}
-          <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl"></div>
-          <div className="absolute bottom-20 left-0 w-96 h-96 rounded-full bg-gold/5 blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-full h-full overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+            <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          </div>
           
           <div className="container mx-auto px-4 relative z-10">
             <motion.div 
               className="max-w-4xl mx-auto mb-16 text-center"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={0}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
             >
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-dark-blue/10 to-blue-500/10 text-dark-blue text-sm font-semibold mb-3"
+              >
+                Environnement d'apprentissage
+              </motion.span>
+              
               <motion.h2 
-                className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-6"
-                variants={fadeIn}
-                custom={1}
+                className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                World-Class Facilities
+                Des Installations <span className="text-gold">De Classe Mondiale</span>
               </motion.h2>
+              
               <motion.p 
-                className="text-gray"
-                variants={fadeIn}
-                custom={2}
+                className="text-gray-600 text-lg max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Our state-of-the-art campuses provide the perfect environment for learning, innovation, and personal growth.
+                Nos campus à la pointe de la technologie offrent l'environnement idéal pour l'apprentissage, l'innovation et l'épanouissement personnel.
               </motion.p>
             </motion.div>
             
+            {/* Interactive campus map - NEW COMPONENT */}
             <motion.div 
-              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={3}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="mb-24 rounded-2xl overflow-hidden shadow-xl bg-white border border-gray-100"
             >
-              <div className="order-2 lg:order-1">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">
-                  Modern Learning Spaces
+              <div className="relative h-96 w-full">
+                <Image
+                  src="/images/facilities/campus-map.jpg"
+                  alt="Vue aérienne du campus"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/70 to-transparent opacity-60"></div>
+                <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">Campus Principal</h3>
+                  <p className="text-white/80 max-w-2xl">
+                    Notre campus principal s'étend sur plus de 15 hectares et comprend des installations modernes conçues pour favoriser l'apprentissage et l'innovation.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <FaChalkboardTeacher className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-dark-blue">25 Bâtiments</h4>
+                    <p className="text-gray-600 text-sm">Répartis stratégiquement sur le campus</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                    <FaUsers className="text-amber-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-dark-blue">Capacité de 12,000</h4>
+                    <p className="text-gray-600 text-sm">Étudiants sur le campus simultanément</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <FaGlobe className="text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-dark-blue">Éco-responsable</h4>
+                    <p className="text-gray-600 text-sm">Campus certifié écologique</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* Facility Features - Grid Cards */}
+            <div className="space-y-24">
+              {/* Modern Learning Spaces */}
+              <motion.div 
+                className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <div className="order-2 lg:order-1 bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                  <h3 className="text-2xl font-bold text-dark-blue mb-4 flex items-center">
+                    <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                      <FaChalkboardTeacher className="text-blue-600 text-sm" />
+                    </span>
+                    Espaces d'Apprentissage Modernes
                 </h3>
-                <p className="text-gray mb-6">
-                  Our classrooms and lecture halls are equipped with the latest technology and designed to facilitate interactive learning and collaboration.
-                </p>
-                <ul className="space-y-3">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Nos salles de classe et amphithéâtres sont équipés des technologies les plus récentes et conçus pour faciliter l'apprentissage interactif et la collaboration.
+                  </p>
+                  <ul className="space-y-4">
+                    {[
+                      "Tableaux interactifs et systèmes de projection",
+                      "Dispositions de sièges flexibles pour diverses méthodologies d'enseignement",
+                      "Internet haut débit et ressources numériques disponibles partout",
+                      "Capacités d'enregistrement pour la capture et la révision des cours"
+                    ].map((item, index) => (
                   <motion.li 
+                        key={index}
                     className="flex items-start"
-                    variants={fadeIn}
-                    custom={4}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Interactive smart boards and projection systems</span>
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 * index }}
+                      >
+                        <span className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-0.5 flex-shrink-0">
+                          <FaCheck className="text-xs" />
+                        </span>
+                        <span className="text-gray-600">{item}</span>
                   </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={5}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Flexible seating arrangements for various teaching methodologies</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={6}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>High-speed internet and digital resources available throughout</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={7}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Recording capabilities for lecture capture and review</span>
-                  </motion.li>
+                    ))}
                 </ul>
               </div>
               
               <motion.div 
-                className="order-1 lg:order-2 relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
-                variants={scaleIn}
-                custom={4}
-                whileHover={{ scale: 1.05 }}
+                  className="order-1 lg:order-2 relative h-96 glass-morphism shadow-2xl rounded-xl overflow-hidden group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
               >
                 <Image 
                   src="/images/facilities/classrooms.jpg"
-                  alt="Modern classrooms"
-                  fill
-                  className="object-cover rounded-xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
+                    alt="Salles de classe modernes"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent group-hover:opacity-70 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="inline-block px-4 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-2">
+                      12 Amphithéâtres
+                    </span>
+                    <h4 className="text-white text-xl font-bold">Salles de Classe Connectées</h4>
+                  </div>
               </motion.div>
             </motion.div>
             
+              {/* Library & Research Center */}
             <motion.div 
-              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={8}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
             >
               <motion.div 
-                className="relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
-                variants={scaleIn}
-                custom={9}
-                whileHover={{ scale: 1.05 }}
+                  className="relative h-96 glass-morphism shadow-2xl rounded-xl overflow-hidden group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
               >
                 <Image 
                   src="/images/facilities/library.jpg"
-                  alt="Library and research center"
-                  fill
-                  className="object-cover rounded-xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
+                    alt="Bibliothèque et centre de recherche"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent group-hover:opacity-70 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="inline-block px-4 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-2">
+                      5 Étages
+                    </span>
+                    <h4 className="text-white text-xl font-bold">Centre de Ressources Complet</h4>
+                  </div>
               </motion.div>
               
-              <div>
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">
-                  Library & Research Center
+                <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                  <h3 className="text-2xl font-bold text-dark-blue mb-4 flex items-center">
+                    <span className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                      <FaBook className="text-amber-600 text-sm" />
+                    </span>
+                    Bibliothèque & Centre de Recherche
                 </h3>
-                <p className="text-gray mb-6">
-                  Our extensive library houses thousands of books, journals, and digital resources, providing a quiet environment for study and research.
-                </p>
-                <ul className="space-y-3">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Notre vaste bibliothèque abrite des milliers de livres, revues et ressources numériques, offrant un environnement calme pour l'étude et la recherche.
+                  </p>
+                  <ul className="space-y-4">
+                    {[
+                      "Plus de 50 000 volumes physiques et vastes collections numériques",
+                      "Abonnement aux principales revues académiques et bases de données",
+                      "Salles d'étude privées et espaces collaboratifs",
+                      "Bibliothécaires professionnels pour répondre aux besoins de recherche"
+                    ].map((item, index) => (
                   <motion.li 
+                        key={index}
                     className="flex items-start"
-                    variants={fadeIn}
-                    custom={10}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Over 50,000 physical volumes and extensive digital collections</span>
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 * index }}
+                      >
+                        <span className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-3 mt-0.5 flex-shrink-0">
+                          <FaCheck className="text-xs" />
+                        </span>
+                        <span className="text-gray-600">{item}</span>
                   </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={11}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Subscription to major academic journals and databases</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={12}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Private study rooms and collaborative spaces</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={13}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Professional librarians to assist with research needs</span>
-                  </motion.li>
+                    ))}
                 </ul>
               </div>
             </motion.div>
+            </div>
             
+            {/* Virtual Tour CTA */}
             <motion.div 
-              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
-              initial="hidden"
-              animate="visible"
-              variants={fadeIn}
-              custom={14}
+              className="mt-24 bg-gradient-to-r from-dark-blue to-blue-800 rounded-2xl overflow-hidden shadow-xl relative"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
             >
-              <div className="order-2 lg:order-1">
-                <h3 className="text-2xl font-bold text-dark-blue mb-4">
-                  Innovation Hub & Technology Labs
-                </h3>
-                <p className="text-gray mb-6">
-                  Our innovation hub provides students with access to cutting-edge technology and equipment for practical learning and project development.
-                </p>
-                <ul className="space-y-3">
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={15}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Computer labs with industry-standard software</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={16}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>3D printing and prototyping facilities</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={17}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Virtual reality and simulation equipment</span>
-                  </motion.li>
-                  <motion.li 
-                    className="flex items-start"
-                    variants={fadeIn}
-                    custom={18}
-                  >
-                    <span className="text-gold mr-2 neon-text">•</span>
-                    <span>Spaces for startups and entrepreneurial ventures</span>
-                  </motion.li>
-                </ul>
-              </div>
-              
-              <motion.div 
-                className="order-1 lg:order-2 relative rounded-xl overflow-hidden h-80 glass-morphism shadow-2xl"
-                variants={scaleIn}
-                custom={19}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Image 
-                  src="/images/facilities/tech-lab.jpg"
-                  alt="Technology labs"
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src="/images/facilities/campus-aerial.jpg"
+                  alt="Campus aérien"
                   fill
-                  className="object-cover rounded-xl"
+                  className="object-cover opacity-20"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-blue/40 to-transparent"></div>
-              </motion.div>
+              </div>
+              <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="md:w-2/3">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Visite Virtuelle de Notre Campus</h3>
+                  <p className="text-white/80 md:text-lg">
+                    Explorez notre campus depuis chez vous avec notre visite interactive à 360°. Découvrez nos installations, ressentez l'atmosphère et imaginez-vous faire partie de notre communauté.
+                  </p>
+                </div>
+                <div className="md:w-1/3 flex justify-center md:justify-end">
+                  <Link 
+                    href="/virtual-tour"
+                    className="inline-flex items-center justify-center px-8 py-4 bg-white text-dark-blue rounded-full hover:bg-gold transition-colors duration-300 font-medium group"
+                  >
+                    Visite Virtuelle
+                    <span className="ml-2 w-8 h-8 rounded-full bg-gold flex items-center justify-center group-hover:bg-dark-blue group-hover:text-white transition-colors duration-300">
+                      <FaArrowRight />
+                    </span>
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
       )}
+      
+      {/* Video Testimonials Section */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-0 right-0 w-full h-full overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+          <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="max-w-4xl mx-auto mb-16 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-gold text-sm font-semibold mb-3"
+            >
+              Témoignages
+            </motion.span>
+            
+            <motion.h2 
+              className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Écoutez Nos <span className="text-gold relative">
+                Étudiants
+                <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 100 8" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0,3 Q50,7 100,3" stroke="#F0C674" strokeWidth="2" fill="none" />
+                </svg>
+              </span>
+            </motion.h2>
+            
+            <motion.p 
+              className="text-gray-600 text-lg max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Découvrez l'impact transformateur de Greenwich HSTC à travers les expériences de nos étudiants et membres du corps enseignant.
+            </motion.p>
+          </motion.div>
+          
+          {/* Featured Video Testimonial */}
+          <motion.div 
+            className="mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video group">
+                <div className="absolute inset-0 bg-dark-blue/30 group-hover:bg-dark-blue/10 transition-colors duration-300 z-10 flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 rounded-full bg-gold flex items-center justify-center">
+                      <svg className="w-6 h-6 text-dark-blue ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <Image 
+                  src="/images/testimonials/featured-testimonial.jpg"
+                  alt="Témoignage d'étudiant"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              
+              <div className="relative">
+                <FaQuoteLeft className="text-gold/20 text-6xl absolute -top-6 -left-4" />
+                <div className="ml-8">
+                  <h3 className="text-2xl font-bold text-dark-blue mb-4">Une Expérience Transformatrice</h3>
+                  <p className="text-gray-600 text-lg italic mb-6 leading-relaxed">
+                    "Étudier à Greenwich HSTC a complètement transformé ma perspective de carrière. Les professeurs sont non seulement des experts dans leur domaine, mais aussi de véritables mentors qui s'investissent dans la réussite de chaque étudiant. L'environnement international m'a permis de développer un réseau mondial de contacts qui m'est précieux aujourd'hui."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
+                      <Image 
+                        src="/images/testimonials/student-1.jpg"
+                        alt="Sophie Martel"
+                        width={48}
+                        height={48}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-dark-blue">Sophie Martel</h4>
+                      <p className="text-gray-500 text-sm">Diplômée en Management International, 2023</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          
+          {/* Video Testimonials Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Alexandre Dubois",
+                role: "Étudiant en Finance",
+                quote: "La qualité de l'enseignement et les opportunités de stage m'ont permis de décrocher un poste dans une banque internationale dès l'obtention de mon diplôme.",
+                image: "/images/testimonials/student-2.jpg",
+                videoThumbnail: "/images/testimonials/video-thumb-1.jpg"
+              },
+              {
+                name: "Dr. Émilie Laurent",
+                role: "Professeure d'Économie",
+                quote: "L'approche pédagogique de Greenwich HSTC encourage l'innovation et permet aux enseignants d'adapter leurs méthodes aux besoins des étudiants.",
+                image: "/images/testimonials/faculty-1.jpg",
+                videoThumbnail: "/images/testimonials/video-thumb-2.jpg"
+              },
+              {
+                name: "Omar Benali",
+                role: "Étudiant International",
+                quote: "Le soutien que j'ai reçu en tant qu'étudiant international a fait toute la différence dans mon adaptation et ma réussite académique.",
+                image: "/images/testimonials/student-3.jpg",
+                videoThumbnail: "/images/testimonials/video-thumb-3.jpg"
+              }
+            ].map((testimonial, index) => (
+              <motion.div 
+                key={index}
+                className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                <Image 
+                    src={testimonial.videoThumbnail}
+                    alt={`Témoignage de ${testimonial.name}`}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-dark-blue/40 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
+                        <svg className="w-3 h-3 text-dark-blue ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                      <Image 
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={40}
+                        height={40}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-dark-blue">{testimonial.name}</h4>
+                      <p className="text-gray-500 text-sm">{testimonial.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Testimonial CTA */}
+          <motion.div 
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+          >
+            <Link 
+              href="/testimonials"
+              className="inline-flex items-center px-8 py-4 bg-dark-blue text-white rounded-full hover:bg-gold hover:text-dark-blue transition-colors duration-300 font-medium group"
+            >
+              Voir plus de témoignages
+              <span className="ml-2 w-8 h-8 rounded-full bg-gold flex items-center justify-center group-hover:bg-dark-blue group-hover:text-white transition-colors duration-300">
+                <FaArrowRight />
+              </span>
+            </Link>
+            </motion.div>
+          </div>
+        </section>
       
       {/* Policies Section */}
       <section className="py-20 bg-light-gray">
@@ -1066,6 +1713,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 } 

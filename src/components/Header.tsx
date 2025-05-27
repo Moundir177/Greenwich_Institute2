@@ -19,7 +19,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <Disclosure as="nav" className="bg-dark-blue shadow-md">
+    <Disclosure as="nav" className="bg-dark-blue">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

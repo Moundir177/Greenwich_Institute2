@@ -1,6 +1,0 @@
-<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 25C10 16.7157 16.7157 10 25 10H175C183.284 10 190 16.7157 190 25C190 33.2843 183.284 40 175 40H25C16.7157 40 10 33.2843 10 25Z" fill="#0f2b46" fill-opacity="0.05"/>
-  <text x="20" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="#0f2b46">Global</text>
-  <text x="80" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="#c8a951">Education</text>
-  <text x="140" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="#0f2b46">Institute</text>
-</svg> 

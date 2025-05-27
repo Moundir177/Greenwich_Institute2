@@ -9,6 +9,8 @@ import { FaFilter, FaSearch, FaSortAmountDown, FaSortAmountUpAlt, FaGraduationCa
 import CourseCard from '@/components/courses/CourseCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import PageHeroSection from '../components/PageHeroSection';
+import PageLayout from '../components/PageLayout';
 
 // Mock course data (in a real app, this would come from an API)
 const COURSES = [
@@ -461,98 +463,15 @@ export default function CoursesPage() {
   };
 
   return (
-    <div className={`min-h-screen ${isRtl ? 'rtl' : 'ltr'}`}>
-      {/* Hero Section */}
-      <section className="pt-20 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white relative overflow-hidden">
-        {/* Particle Effects */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-0 left-0 w-full h-full">
-              {Array.from({ length: 20 }).map((_, index) => (
-                <div 
-                  key={index}
-                  className="absolute rounded-full bg-gold/30"
-                  style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`,
-                    width: `${Math.random() * 8 + 2}px`,
-                    height: `${Math.random() * 8 + 2}px`,
-                    animationDuration: `${Math.random() * 10 + 10}s`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animation: `float-particle ${Math.random() * 10 + 15}s infinite ease-in-out`
-                  }}
-                ></div>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Background Gradient Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-          <div className="absolute -top-24 -left-24 w-64 md:w-96 h-64 md:h-96 rounded-full bg-gold/20 blur-3xl"></div>
-          <div className="absolute top-1/2 right-0 w-64 md:w-96 h-64 md:h-96 rounded-full bg-gold/10 blur-3xl"></div>
-          <div className="absolute -bottom-24 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-dark-blue/30 blur-3xl"></div>
-        </div>
-        
-        {/* 3D Polygons */}
-        <div className="absolute top-20 right-10 w-32 sm:w-64 h-32 sm:h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20 hidden sm:block"></div>
-        <div className="absolute bottom-20 left-10 w-16 sm:w-32 h-16 sm:h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30 hidden sm:block"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div 
-            className="max-w-4xl mx-auto text-center"
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            variants={fadeIn}
-            custom={0}
-          >
-            <motion.h1 
-              className="text-3xl sm:text-4xl md:text-6xl font-serif font-bold mb-4 md:mb-6"
-              variants={fadeIn}
-              custom={1}
-            >
-              {t('explore_our')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold neon-text">Courses</span>
-            </motion.h1>
-            <motion.p 
-              className="text-base sm:text-lg md:text-xl text-white/80 mb-6 md:mb-8 px-4"
-              variants={fadeIn}
-              custom={2}
-            >
-              <span className="relative">
-                Discover a wide range of professional and academic courses designed to help you achieve your career goals and unlock your potential.
-              </span>
-            </motion.p>
-            
-            <motion.div 
-              className="relative w-full max-w-sm sm:max-w-md md:max-w-2xl mx-auto"
-              variants={fadeIn}
-              custom={3}
-            >
-              <input
-                type="text"
-                placeholder="Search for courses..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full py-3 md:py-4 px-4 md:px-6 w-full pl-10 md:pl-12 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-gold shadow-lg text-sm sm:text-base"
-              />
-              <FaSearch className="absolute left-3 md:left-4 top-3 md:top-4 text-white/60" />
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 hidden md:block"
-            >
-              <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center animate-bounce border border-white/20 cursor-pointer shadow-xl" onClick={() => window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' })}>
-                <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L10 9L19 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <PageLayout>
+      <PageHeroSection 
+        title={t('courses_hero_title')}
+        titleHighlight={t('courses_hero_highlight')}
+        description={t('courses_hero_description')}
+        buttonText={t('courses_hero_button')}
+        buttonLink="/contact"
+        imageSrc="/images/courses/courses-hero-bg.jpg"
+      />
       
       {/* Tabs Navigation */}
       <section className="bg-white py-2 sm:py-4 border-b border-gray-200 sticky top-0 z-20 shadow-md backdrop-blur-lg bg-white/90">
@@ -931,64 +850,6 @@ export default function CoursesPage() {
           </div>
         </div>
       </section>
-      
-      {/* Call to Action Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-dark-blue to-blue-900 text-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 rounded-full bg-gold/10 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 md:w-96 h-64 md:h-96 rounded-full bg-gold/5 blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h2 
-              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-4 md:mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Ready to <span className="text-gold">Transform</span> Your Career?
-            </motion.h2>
-            <motion.p 
-              className="text-base sm:text-lg md:text-xl text-white/80 mb-6 md:mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-            >
-              Join thousands of students who have advanced their careers with our industry-leading courses.
-            </motion.p>
-            <motion.div 
-              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <Link 
-                href="/contact" 
-                className="relative group overflow-hidden bg-gradient-to-r from-gold to-amber-500 text-dark-blue px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-[0_20px_40px_-15px_rgba(240,198,116,0.5)] text-sm sm:text-base"
-              >
-                <span className="relative z-10 flex items-center justify-center">
-                  Get Personalized Advice
-                  <FaArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
-              </Link>
-              <Link 
-                href="/register" 
-                className="relative overflow-hidden bg-transparent border border-white/30 backdrop-blur-sm text-white px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-300 hover:border-white/60 hover:bg-white/10 transform hover:translate-y-[-2px] text-sm sm:text-base"
-              >
-                <span className="relative z-10 flex items-center justify-center">
-                  Create Account
-                </span>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-    </div>
+    </PageLayout>
   );
 } 

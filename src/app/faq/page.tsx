@@ -1,205 +1,88 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import PageLayout from '../components/PageLayout';
 import Link from 'next/link';
-import { FaSearch, FaChevronDown, FaChevronUp, FaQuestion, FaArrowRight } from 'react-icons/fa';
-import Button from '@/components/ui/Button';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import Particles from 'react-particles';
 import { loadSlim } from "tsparticles-slim";
 import { Engine } from 'tsparticles-engine';
+import { 
+  FaSearch, 
+  FaChevronDown, 
+  FaChevronUp, 
+  FaGraduationCap, 
+  FaMoneyBillWave, 
+  FaCertificate, 
+  FaLaptop, 
+  FaLightbulb, 
+  FaHeadset, 
+  FaQuestion,
+  FaPhone,
+  FaEnvelope
+} from 'react-icons/fa';
+import { useLanguage } from '../contexts/LanguageContext';
+import { AccordionItem } from '@/components/ui/Accordion';
 
-const faqCategories = [
-  {
-    id: 'admissions',
-    title: 'Admissions & Enrollment',
-    faqs: [
-      {
-        question: 'What are the entry requirements for your courses?',
-        answer: 'Entry requirements vary by course. Most professional courses require a high school diploma or equivalent, while advanced courses may require previous qualifications or experience. Please check the specific course page for detailed requirements or contact our admissions team for guidance.',
-      },
-      {
-        question: 'How do I apply for a course?',
-        answer: 'You can apply online through our website. Navigate to your desired course page and click the "Apply Now" or "Enroll" button. Follow the instructions to create an account, complete your application, and submit any required documentation. Our admissions team will review your application and contact you within 5 business days.',
-      },
-      {
-        question: 'Can I enroll in multiple courses simultaneously?',
-        answer: 'Yes, you can enroll in multiple courses simultaneously. However, we recommend carefully considering your available time for study. Our advisors can help you create a balanced study plan that allows you to manage multiple courses effectively without compromising your learning experience.',
-      },
-      {
-        question: 'Is there an application deadline?',
-        answer: 'Most of our courses have rolling admissions, meaning you can apply at any time. However, some specialized programs have specific start dates and application deadlines. These are clearly indicated on the relevant course pages. We recommend applying at least 2-4 weeks before your intended start date to allow time for processing.',
-      },
-      {
-        question: 'Do you accept international students?',
-        answer: 'Yes, we welcome students from around the world. Our online courses are accessible globally. For in-person courses, international students may need to arrange appropriate visas. We provide supporting documentation for visa applications where required. Our enrollment advisors can provide guidance specific to your country of residence.',
-      },
-    ],
-  },
-  {
-    id: 'courses',
-    title: 'Courses & Curriculum',
-    faqs: [
-      {
-        question: 'How long does it take to complete a course?',
-        answer: 'Course duration varies depending on the program. Certificate courses typically take 8-12 weeks, diploma programs 6-12 months, and advanced professional qualifications 12-24 months. Most courses allow for flexible pacing, so you can complete them faster or slower depending on your schedule and learning style.',
-      },
-      {
-        question: 'Are courses self-paced or do they have fixed schedules?',
-        answer: 'We offer both options. Many of our courses are self-paced, allowing you to study at your convenience. Others follow a cohort model with scheduled live sessions and deadlines. Each course page specifies the format. Even our scheduled courses offer some flexibility to accommodate working professionals.',
-      },
-      {
-        question: 'What learning materials are provided?',
-        answer: 'All courses include comprehensive digital learning materials accessible through our online learning platform. These typically include video lectures, reading materials, interactive exercises, case studies, and assessments. Some courses also provide additional resources like software access, downloadable templates, and supplementary reading recommendations.',
-      },
-      {
-        question: 'Do you offer practical, hands-on components in your courses?',
-        answer: 'Yes, most of our courses include practical components like projects, case studies, simulations, or lab work. Our business and technology courses particularly emphasize practical application of concepts. For online courses, we use virtual labs, simulations, and project-based assessments to ensure you gain practical experience.',
-      },
-      {
-        question: 'Can I transfer credits from other institutions?',
-        answer: 'We consider transfer credits on a case-by-case basis. Credits from accredited institutions may be transferable if the course content aligns with our curriculum. To apply for credit transfer, please submit your official transcripts and course descriptions to our admissions team for evaluation. A maximum of 30% of credits may be transferred for any program.',
-      },
-    ],
-  },
-  {
-    id: 'payments',
-    title: 'Fees & Payment',
-    faqs: [
-      {
-        question: 'What are the tuition fees for your courses?',
-        answer: 'Tuition fees vary by course, ranging from £200 for short certificate courses to £2,000-£5,000 for comprehensive diploma and professional qualification programs. Current fees are listed on each course page. We regularly offer promotions and early enrollment discounts, so check our website for the most up-to-date pricing.',
-      },
-      {
-        question: 'Do you offer payment plans?',
-        answer: 'Yes, we offer flexible payment plans for most courses. Typically, you can choose to pay in full or in monthly installments. For courses over £1,000, we offer plans of 3, 6, or 12 monthly payments. Payment plans are interest-free, though a small administration fee may apply. Details are available during the enrollment process.',
-      },
-      {
-        question: 'What payment methods do you accept?',
-        answer: 'We accept major credit and debit cards (Visa, Mastercard, American Express), PayPal, bank transfers, and in some cases, employer-sponsored payments. All payments are processed securely through our encrypted payment gateway. For bank transfers, please contact our finance team for detailed instructions.',
-      },
-      {
-        question: 'Are there any additional costs beyond tuition?',
-        answer: 'Tuition covers all essential learning materials and assessments. Some courses may recommend optional textbooks or software. Advanced professional certifications sometimes have external examination fees set by the certifying body. Any additional costs are clearly indicated on the course page under "Additional Information."',
-      },
-      {
-        question: 'What is your refund policy?',
-        answer: 'We offer a 14-day money-back guarantee from the date of enrollment for most courses. If you withdraw within this period, you\'ll receive a full refund minus any administration fees. After 14 days, refunds are prorated based on the portion of the course completed. Some specialized programs with limited enrollment may have different refund policies, which are specified on their respective pages.',
-      },
-    ],
-  },
-  {
-    id: 'certifications',
-    title: 'Certificates & Accreditation',
-    faqs: [
-      {
-        question: 'Are your courses accredited?',
-        answer: 'Yes, our courses are accredited by relevant professional bodies and educational authorities. We hold institutional accreditation from the British Accreditation Council for Independent Further and Higher Education. Individual courses have program-specific accreditations from organizations like Chartered Management Institute (CMI), Chartered Institute of Marketing (CIM), and various technology certification bodies.',
-      },
-      {
-        question: 'What certification will I receive upon completion?',
-        answer: 'Upon successful completion, you will receive an official UK Institute certificate specifying the course title, duration, completion date, and relevant accreditations. For professionally recognized qualifications, you\'ll also receive the appropriate industry certification. All certificates are available in digital format, with physical copies available upon request (shipping fees may apply).',
-      },
-      {
-        question: 'Are your certificates recognized by employers?',
-        answer: 'Yes, our certificates and qualifications are widely recognized by employers across industries. We continuously collaborate with industry partners to ensure our curriculum meets current market needs. Our professional qualification programs are particularly valued for their practical relevance and alignment with industry standards.',
-      },
-      {
-        question: 'How do I verify the authenticity of a certificate?',
-        answer: 'All certificates issued by Greenwich include a unique verification code. Employers and other institutions can verify certificate authenticity through our online verification portal at verify.greenwich.edu. Simply enter the verification code and student name to confirm certificate validity and view completion details.',
-      },
-      {
-        question: 'Do certificates expire?',
-        answer: 'Our general education certificates do not expire. However, certain professional and technical certifications may require renewal or continuing education credits to remain current, especially in rapidly evolving fields like technology or healthcare. Any renewal requirements are clearly communicated during the course and in the certification documentation.',
-      },
-    ],
-  },
-  {
-    id: 'support',
-    title: 'Student Support',
-    faqs: [
-      {
-        question: 'What kind of support do you offer to students?',
-        answer: 'We provide comprehensive support throughout your learning journey. This includes academic support from tutors and instructors, technical assistance for our learning platform, and administrative support for enrollment and payment matters. We also offer career guidance, study skills workshops, and access to our student community forums. Our support team is available via email, live chat, and scheduled video calls.',
-      },
-      {
-        question: 'How do I contact my instructor?',
-        answer: 'You can contact your instructor directly through our learning platform\'s messaging system. For courses with live components, you can interact during scheduled sessions. Most instructors hold regular virtual office hours where you can ask questions in real-time. Our policy ensures that all instructor queries receive a response within 48 hours during business days.',
-      },
-      {
-        question: 'Is there technical support available?',
-        answer: 'Yes, we provide technical support for all aspects of our learning platform. Our technical support team is available Monday-Friday, 9am-8pm GMT, and Saturday 10am-4pm GMT. You can reach them through the help center on your student dashboard, by email at support@ukinstitute.edu, or via live chat during business hours.',
-      },
-      {
-        question: 'Do you provide accommodations for students with disabilities?',
-        answer: 'Absolutely. We are committed to making our courses accessible to all learners. We provide reasonable accommodations such as extended assignment deadlines, alternative format materials, and modified assessments based on documented needs. Please contact our accessibility services team at accessibility@ukinstitute.edu before or during enrollment to discuss your specific requirements.',
-      },
-      {
-        question: 'Are there networking opportunities with other students?',
-        answer: 'Yes, we foster a vibrant student community. Our learning platform includes discussion forums for each course where you can engage with peers. We also host virtual networking events, student clubs, and group projects. For professional development courses, we organize industry meetups and alumni networking sessions to help you build valuable connections in your field.',
-      },
-    ],
-  },
-  {
-    id: 'technical',
-    title: 'Technical Requirements',
-    faqs: [
-      {
-        question: 'What are the technical requirements for online courses?',
-        answer: 'For optimal experience with our online courses, you need a reliable internet connection (minimum 5 Mbps download speed), a computer with at least 4GB RAM, and an updated browser (Chrome, Firefox, Safari, or Edge). Some courses require specific software that will be detailed on the course page. For video conferencing, a webcam and microphone are recommended. Mobile access is available through our app, but a computer is recommended for most coursework.',
-      },
-      {
-        question: 'Can I access courses on mobile devices?',
-        answer: 'Yes, our learning platform is mobile-responsive, and we offer dedicated apps for iOS and Android devices. While you can review lecture materials, participate in discussions, and complete some assignments on mobile devices, certain interactive elements and assignments may require a desktop or laptop computer. We recommend using mobile access as a supplement to, rather than replacement for, computer access.',
-      },
-      {
-        question: 'What browsers are supported?',
-        answer: 'Our platform works best with the latest versions of Chrome, Firefox, Safari, and Edge. We recommend keeping your browser updated for optimal performance and security. Internet Explorer is not supported. If you encounter any browser-specific issues, our technical support team can assist you.',
-      },
-      {
-        question: 'Do I need to install special software?',
-        answer: 'Basic course access requires no special software beyond a modern web browser. However, specific courses, particularly in areas like design, programming, or data analysis, may require specialized software. Required software is clearly listed on the course description page. Where possible, we provide student licenses or recommend free alternatives. Cloud-based options are available for many applications to minimize installation requirements.',
-      },
-      {
-        question: 'Are course materials available offline?',
-        answer: 'Many course materials, including readings, lecture slides, and some videos, can be downloaded for offline use. However, interactive elements, assessments, and discussion forums require an internet connection. Our mobile app offers limited offline functionality, allowing you to download certain content for viewing when internet access is unavailable. Materials automatically sync when you reconnect.',
-      },
-    ],
-  },
-];
+import { faqCategories } from '@/data/faqData';
 
 export default function FAQPage() {
-  const [activeCategory, setActiveCategory] = useState('admissions');
+  const { t, language } = useLanguage();
+  const isRtl = language === 'ar';
+  const [activeCategory, setActiveCategory] = useState('courses');
   const [searchQuery, setSearchQuery] = useState('');
-  const [openQuestions, setOpenQuestions] = useState<Record<string, boolean>>({});
+  const [filteredFaqs, setFilteredFaqs] = useState<Array<any>>([]);
+  const faqSectionRef = useRef<HTMLDivElement>(null);
   
   const particlesInit = async (engine: Engine) => {
     await loadSlim(engine);
   };
   
-  // Toggle question open/closed state
-  const toggleQuestion = (categoryId: string, questionIndex: number) => {
-    const key = `${categoryId}-${questionIndex}`;
-    setOpenQuestions(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+  // Filter FAQs based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredFaqs([]);
+      return;
+    }
+    
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const results = faqCategories.flatMap(category => 
+      category.faqs
+        .filter(faq => 
+          faq.question.toLowerCase().includes(lowercasedQuery) || 
+          (typeof faq.answer === 'string' && faq.answer.toLowerCase().includes(lowercasedQuery))
+        )
+        .map(faq => ({
+          ...faq,
+          categoryId: category.id,
+          categoryTitle: category.title,
+          categoryIcon: category.icon
+        }))
+    );
+    
+    setFilteredFaqs(results);
+  }, [searchQuery]);
+  
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
   
-  // Filter FAQs based on search query
-  const filteredCategories = searchQuery
-    ? faqCategories.map(category => ({
-        ...category,
-        faqs: category.faqs.filter(faq => 
-          faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      })).filter(category => category.faqs.length > 0)
-    : faqCategories;
+  // Clear search
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+  
+  // Scroll to FAQs section
+  const scrollToFaqs = () => {
+    faqSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <>
+    <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue py-24 overflow-hidden">
         {/* Particle Effects Background */}
         <div className="absolute inset-0 z-0">
           <Particles
@@ -291,7 +174,7 @@ export default function FAQPage() {
             }}
           />
         </div>
-        
+
         {/* Decorative Blurs */}
         <div className="absolute -top-40 -left-40 w-80 h-80 bg-gold opacity-20 rounded-full filter blur-[100px] animate-pulse z-0"></div>
         <div className="absolute top-1/3 -right-20 w-80 h-80 bg-blue-500 opacity-20 rounded-full filter blur-[100px] animate-pulse z-0" style={{ animationDelay: "2s" }}></div>
@@ -300,141 +183,408 @@ export default function FAQPage() {
         <div className="absolute top-20 right-10 w-64 h-64 border border-white/10 transform rotate-45 rounded-3xl opacity-20"></div>
         <div className="absolute bottom-20 left-10 w-32 h-32 border border-gold/20 transform -rotate-12 rounded-xl opacity-30"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 animate-bounceIn">
-              Frequently Asked <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Questions</span>
+        <div className="container relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-white/10 backdrop-blur-md rounded-full mb-6 border border-white/10 shadow-lg">
+              <FaQuestion className="text-gold mr-2" />
+              <span className="text-white text-sm">Find answers to your questions</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-md">
+              {t('faq_hero_title')}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold block mt-3">
+                {t('faq_hero_highlight')}
+              </span>
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
-              Find answers to common questions about our courses, admissions, payments, and more.
+            <p className="text-xl text-white/80 mb-10 leading-relaxed">
+              {t('faq_hero_description')}
+              Can't find what you're looking for? <Link href="/contact" className="text-gold hover:underline">Contact us</Link>.
             </p>
-            
-            {/* Search Box */}
-            <div className="max-w-2xl mx-auto mt-8 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search for a question..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-6 py-4 pl-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300"
-                />
-                <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/60" />
+          
+          {/* Enhanced Search Box */}
+            <div className="relative w-full max-w-2xl mx-auto mb-16">
+              <div className="relative flex items-center rounded-full overflow-hidden shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/10">
+              <input
+                type="text"
+                placeholder="Search for answers..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                  className="w-full py-5 px-6 pl-14 text-gray-900 rounded-full outline-none text-lg bg-white/95"
+              />
+                <div className="absolute left-5 text-gray-500">
+                  <FaSearch size={18} />
+              </div>
+              {searchQuery && (
+                <button 
+                  onClick={clearSearch}
+                    className="absolute right-5 text-gray-500 hover:text-gray-700 p-2"
+                >
+                  <span className="sr-only">Clear search</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          
+              {/* Quick category pills below search */}
+              <div className="mt-6 flex flex-wrap gap-2 justify-center">
+                {faqCategories.slice(0, 4).map(category => (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      setActiveCategory(category.id);
+                      scrollToFaqs();
+                    }}
+                    className="bg-white/10 hover:bg-white/20 text-white text-sm px-4 py-2 rounded-full backdrop-blur-sm transition-all duration-200 border border-white/10 flex items-center gap-2"
+                  >
+                    {category.icon}
+                    <span>{category.title}</span>
+                  </button>
+                ))}
               </div>
             </div>
+            
+            <button 
+              onClick={scrollToFaqs}
+              className="group flex flex-col items-center justify-center text-white/70 hover:text-white transition-colors"
+            >
+              <span className="relative inline-flex">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/30 opacity-75"></span>
+                <span className="animate-bounce relative inline-flex rounded-full p-2 bg-white/10 backdrop-blur-sm">
+                  <FaChevronDown className="h-5 w-5" />
+                </span>
+              </span>
+              <span className="text-xs mt-2 tracking-wider font-medium">Scroll to explore</span>
+            </button>
           </div>
         </div>
+        
+        {/* Wave Divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full h-auto">
+            <path 
+              fill="#ffffff" 
+              fillOpacity="1" 
+              d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
+            ></path>
+                  </svg>
+        </div>
       </section>
-      
-      {/* FAQ Categories Section */}
-      <section className="py-8 bg-gray-50 relative overflow-hidden border-b border-gray-200">
-        <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-wrap justify-center gap-4">
-            {filteredCategories.map((category) => (
-              <button 
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category.id 
-                    ? 'bg-uk-blue text-white shadow-lg' 
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+
+      {/* FAQ Content Section */}
+      <section ref={faqSectionRef} className="py-16 bg-white">
+        <div className="container">
+          {/* FAQ Category Navigation Tabs - Top Section (Hero-style tabs) */}
+          <div className="max-w-5xl mx-auto mb-16">
+            <div className="flex flex-wrap justify-center gap-4">
+              {/* Large Category Buttons like in the image */}
+              <button
+                onClick={() => setActiveCategory('courses')}
+                className={`relative flex items-center gap-3 px-6 py-4 rounded-lg transition-all duration-300 min-w-[260px] ${
+                  activeCategory === 'courses'
+                    ? 'bg-gold text-white shadow-md'
+                    : 'bg-blue-50 text-dark-blue hover:bg-blue-100 border border-blue-100'
                 }`}
               >
-                {category.title}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* FAQ Content */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full filter blur-3xl"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            {filteredCategories.map((category) => (
-              <div 
-                key={category.id} 
-                id={category.id} 
-                className={`scroll-mt-24 transition-all duration-500 ${activeCategory === category.id ? 'block' : 'hidden'}`}
-              >
-                <div className="mb-12">
-                  <div className="inline-block bg-blue-100 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">
-                    {category.title}
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-uk-blue via-uk-blue-light to-uk-blue">
-                      {category.title}
-                    </span>
-                  </h2>
+                <div className={`p-2 rounded-full ${activeCategory === 'courses' ? 'bg-white/20' : 'bg-blue-200/40'}`}>
+                  <FaLightbulb className="h-5 w-5" />
                 </div>
-                
+                <span className="font-medium">Courses & Curriculum</span>
+              </button>
+              
+              <button
+                onClick={() => setActiveCategory('payments')}
+                className={`relative flex items-center gap-3 px-6 py-4 rounded-lg transition-all duration-300 min-w-[260px] ${
+                  activeCategory === 'payments'
+                    ? 'bg-gold text-white shadow-md'
+                    : 'bg-blue-50 text-dark-blue hover:bg-blue-100 border border-blue-100'
+                }`}
+              >
+                <div className={`p-2 rounded-full ${activeCategory === 'payments' ? 'bg-white/20' : 'bg-blue-200/40'}`}>
+                  <FaMoneyBillWave className="h-5 w-5" />
+                </div>
+                <span className="font-medium">Fees & Payment</span>
+              </button>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              <button
+                onClick={() => setActiveCategory('certifications')}
+                className={`relative flex items-center gap-3 px-6 py-4 rounded-lg transition-all duration-300 min-w-[260px] ${
+                  activeCategory === 'certifications'
+                    ? 'bg-gold text-white shadow-md'
+                    : 'bg-blue-50 text-dark-blue hover:bg-blue-100 border border-blue-100'
+                }`}
+              >
+                <div className={`p-2 rounded-full ${activeCategory === 'certifications' ? 'bg-white/20' : 'bg-blue-200/40'}`}>
+                  <FaCertificate className="h-5 w-5" />
+                </div>
+                <span className="font-medium">Certificates & Accreditation</span>
+              </button>
+              
+              <button
+                onClick={() => setActiveCategory('technical')}
+                className={`relative flex items-center gap-3 px-6 py-4 rounded-lg transition-all duration-300 min-w-[260px] ${
+                  activeCategory === 'technical'
+                    ? 'bg-gold text-white shadow-md'
+                    : 'bg-blue-50 text-dark-blue hover:bg-blue-100 border border-blue-100'
+                }`}
+              >
+                <div className={`p-2 rounded-full ${activeCategory === 'technical' ? 'bg-white/20' : 'bg-blue-200/40'}`}>
+                  <FaLaptop className="h-5 w-5" />
+                </div>
+                <span className="font-medium">Technical Requirements</span>
+              </button>
+            </div>
+            
+            {/* Active Category Heading */}
+            <div className="text-center mt-12">
+              {activeCategory === 'courses' && (
+                <div className="flex items-center justify-center mb-8">
+                  <span className="p-3 rounded-full bg-gold/10 mr-4">
+                    <FaLightbulb className="h-6 w-6 text-gold" />
+                  </span>
+                  <h2 className="text-3xl font-bold text-dark-blue">Courses & Curriculum</h2>
+                </div>
+              )}
+              
+              {activeCategory === 'payments' && (
+                <div className="flex items-center justify-center mb-8">
+                  <span className="p-3 rounded-full bg-gold/10 mr-4">
+                    <FaMoneyBillWave className="h-6 w-6 text-gold" />
+                  </span>
+                  <h2 className="text-3xl font-bold text-dark-blue">Fees & Payment</h2>
+                </div>
+              )}
+              
+              {activeCategory === 'certifications' && (
+                <div className="flex items-center justify-center mb-8">
+                  <span className="p-3 rounded-full bg-gold/10 mr-4">
+                    <FaCertificate className="h-6 w-6 text-gold" />
+                  </span>
+                  <h2 className="text-3xl font-bold text-dark-blue">Certificates & Accreditation</h2>
+                </div>
+              )}
+              
+              {activeCategory === 'technical' && (
+                <div className="flex items-center justify-center mb-8">
+                  <span className="p-3 rounded-full bg-gold/10 mr-4">
+                    <FaLaptop className="h-6 w-6 text-gold" />
+                  </span>
+                  <h2 className="text-3xl font-bold text-dark-blue">Technical Requirements</h2>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {searchQuery ? (
+            <div className="max-w-4xl mx-auto">
+              <div className="mb-8 bg-light-gray rounded-xl p-6 border border-gray-200">
+                <h2 className="text-2xl font-bold text-dark-blue mb-2 flex items-center">
+                  <FaSearch className="mr-3 text-gold" />
+                  Search Results
+                </h2>
+                <p className="text-gray-600">
+                  Found {filteredFaqs.length} results for "<span className="font-medium text-dark-blue">{searchQuery}</span>"
+                </p>
+              </div>
+              
+              {filteredFaqs.length > 0 ? (
                 <div className="space-y-6">
-                  {category.faqs.map((faq, index) => {
-                    const isOpen = openQuestions[`${category.id}-${index}`];
-                    
-                    return (
-                      <div 
-                        key={index} 
-                        className={`bg-gray-50 rounded-xl overflow-hidden transition-all duration-300 ${
-                          isOpen ? 'shadow-xl' : 'shadow-md'
-                        }`}
-                      >
-                        <button
-                          onClick={() => toggleQuestion(category.id, index)}
-                          className="w-full px-6 py-4 text-left flex items-center justify-between focus:outline-none"
-                        >
-                          <h3 className="text-lg font-medium text-uk-blue flex-1">{faq.question}</h3>
-                          <span className={`flex-shrink-0 ml-4 p-1 rounded-full bg-gray-200 text-uk-blue transition-transform duration-300 ${
-                            isOpen ? 'rotate-180' : ''
-                          }`}>
-                            <FaChevronDown className="h-5 w-5" />
-                          </span>
-                        </button>
-                        <div className={`px-6 overflow-hidden transition-all duration-300 ${
-                          isOpen ? 'max-h-96 pb-6' : 'max-h-0'
-                        }`}>
-                          <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  {filteredFaqs.map((faq, index) => (
+                    <div key={index} className="bg-gray-50 rounded-xl p-6 shadow-sm transition-all hover:shadow-md border border-gray-100">
+                      <div className="flex items-start mb-3">
+                        <div className="mr-4 p-3 rounded-full bg-gold/10 text-gold">
+                          {faq.categoryIcon}
+                        </div>
+                        <div>
+                          <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-md">{faq.categoryTitle}</span>
+                          <h3 className="text-lg font-semibold text-dark-blue mt-1">{faq.question}</h3>
                         </div>
                       </div>
-                    );
-                  })}
+                      <div className="pl-16 border-l-2 border-gold/20 ml-6">
+                          <p className="text-gray-700">{faq.answer}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <div className="text-center py-16 bg-gray-50 rounded-2xl border border-gray-200">
+                  <FaQuestion className="mx-auto h-16 w-16 text-gray-300 mb-6" />
+                  <h3 className="text-2xl font-semibold text-gray-700 mb-3">No results found</h3>
+                  <p className="text-gray-500 mb-8 max-w-lg mx-auto">
+                    We couldn't find any matches for your query. Try using different keywords or browse our FAQ categories below.
+                  </p>
+              <button 
+                onClick={clearSearch}
+                    className="bg-gold hover:bg-amber-500 text-white px-8 py-3 rounded-lg transition-colors shadow-md font-medium"
+              >
+                    Browse All FAQs
+              </button>
+            </div>
+          )}
+            </div>
+          ) : (
+            <div>
+
+              {/* Active Category Content - Enhanced */}
+          <div className="max-w-4xl mx-auto">
+                {faqCategories.map((category) => (
+                  <div key={category.id} className={activeCategory === category.id ? 'block' : 'hidden'}>
+                    
+                    <div className="space-y-4 relative">
+                      {/* Decorative line */}
+                      <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-light-gray to-transparent z-0"></div>
+                      
+                            {category.faqs.map((faq, index) => (
+                              <AccordionItem 
+                                key={index} 
+                                title={faq.question}
+                                defaultOpen={index === 0}
+                          variant="fancy"
+                          icon="chevron"
+                          iconColor="text-dark-blue"
+                          titleClassName="text-lg font-semibold text-dark-blue"
+                          contentClassName="px-4"
+                        >
+                                <p className="text-gray-700">{faq.answer}</p>
+                              </AccordionItem>
+                            ))}
+                    </div>
+                      </div>
+                    ))}
               </div>
-            ))}
-          </div>
+            </div>
+              )}
         </div>
       </section>
-      
-      {/* Contact CTA */}
-      <section className="py-16 bg-gradient-to-br from-dark-blue via-blue-900 to-dark-blue relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="backdrop-blur-md bg-white/5 rounded-xl p-8 md:p-12 border border-white/10 shadow-2xl animate-fadeIn">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Still Have Questions?</span>
-              </h2>
-              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto animate-slideUpFade">
-                If you couldn't find the answer to your question, our support team is here to help.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scaleIn">
-                <Button 
-                  href="/contact" 
-                  variant="gold"
-                  effect="3d"
-                  icon={<FaArrowRight />}
-                >
-                  Contact Support
-                </Button>
+
+      {/* Contact Section - Enhanced */}
+      <section className="py-20 bg-gradient-to-b from-light-gray to-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-48 h-48 bg-gold/5 rounded-full blur-3xl"></div>
+        
+        <div className="container relative z-10">
+          <div className="max-w-5xl mx-auto">
+            {/* Stats cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center hover:shadow-lg transition-shadow">
+                <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FaHeadset className="text-blue-600 text-2xl" />
+                </div>
+                <h3 className="text-xl font-bold text-dark-blue mb-2">24/7 Support</h3>
+                <p className="text-gray-600">Our support team is available around the clock to answer your questions</p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center hover:shadow-lg transition-shadow">
+                <div className="bg-amber-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FaGraduationCap className="text-amber-600 text-2xl" />
+                </div>
+                <h3 className="text-xl font-bold text-dark-blue mb-2">500+ FAQs</h3>
+                <p className="text-gray-600">Comprehensive knowledge base covering all aspects of our services</p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center hover:shadow-lg transition-shadow">
+                <div className="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FaCertificate className="text-green-600 text-2xl" />
+                </div>
+                <h3 className="text-xl font-bold text-dark-blue mb-2">98% Satisfaction</h3>
+                <p className="text-gray-600">Our support team consistently achieves high satisfaction ratings</p>
+              </div>
+            </div>
+            
+            {/* Contact card */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-100 relative">
+              {/* Background pattern */}
+              <div className="absolute inset-0 opacity-5">
+                <Image 
+                  src="/images/patterns/pattern2.png" 
+                  alt="Background pattern" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              
+              <div className="grid md:grid-cols-2 relative z-10">
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
+                  <div className="inline-flex items-center justify-center p-2 bg-blue-50 rounded-full mb-6 w-fit">
+                    <FaQuestion className="text-blue-600 mr-2" />
+                    <span className="text-blue-600 text-sm font-medium">Need more help?</span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-dark-blue mb-6">Still Have Questions?</h3>
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Our dedicated support team is ready to assist you with any specific questions you may have about our programs, services, or enrollment process.
+                  </p>
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <div className="bg-blue-50 p-3 rounded-full mr-4">
+                        <FaPhone className="text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Call us at</p>
+                        <a href="tel:+442071234567" className="text-dark-blue font-medium hover:text-gold transition-colors">
+                          +44 20 7123 4567
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="bg-amber-50 p-3 rounded-full mr-4">
+                        <FaEnvelope className="text-amber-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Email us at</p>
+                        <a href="mailto:support@greenwichhstc.edu" className="text-dark-blue font-medium hover:text-gold transition-colors">
+                          support@greenwichhstc.edu
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-dark-blue to-blue-800 p-8 lg:p-12 text-white flex flex-col justify-center">
+                  <h4 className="text-2xl font-bold mb-6">Send us a message</h4>
+                  <form className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="text-sm font-medium text-white/80 block mb-1">Your Name</label>
+                      <input 
+                        type="text" 
+                        id="name" 
+                        className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold"
+                        placeholder="Enter your name"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="text-sm font-medium text-white/80 block mb-1">Email Address</label>
+                      <input 
+                        type="email" 
+                        id="email" 
+                        className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold"
+                        placeholder="Enter your email"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="text-sm font-medium text-white/80 block mb-1">Your Question</label>
+                      <textarea 
+                        id="message" 
+                        rows={4}
+                        className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold resize-none"
+                        placeholder="What would you like to know?"
+                      ></textarea>
+                    </div>
+                    <button 
+                      type="submit" 
+                      className="w-full bg-gold hover:bg-amber-500 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md"
+                    >
+                      Send Message
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+      
+    </main>
   );
 } 

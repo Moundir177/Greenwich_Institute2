@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaPaperPlane, FaCheck } from 'react-icons/fa';
+import { FaPaperPlane, FaCheck, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
 import Button from './Button';
 
 interface FormValues {
@@ -113,19 +113,20 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md p-6 border border-gray-200 ${className}`}>
+    <div className={`bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-2xl p-8 border border-blue-100 transition-all duration-300 hover:shadow-blue-100/20 ${className}`}>
       {isSuccess ? (
         <div className="text-center py-10">
-          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-green-100">
-            <FaCheck className="w-8 h-8 text-green-600" />
+          <div className="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 shadow-lg shadow-green-200">
+            <FaCheck className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
-          <p className="text-gray-600 mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">Thank You!</h3>
+          <p className="text-gray-600 mb-8 text-lg">
             Your message has been received. We'll get back to you as soon as possible.
           </p>
           <Button 
             onClick={() => setIsSuccess(false)} 
             variant="outline"
+            className="hover:scale-105 transition-transform duration-300"
           >
             Send Another Message
           </Button>
@@ -134,8 +135,8 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* First Name */}
-            <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="transition-all duration-300">
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                 First Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -144,18 +145,22 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 name="firstName"
                 value={formValues.firstName}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
-                  formErrors.firstName ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue`}
+                placeholder="John"
+                className={`w-full px-4 py-3 border ${
+                  formErrors.firstName ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                } rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200`}
               />
               {formErrors.firstName && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.firstName}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center">
+                  <FaExclamationTriangle className="w-3 h-3 mr-1" />
+                  {formErrors.firstName}
+                </p>
               )}
             </div>
             
             {/* Last Name */}
-            <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="transition-all duration-300">
+              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
                 Last Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -164,18 +169,22 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 name="lastName"
                 value={formValues.lastName}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
-                  formErrors.lastName ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue`}
+                placeholder="Doe"
+                className={`w-full px-4 py-3 border ${
+                  formErrors.lastName ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                } rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200`}
               />
               {formErrors.lastName && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.lastName}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center">
+                  <FaExclamationTriangle className="w-3 h-3 mr-1" />
+                  {formErrors.lastName}
+                </p>
               )}
             </div>
             
             {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="transition-all duration-300">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -184,18 +193,22 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 name="email"
                 value={formValues.email}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
-                  formErrors.email ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue`}
+                placeholder="john.doe@example.com"
+                className={`w-full px-4 py-3 border ${
+                  formErrors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                } rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200`}
               />
               {formErrors.email && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center">
+                  <FaExclamationTriangle className="w-3 h-3 mr-1" />
+                  {formErrors.email}
+                </p>
               )}
             </div>
             
             {/* Phone */}
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="transition-all duration-300">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone (optional)
               </label>
               <input
@@ -204,14 +217,15 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 name="phone"
                 value={formValues.phone}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue"
+                placeholder="+44 20 1234 5678"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200"
               />
             </div>
           </div>
           
           {/* Subject */}
-          <div>
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="transition-all duration-300">
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
               Subject <span className="text-red-500">*</span>
             </label>
             <select
@@ -219,9 +233,9 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
               name="subject"
               value={formValues.subject}
               onChange={handleChange}
-              className={`w-full px-3 py-2 border ${
-                formErrors.subject ? 'border-red-300' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue`}
+              className={`w-full px-4 py-3 border ${
+                formErrors.subject ? 'border-red-300 bg-red-50' : 'border-gray-300'
+              } rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200 appearance-none bg-no-repeat bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQgNmw0IDQgNC00IiBzdHJva2U9IiM2QjcyODAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+')] bg-[center_right_1rem]`}
             >
               <option value="">Please select</option>
               <option value="General Inquiry">General Inquiry</option>
@@ -232,13 +246,16 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
               <option value="Other">Other</option>
             </select>
             {formErrors.subject && (
-              <p className="mt-1 text-sm text-red-600">{formErrors.subject}</p>
+              <p className="mt-2 text-sm text-red-600 flex items-center">
+                <FaExclamationTriangle className="w-3 h-3 mr-1" />
+                {formErrors.subject}
+              </p>
             )}
           </div>
           
           {/* Message */}
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="transition-all duration-300">
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
               Message <span className="text-red-500">*</span>
             </label>
             <textarea
@@ -247,18 +264,23 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
               rows={5}
               value={formValues.message}
               onChange={handleChange}
-              className={`w-full px-3 py-2 border ${
-                formErrors.message ? 'border-red-300' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-uk-blue focus:border-uk-blue`}
+              placeholder="Please describe your inquiry in detail..."
+              className={`w-full px-4 py-3 border ${
+                formErrors.message ? 'border-red-300 bg-red-50' : 'border-gray-300'
+              } rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200 resize-none`}
             ></textarea>
             {formErrors.message && (
-              <p className="mt-1 text-sm text-red-600">{formErrors.message}</p>
+              <p className="mt-2 text-sm text-red-600 flex items-center">
+                <FaExclamationTriangle className="w-3 h-3 mr-1" />
+                {formErrors.message}
+              </p>
             )}
           </div>
           
           {submitError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {submitError}
+            <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-lg shadow-sm flex items-center">
+              <FaExclamationTriangle className="w-5 h-5 mr-2 flex-shrink-0" />
+              <span>{submitError}</span>
             </div>
           )}
           
@@ -268,25 +290,12 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
               variant="primary"
               fullWidth
               disabled={isSubmitting}
+              className="py-3 text-base font-medium shadow-xl shadow-blue-600/10 hover:scale-[1.02] transition-all duration-300"
             >
               <div className="flex items-center justify-center">
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" viewBox="0 0 24 24">
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
+                    <FaSpinner className="animate-spin mr-2 h-5 w-5" />
                     Sending...
                   </>
                 ) : (
@@ -298,6 +307,10 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
               </div>
             </Button>
           </div>
+          
+          <p className="text-center text-xs text-gray-500 mt-4">
+            By submitting this form, you agree to our <a href="/privacy-policy" className="text-uk-blue hover:underline">Privacy Policy</a> and <a href="/terms" className="text-uk-blue hover:underline">Terms of Service</a>.
+          </p>
         </form>
       )}
     </div>

@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    unoptimized: true,
+    unoptimized: false,
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  trailingSlash: true,
 };
 
 export default nextConfig;

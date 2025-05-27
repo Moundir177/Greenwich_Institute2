@@ -9,36 +9,84 @@ import { useLanguage } from '../../app/contexts/LanguageContext';
 const testimonials = [
   {
     id: 1,
-    name: "Emily Johnson",
-    role: "MBA Graduate",
-    image: "/testimonials/student1.jpg",
-    content: "The UK Institute transformed my career prospects. The professors were incredibly supportive and the curriculum was directly applicable to real-world business scenarios.",
+    name: "Ahmed Khalid",
+    role: "SIYB Program Graduate",
+    image: "/images/testimonials/student1.jpg",
+    content: "The 'Start and Improve Your Business' program transformed my entrepreneurial journey. I came with just an idea, but left with a comprehensive business plan, financial projections, and marketing strategies. Within six months of graduation, I secured funding and launched my tech startup that now employs 12 people.",
     rating: 5,
+    program: "Start and Improve Your Business (SIYB)",
+    year: "2023"
   },
   {
     id: 2,
-    name: "Michael Chen",
-    role: "Software Engineering Student",
-    image: "/testimonials/student2.jpg",
-    content: "I enrolled in their professional certification program and was impressed by the cutting-edge technology and hands-on approach. Within weeks of graduating, I landed my dream job!",
+    name: "Sophia Martinez",
+    role: "Project Management Professional",
+    image: "/images/testimonials/student2.jpg",
+    content: "The Project Cycle Management course provided practical tools that I immediately applied to my work with an international NGO. The instructors brought real-world experience and the case studies were directly relevant to development challenges. This certification has been instrumental in advancing my career in humanitarian project management.",
     rating: 5,
+    program: "Project Cycle Management (PCM)",
+    year: "2022"
   },
   {
     id: 3,
-    name: "Sarah Williams",
-    role: "Healthcare Professional",
-    image: "/testimonials/student3.jpg",
-    content: "The flexible schedule allowed me to continue working while pursuing my advanced degree. The knowledge I gained has been invaluable for my career progression.",
-    rating: 4,
+    name: "Mohammed Al-Farsi",
+    role: "Business Consultant",
+    image: "/images/testimonials/student3.jpg",
+    content: "Completing the Professional Trainer and Consultant program was a turning point in my career. The ILO certification opened doors internationally, and the mentorship I received continues to guide my consulting practice. The business simulation exercises prepared me for real-world challenges I now help my clients overcome.",
+    rating: 5,
+    program: "Professional Trainer and Consultant (PMT/TOT)",
+    year: "2023"
   },
   {
     id: 4,
-    name: "David Oyelowo",
-    role: "Finance Certificate Holder",
-    image: "/testimonials/student4.jpg",
-    content: "The international perspective provided by UK Institute gave me a competitive edge in the global financial market. Their career support services were exceptional.",
+    name: "Fatima Zahra",
+    role: "Founder of EcoTech Solutions",
+    image: "/images/testimonials/student4.jpg",
+    content: "As a woman entrepreneur in a traditionally male-dominated field, the support I received through the 'Improve Your Business' program was invaluable. The instructors helped me refine my sustainable technology business model and connected me with mentors and funding opportunities. My company has since won two innovation awards.",
     rating: 5,
+    program: "Improve Your Business (IYB)",
+    year: "2022"
   },
+  {
+    id: 5,
+    name: "Omar Benali",
+    role: "Small Business Owner",
+    image: "/images/testimonials/student5.jpg",
+    content: "I was skeptical about whether formal business education could help my family restaurant, but the 'Manage Your Business' course transformed our operations. We implemented new inventory systems, improved our marketing, and developed employee training protocols. Our revenue increased by 35% in the first year after completing the program.",
+    rating: 5,
+    program: "Manage Your Business (MYB)",
+    year: "2023"
+  },
+  {
+    id: 6,
+    name: "Leila Mansour",
+    role: "Digital Marketing Specialist",
+    image: "/images/testimonials/student6.jpg",
+    content: "The Digital Marketing Mastery certificate equipped me with cutting-edge strategies and practical skills that set me apart in the job market. I appreciated the hands-on approach with real campaign development and analytics. Within weeks of completing the course, I received three job offers and was able to negotiate a higher salary.",
+    rating: 4,
+    program: "Digital Marketing Mastery",
+    year: "2023"
+  },
+  {
+    id: 7,
+    name: "Ibrahim Touré",
+    role: "Tech Entrepreneur",
+    image: "/images/testimonials/student7.jpg",
+    content: "The combination of business fundamentals and technical knowledge in the Full-Stack Web Development program was exactly what I needed. Instead of just learning to code, I learned to build products that solve real problems. The capstone project became the prototype for my current business that now serves clients across West Africa.",
+    rating: 5,
+    program: "Full-Stack Web Development",
+    year: "2022"
+  },
+  {
+    id: 8,
+    name: "Amina Diallo",
+    role: "Financial Analyst",
+    image: "/images/testimonials/student8.jpg",
+    content: "Greenwich Institute's Data Science and Analytics program provided me with the technical skills I needed to transition from traditional financial analysis to data-driven financial modeling. The program's emphasis on practical applications and industry-relevant tools made my resume stand out, helping me secure a position at a leading international bank.",
+    rating: 5,
+    program: "Data Science and Analytics",
+    year: "2023"
+  }
 ];
 
 interface TestimonialsProps {

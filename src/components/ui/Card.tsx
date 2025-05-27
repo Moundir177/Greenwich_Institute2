@@ -1,14 +1,17 @@
+'use client';
+
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-interface CardProps {
+export interface CardProps {
   children: ReactNode;
   className?: string;
   href?: string;
-  variant?: 'default' | 'bordered' | 'elevated' | 'glass' | 'gradient';
-  color?: 'default' | 'blue' | 'red' | 'gold' | 'light';
-  hoverEffect?: boolean;
+  variant?: 'default' | 'bordered' | 'elevated' | 'glass' | 'gradient' | 'flat' | 'soft' | 'outlined';
+  color?: 'default' | 'blue' | 'red' | 'gold' | 'light' | 'dark' | 'custom';
+  hoverEffect?: 'none' | 'lift' | 'scale' | 'glow' | 'border' | 'shadow';
   clickable?: boolean;
   icon?: ReactNode;
   withImage?: boolean;
@@ -19,7 +22,11 @@ interface CardProps {
   headerContent?: ReactNode;
   footerContent?: ReactNode;
   aspectRatio?: string;
+  animate?: boolean;
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
 const Card = ({
@@ -28,7 +35,7 @@ const Card = ({
   href,
   variant = 'default',
   color = 'default',
-  hoverEffect = true,
+  hoverEffect = 'lift',
   clickable = false,
   icon,
   withImage = false,
@@ -38,39 +45,77 @@ const Card = ({
   subtitle,
   headerContent,
   footerContent,
-  aspectRatio = 'auto'
+  aspectRatio = 'auto',
+  animate = false,
+  rounded = 'lg',
+  padding = 'md',
+  style,
+  onClick
 }: CardProps) => {
   // Base card styles
-  const baseStyles = 'card';
+  const baseStyles = 'relative overflow-hidden transition-all duration-300';
   
   // Variants
   const variantStyles = {
-    default: '',
-    bordered: 'border border-gray-200 dark:border-gray-700',
-    elevated: 'shadow-lg hover:shadow-xl',
-    glass: 'backdrop-blur-lg bg-white/10 border border-white/20',
-    gradient: 'bg-gradient-to-br'
+    default: 'bg-white',
+    bordered: 'bg-white border border-gray-200 dark:border-gray-700',
+    elevated: 'bg-white shadow-md',
+    glass: 'backdrop-filter backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 border border-white/20 dark:border-gray-700/30',
+    gradient: 'bg-gradient-to-br',
+    flat: 'bg-gray-50 dark:bg-gray-800',
+    soft: 'bg-gray-50/50 dark:bg-gray-800/50 backdrop-filter backdrop-blur-sm',
+    outlined: 'border-2 border-gray-200'
   };
   
   // Colors
   const colorStyles = {
-    default: '',
+    default: 'text-gray-800 dark:text-gray-100',
     blue: variant === 'gradient' 
-      ? 'from-uk-blue-light to-uk-blue-dark text-uk-white' 
-      : 'bg-uk-blue text-uk-white',
+      ? 'from-uk-blue-light to-uk-blue-dark text-white' 
+      : 'bg-uk-blue text-white',
     red: variant === 'gradient' 
-      ? 'from-uk-red-light to-uk-red-dark text-uk-white' 
-      : 'bg-uk-red text-uk-white',
+      ? 'from-uk-red-light to-uk-red-dark text-white' 
+      : 'bg-uk-red text-white',
     gold: variant === 'gradient' 
-      ? 'from-gold-light to-gold-dark text-uk-blue' 
+      ? 'from-amber-300 to-amber-600 text-uk-blue' 
       : 'bg-gold text-uk-blue',
     light: variant === 'gradient' 
       ? 'from-gray-100 to-gray-200 text-gray-800' 
       : 'bg-gray-100 text-gray-800',
+    dark: variant === 'gradient'
+      ? 'from-gray-700 to-gray-900 text-white'
+      : 'bg-gray-800 text-white',
+    custom: ''
   };
   
-  // Hover effect
-  const hoverStyles = hoverEffect ? 'hover:transform hover:-translate-y-1' : '';
+  // Hover effects
+  const hoverStyles = {
+    none: '',
+    lift: 'hover:translate-y-[-4px] hover:shadow-lg',
+    scale: 'hover:scale-[1.02]',
+    glow: 'hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-800/20',
+    border: 'hover:border-blue-500 dark:hover:border-blue-400',
+    shadow: 'hover:shadow-xl'
+  };
+
+  // Rounded corners
+  const roundedStyles = {
+    none: 'rounded-none',
+    sm: 'rounded-sm',
+    md: 'rounded',
+    lg: 'rounded-lg',
+    xl: 'rounded-xl',
+    full: 'rounded-full'
+  };
+
+  // Padding
+  const paddingStyles = {
+    none: 'p-0',
+    sm: 'p-3',
+    md: 'p-5',
+    lg: 'p-6',
+    xl: 'p-8'
+  };
   
   // Clickable
   const clickableStyles = clickable ? 'cursor-pointer' : '';
@@ -80,34 +125,34 @@ const Card = ({
     ${baseStyles} 
     ${variantStyles[variant]} 
     ${colorStyles[color]} 
-    ${hoverStyles} 
+    ${hoverStyles[hoverEffect]} 
     ${clickableStyles} 
-    ${className} 
-    overflow-hidden
-    transition-all duration-300
+    ${roundedStyles[rounded]}
+    ${paddingStyles[padding]}
+    ${className}
   `;
   
   // Card content
   const cardContent = (
     <>
       {withImage && imageSrc && (
-        <div className="card-image" style={{ aspectRatio }}>
+        <div className="card-image -mx-5 -mt-5 mb-5" style={{ aspectRatio }}>
           <Image
             src={imageSrc}
             alt={imageAlt}
             fill
-            className="object-cover"
+            className={`object-cover ${roundedStyles[rounded]}`}
           />
         </div>
       )}
       
       {(title || subtitle || headerContent || icon) && (
-        <div className="card-header">
+        <div className="card-header mb-4">
           {headerContent || (
             <>
-              {icon && <div className="card-icon">{icon}</div>}
-              {title && <h3 className="card-title">{title}</h3>}
-              {subtitle && <div className="card-subtitle">{subtitle}</div>}
+              {icon && <div className="card-icon mb-3">{icon}</div>}
+              {title && <h3 className="card-title text-xl font-semibold mb-1">{title}</h3>}
+              {subtitle && <div className="card-subtitle text-gray-500 dark:text-gray-400">{subtitle}</div>}
             </>
           )}
         </div>
@@ -118,7 +163,7 @@ const Card = ({
       </div>
       
       {footerContent && (
-        <div className="card-footer">
+        <div className="card-footer mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
           {footerContent}
         </div>
       )}
@@ -128,20 +173,31 @@ const Card = ({
       )}
     </>
   );
+
+  // Wrap with motion component if animate is true
+  const CardComponent = animate ? motion.div : 'div';
+  const animateProps = animate ? {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 },
+    whileHover: { scale: hoverEffect === 'scale' ? 1.02 : 1 }
+  } : {};
   
   // Return card with or without link
   if (href) {
     return (
-      <Link href={href} className={cardStyles}>
-        {cardContent}
+      <Link href={href} className={cardStyles} style={style} onClick={onClick}>
+        <CardComponent {...animateProps}>
+          {cardContent}
+        </CardComponent>
       </Link>
     );
   }
   
   return (
-    <div className={cardStyles}>
+    <CardComponent className={cardStyles} style={style} onClick={onClick} {...animateProps}>
       {cardContent}
-    </div>
+    </CardComponent>
   );
 };
 

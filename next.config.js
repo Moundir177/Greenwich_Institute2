@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true,
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
@@ -19,8 +19,8 @@ const nextConfig = {
     // your project has TypeScript errors.
     ignoreBuildErrors: true,
   },
-  output: 'export',
-  distDir: 'out',
+  // output: 'export', // Removed as it conflicts with middleware
+  // distDir: 'out',  // Using default .next directory for server-side rendering
   trailingSlash: true,
 };
 

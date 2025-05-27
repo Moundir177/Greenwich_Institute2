@@ -22,7 +22,7 @@ export default function SimpleHeader() {
   }, [scrolled]);
 
   return (
-    <header className={`${scrolled ? 'py-2 shadow-xl' : 'py-4'}`}>
+    <header className={`${scrolled ? 'py-2' : 'py-4'}`}>
       <div className="container">
         <div className="flex justify-between items-center">
           <div className="flex items-center">

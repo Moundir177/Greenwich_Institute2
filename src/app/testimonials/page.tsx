@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { FaQuoteLeft, FaStar, FaUsers, FaGraduationCap, FaArrowRight } from 'react-icons/fa';
+import type { IconType } from 'react-icons';
 import { useLanguage } from '../contexts/LanguageContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Testimonials from '@/components/home/Testimonials';
+import VideoTestimonials from '@/components/home/VideoTestimonials';
 import Button from '@/components/ui/Button';
 import Particles from 'react-particles';
 import { loadSlim } from "tsparticles-slim";
 import { Engine } from 'tsparticles-engine';
+import PageLayout from '../components/PageLayout';
 
 // Metadata for the page
 const pageMetadata = {
@@ -31,7 +34,7 @@ export default function TestimonialsPage() {
   }, []);
 
   return (
-    <div className={`min-h-screen ${isRtl ? 'rtl' : 'ltr'}`}>
+    <PageLayout>
       {/* Hero Section */}
       <section className="relative min-h-[80vh] bg-gradient-to-b from-dark-blue via-blue-900 to-dark-blue text-white py-20 overflow-hidden">
         {/* Particle Effects Background */}
@@ -137,11 +140,110 @@ export default function TestimonialsPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 animate-bounceIn">
-              Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Testimonials</span>
+              {t('testimonials_hero_title')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">{t('testimonials_hero_highlight')}</span>
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto animate-slideUpFade" style={{ animationDelay: '0.3s' }}>
-              Discover what our students and alumni have to say about their experiences with our institute and how we've helped them achieve their goals.
+              {t('testimonials_hero_description')}
             </p>
+            
+            {/* Testimonial Highlights Carousel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              className="mt-12 mb-12 max-w-4xl mx-auto"
+            >
+              <div className="flex items-center justify-center gap-10 flex-wrap">
+                <div className="relative w-full max-w-lg">
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 shadow-xl relative">
+                    {/* Quote icon */}
+                    <div className="absolute -top-5 -left-5 bg-gradient-to-br from-gold to-amber-600 rounded-full p-3 shadow-lg">
+                      <FaQuoteLeft className="text-white text-lg" />
+                    </div>
+                    
+                    {/* Star rating */}
+                    <div className="flex mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar key={i} className="text-gold" />
+                      ))}
+                    </div>
+                    
+                    <p className="text-white italic mb-6 text-lg leading-relaxed">
+                      "The Start and Improve Your Business program transformed my entrepreneurial journey. Within six months of graduation, I secured funding and launched my tech startup that now employs 12 people."
+                    </p>
+                    
+                    <div className="flex items-center mt-4">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4 ring-2 ring-gold/30 ring-offset-2 ring-offset-blue-900/50">
+                        <Image
+                          src="/images/testimonials/student1.jpg"
+                          alt="Ahmed Khalid"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white">Ahmed Khalid</h4>
+                        <p className="text-sm text-blue-200">SIYB Program Graduate, 2023</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="hidden md:block relative">
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 shadow-xl">
+                    {/* Quote icon */}
+                    <div className="absolute -top-5 -left-5 bg-gradient-to-br from-gold to-amber-600 rounded-full p-3 shadow-lg">
+                      <FaQuoteLeft className="text-white text-lg" />
+                    </div>
+                    
+                    {/* Star rating */}
+                    <div className="flex mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar key={i} className="text-gold" />
+                      ))}
+                    </div>
+                    
+                    <p className="text-white italic mb-6 text-lg leading-relaxed">
+                      "As a woman entrepreneur in a male-dominated field, the support I received through Greenwich Institute was invaluable. My company has since won two innovation awards."
+                    </p>
+                    
+                    <div className="flex items-center mt-4">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4 ring-2 ring-gold/30 ring-offset-2 ring-offset-blue-900/50">
+                        <Image
+                          src="/images/testimonials/student4.jpg"
+                          alt="Fatima Zahra"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white">Fatima Zahra</h4>
+                        <p className="text-sm text-blue-200">IYB Program Graduate, 2022</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1 }}
+                className="mt-10 flex justify-center"
+              >
+                <button
+                  onClick={() => document.getElementById('testimonials-main')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-white/70 hover:text-white hover:bg-white/10 border border-white/30 rounded-full px-6 py-2 text-sm transition-all duration-300 flex items-center"
+                >
+                  <span>View All Testimonials</span>
+                  <span className="ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </span>
+                </button>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
         <div className="absolute bottom-8 left-0 right-0 flex justify-center animate-fadeIn" style={{ animationDelay: '1.2s' }}>
@@ -152,17 +254,17 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-16 bg-gray-50 relative overflow-hidden">
+      <section id="testimonials-main" className="py-16 bg-gray-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full filter blur-3xl"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="mb-12">
-            <div className="inline-block bg-blue-100 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">Success Stories</div>
+            <div className="inline-block bg-blue-100 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">{t('testimonials_success_stories')}</div>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
-              What Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Students Say</span>
+              {t('what_students_say')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">{t('about_us')}</span>
             </h2>
             <p className="text-lg max-w-3xl animate-slideUpFade">
-              Read testimonials from our students about their learning experiences and success stories with our institute.
+              {t('testimonials_description')}
             </p>
           </div>
           
@@ -178,51 +280,15 @@ export default function TestimonialsPage() {
           <div className="mb-12">
             <div className="inline-block bg-gold/20 text-uk-blue px-4 py-1 rounded-full text-sm font-semibold mb-4 animate-flipIn">Video Testimonials</div>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-uk-blue mb-6">
-              Hear From Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-uk-blue via-uk-blue-light to-uk-blue">Alumni</span>
+              {t('testimonials_video_title')}
             </h2>
             <p className="text-lg max-w-3xl animate-slideUpFade">
               Watch video testimonials from our alumni as they share their experiences and success stories.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="transform transition-all duration-300 hover:-translate-y-2">
-                <div className="bg-white rounded-xl shadow-xl overflow-hidden group h-full border border-gray-100">
-                <div className="relative aspect-video bg-gray-100 overflow-hidden">
-                  <Image 
-                    src={`/images/testimonials/video-${index}.jpg`} 
-                    alt={`Video testimonial ${index}`}
-                    width={600}
-                    height={400}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-dark-blue/50 flex items-center justify-center group-hover:bg-dark-blue/30 transition-all duration-300">
-                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transform transition-all duration-300">
-                        <div className="w-14 h-14 rounded-full bg-gradient-to-r from-gold to-amber-500 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                    <h3 className="text-xl font-bold text-uk-blue mb-2">
-                      {`Student Name ${index}`}
-                  </h3>
-                  <p className="text-gray-500 mb-4">
-                      {`Program ${index}`} • Class of 202{index}
-                  </p>
-                    <p className="text-gray-600">
-                      "The education and support I received at this institute has been truly transformative. The faculty and resources helped me achieve my goals."
-                  </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Replace the old video testimonials with our new component */}
+          <VideoTestimonials />
         </div>
       </section>
 
@@ -261,6 +327,6 @@ export default function TestimonialsPage() {
           </div>
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 } 
