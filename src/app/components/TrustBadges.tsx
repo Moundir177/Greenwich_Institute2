@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion } from 'framer-motion';
 
@@ -53,9 +54,13 @@ const TrustBadges = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex items-center justify-center h-full bg-blue-600 rounded-lg">
-                <h3 className="text-white text-lg font-serif font-bold text-center">International Labour Organization</h3>
-              </div>
+              <Image 
+                src="/images/logos/ilo-logo.png" 
+                alt="International Labour Organization" 
+                width={240}
+                height={120}
+                className="object-contain w-full h-full"
+              />
             </div>
             <p className="mt-4 text-base font-medium text-gray-700">International Labour Organization</p>
           </motion.div>
@@ -69,9 +74,13 @@ const TrustBadges = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex items-center justify-center h-full bg-green-600 rounded-lg">
-                <h3 className="text-white text-lg font-serif font-bold text-center">Peace Ambassadors Foundation</h3>
-              </div>
+              <Image 
+                src="/images/logos/peace-ambassadors-logo.png" 
+                alt="Peace Ambassadors Foundation" 
+                width={240}
+                height={120}
+                className="object-contain w-full h-full"
+              />
             </div>
             <p className="mt-4 text-base font-medium text-gray-700">Peace Ambassadors Foundation</p>
           </motion.div>
@@ -85,9 +94,13 @@ const TrustBadges = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex items-center justify-center h-full bg-amber-600 rounded-lg">
-                <h3 className="text-white text-lg font-serif font-bold text-center">Sindibad Foundation</h3>
-              </div>
+              <Image 
+                src="/images/logos/sindibad-logo.png" 
+                alt="Sindibad Foundation" 
+                width={240}
+                height={120}
+                className="object-contain w-full h-full"
+              />
             </div>
             <p className="mt-4 text-base font-medium text-gray-700">Sindibad Foundation</p>
           </motion.div>
@@ -101,8 +114,8 @@ const TrustBadges = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex items-center justify-center h-full bg-navy-blue rounded-lg">
-                <h3 className="text-white text-lg font-serif font-bold text-center">Pioneers of Intellectual Development</h3>
+              <div className="flex items-center justify-center h-full bg-blue-50 rounded-lg p-2">
+                <h3 className="text-dark-blue text-lg font-serif font-bold text-center">Pioneers of Intellectual Development</h3>
               </div>
             </div>
             <p className="mt-4 text-base font-medium text-gray-700">Pioneers of Intellectual Development</p>

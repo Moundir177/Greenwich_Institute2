@@ -11,7 +11,6 @@ module.exports = {
     'bg-gold',
     'bg-gray',
     'bg-white',
-    'bg-navy-blue',
     'text-dark-blue',
     'text-light-gray',
     'text-gold',
@@ -69,7 +68,6 @@ module.exports = {
         'uk-blue': '#0f2b46',
         'uk-blue-light': '#1e5c87',
         'uk-blue-dark': '#072a43',
-        'navy-blue': '#002a5c', // Navy blue for Pioneers logo
         'light-gray': '#f7f9fc', // Light gray 
         'light-gray-200': '#eef1f6',
         'light-gray-300': '#e4e9f2',
