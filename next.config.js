@@ -19,7 +19,7 @@ const nextConfig = {
     // your project has TypeScript errors.
     ignoreBuildErrors: true,
   },
-  // output: 'export', // Removed as it conflicts with middleware
+  output: 'export', // Enables static site generation
   // distDir: 'out',  // Using default .next directory for server-side rendering
   trailingSlash: true,
 };

@@ -28,10 +28,7 @@ jobs:
         run: npm run build
 
       - name: Copy _routes.json
-        run: |
-          if [ -f "public/_routes.json" ]; then
-            cp public/_routes.json out/
-          fi
+        run: node copy-routes.js
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

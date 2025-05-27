@@ -1,12 +1,5 @@
 {
   "version": 1,
   "include": ["/*"],
-  "exclude": [
-    "/build/*",
-    "/images/*",
-    "/fonts/*",
-    "/_next/*",
-    "/favicon.ico",
-    "/robots.txt"
-  ]
+  "exclude": []
 } 
