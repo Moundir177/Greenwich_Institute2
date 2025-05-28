@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './styles/navbar-fix.css';
 import { Inter, Playfair_Display } from 'next/font/google';
-import { LanguageProvider } from './contexts/LanguageContext';
+import ClientProviders from './components/ClientProviders';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -32,13 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`} suppressHydrationWarning>
-        <LanguageProvider>
+        <ClientProviders>
           <Navbar />
           <div className="pt-20">
             {children}
           </div>
           <Footer />
-        </LanguageProvider>
+        </ClientProviders>
       </body>
     </html>
   );

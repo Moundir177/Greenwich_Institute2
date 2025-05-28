@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { FaQuoteLeft, FaUsers, FaGlobe, FaUniversity, FaBook, FaChalkboardTeacher, FaUserGraduate, FaAward, FaMedal, FaArrowRight, FaShieldAlt, FaFileInvoiceDollar, FaLinkedin, FaTwitter, FaCertificate, FaMapMarkerAlt, FaCalendarAlt, FaHandshake, FaCheck } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import OurCredibility from '../components/OurCredibility';
 import PageHeroSection from '../components/PageHeroSection';
 import PageLayout from '../components/PageLayout';
 
@@ -267,68 +266,45 @@ const staggerContainer = {
 export default function AboutPage() {
   const { t, language } = useLanguage();
   const isRtl = language === 'ar';
-  const [activeTab, setActiveTab] = useState('mission');
-  const [isVisible, setIsVisible] = useState(false);
+
+  // State for active tab
+  const [activeTab, setActiveTab] = useState<string>('mission');
   
+  // Handle hash change for deep linking
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Check for hash in URL to determine which tab to show
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      const tabMap: Record<string, string> = {
-        'story': 'history',
-        'mission': 'mission',
-        'leadership': 'team',
-        'campus': 'facilities'
-      };
-      
-      if (tabMap[hash]) {
-        setActiveTab(tabMap[hash]);
+    // Set initial tab based on URL hash
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['mission', 'history', 'team', 'facilities'].includes(hash)) {
+        setActiveTab(hash);
       }
-    }
+    };
+    
+    // Initial check
+    handleHashChange();
     
     // Listen for hash changes
-    const handleHashChange = () => {
-      const newHash = window.location.hash.replace('#', '');
-      const tabMap: Record<string, string> = {
-        'story': 'history',
-        'mission': 'mission',
-        'leadership': 'team',
-        'campus': 'facilities'
-      };
-      
-      if (tabMap[newHash]) {
-        setActiveTab(tabMap[newHash]);
-      }
-    };
-    
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
   
-  // Function to change tab and update URL hash
+  // Update hash when tab changes
   const changeTab = (tab: string) => {
     setActiveTab(tab);
-    const hashMap: Record<string, string> = {
-      'history': 'story',
-      'mission': 'mission',
-      'team': 'leadership',
-      'facilities': 'campus'
-    };
-    
-    if (hashMap[tab]) {
-      window.history.pushState(null, '', `#${hashMap[tab]}`);
-    }
+    window.history.pushState(null, '', `#${tab}`);
   };
   
   return (
     <PageLayout>
-      <PageHeroSection 
-        title="About Greenwich"
-        titleHighlight="Our Story & Mission"
-        description="Discover our history, mission, and values that inspire educational excellence."
-        buttonText="Contact Us"
+      {/* Page Hero */}
+      <PageHeroSection
+        title={t('about_hero_title')}
+        titleHighlight={t('about_hero_highlight')}
+        description={t('about_hero_description')}
+        buttonText={t('about_hero_button')}
         buttonLink="/contact"
         imageSrc="/images/about/about-hero-bg.jpg"
         imageAlt="Greenwich Institute"
@@ -585,9 +561,6 @@ export default function AboutPage() {
               </motion.div>
             </div>
           </section>
-          
-          {/* Add Our Credibility section here */}
-          <OurCredibility />
         </>
       )}
       
@@ -1398,321 +1371,6 @@ export default function AboutPage() {
           </div>
         </section>
       )}
-      
-      {/* Video Testimonials Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute top-0 right-0 w-full h-full overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold/10 blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
-          <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            className="max-w-4xl mx-auto mb-16 text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-gold text-sm font-semibold mb-3"
-            >
-              Témoignages
-            </motion.span>
-            
-            <motion.h2 
-              className="text-3xl md:text-5xl font-serif font-bold text-dark-blue mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Écoutez Nos <span className="text-gold relative">
-                Étudiants
-                <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 100 8" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0,3 Q50,7 100,3" stroke="#F0C674" strokeWidth="2" fill="none" />
-                </svg>
-              </span>
-            </motion.h2>
-            
-            <motion.p 
-              className="text-gray-600 text-lg max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              Découvrez l'impact transformateur de Greenwich HSTC à travers les expériences de nos étudiants et membres du corps enseignant.
-            </motion.p>
-          </motion.div>
-          
-          {/* Featured Video Testimonial */}
-          <motion.div 
-            className="mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video group">
-                <div className="absolute inset-0 bg-dark-blue/30 group-hover:bg-dark-blue/10 transition-colors duration-300 z-10 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 group-hover:scale-110 transition-transform duration-300">
-                    <div className="w-16 h-16 rounded-full bg-gold flex items-center justify-center">
-                      <svg className="w-6 h-6 text-dark-blue ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <Image 
-                  src="/images/testimonials/featured-testimonial.jpg"
-                  alt="Témoignage d'étudiant"
-                  fill
-                  className="object-cover transform group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              
-              <div className="relative">
-                <FaQuoteLeft className="text-gold/20 text-6xl absolute -top-6 -left-4" />
-                <div className="ml-8">
-                  <h3 className="text-2xl font-bold text-dark-blue mb-4">Une Expérience Transformatrice</h3>
-                  <p className="text-gray-600 text-lg italic mb-6 leading-relaxed">
-                    "Étudier à Greenwich HSTC a complètement transformé ma perspective de carrière. Les professeurs sont non seulement des experts dans leur domaine, mais aussi de véritables mentors qui s'investissent dans la réussite de chaque étudiant. L'environnement international m'a permis de développer un réseau mondial de contacts qui m'est précieux aujourd'hui."
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                      <Image 
-                        src="/images/testimonials/student-1.jpg"
-                        alt="Sophie Martel"
-                        width={48}
-                        height={48}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-dark-blue">Sophie Martel</h4>
-                      <p className="text-gray-500 text-sm">Diplômée en Management International, 2023</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Video Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Alexandre Dubois",
-                role: "Étudiant en Finance",
-                quote: "La qualité de l'enseignement et les opportunités de stage m'ont permis de décrocher un poste dans une banque internationale dès l'obtention de mon diplôme.",
-                image: "/images/testimonials/student-2.jpg",
-                videoThumbnail: "/images/testimonials/video-thumb-1.jpg"
-              },
-              {
-                name: "Dr. Émilie Laurent",
-                role: "Professeure d'Économie",
-                quote: "L'approche pédagogique de Greenwich HSTC encourage l'innovation et permet aux enseignants d'adapter leurs méthodes aux besoins des étudiants.",
-                image: "/images/testimonials/faculty-1.jpg",
-                videoThumbnail: "/images/testimonials/video-thumb-2.jpg"
-              },
-              {
-                name: "Omar Benali",
-                role: "Étudiant International",
-                quote: "Le soutien que j'ai reçu en tant qu'étudiant international a fait toute la différence dans mon adaptation et ma réussite académique.",
-                image: "/images/testimonials/student-3.jpg",
-                videoThumbnail: "/images/testimonials/video-thumb-3.jpg"
-              }
-            ].map((testimonial, index) => (
-              <motion.div 
-                key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
-              >
-                <div className="relative h-48 overflow-hidden">
-                <Image 
-                    src={testimonial.videoThumbnail}
-                    alt={`Témoignage de ${testimonial.name}`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-dark-blue/40 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                      <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
-                        <svg className="w-3 h-3 text-dark-blue ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                      <Image 
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-dark-blue">{testimonial.name}</h4>
-                      <p className="text-gray-500 text-sm">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          {/* Testimonial CTA */}
-          <motion.div 
-            className="mt-16 text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            <Link 
-              href="/testimonials"
-              className="inline-flex items-center px-8 py-4 bg-dark-blue text-white rounded-full hover:bg-gold hover:text-dark-blue transition-colors duration-300 font-medium group"
-            >
-              Voir plus de témoignages
-              <span className="ml-2 w-8 h-8 rounded-full bg-gold flex items-center justify-center group-hover:bg-dark-blue group-hover:text-white transition-colors duration-300">
-                <FaArrowRight />
-              </span>
-            </Link>
-            </motion.div>
-          </div>
-        </section>
-      
-      {/* Policies Section */}
-      <section className="py-20 bg-light-gray">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-blue mb-4">
-                <span className="text-gold neon-text">{t('our_policies')}</span> {t('and_guidelines')}
-              </h2>
-              <p className="text-gray-600 max-w-3xl mx-auto">
-                {t('policies_description')}
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="bg-white rounded-xl overflow-hidden shadow-lg"
-              >
-                <div className="relative h-48">
-                  <div className="absolute inset-0 bg-dark-blue">
-                    <div className="absolute inset-0 opacity-20" style={{ 
-                      backgroundImage: 'url(/images/patterns/pattern1.png)',
-                      backgroundSize: 'cover'
-                    }}></div>
-                  </div>
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
-                    <FaShieldAlt className="text-5xl text-gold mb-4" />
-                    <h3 className="text-2xl font-bold text-white">{t('privacy_policy')}</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 mb-6">
-                    {t('privacy_policy_brief')}
-                  </p>
-                  <ul className="space-y-3 mb-6">
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('data_collection')}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('data_use')}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('your_rights')}</span>
-                    </li>
-                  </ul>
-                  <Link 
-                    href="/privacy-policy"
-                    className="flex items-center justify-center w-full bg-dark-blue hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300"
-                  >
-                    {t('read_privacy_policy')}
-                    <FaArrowRight className="ml-2" />
-                  </Link>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="bg-white rounded-xl overflow-hidden shadow-lg"
-              >
-                <div className="relative h-48">
-                  <div className="absolute inset-0 bg-dark-blue">
-                    <div className="absolute inset-0 opacity-20" style={{ 
-                      backgroundImage: 'url(/images/patterns/pattern2.png)',
-                      backgroundSize: 'cover'
-                    }}></div>
-                  </div>
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center p-6">
-                    <FaFileInvoiceDollar className="text-5xl text-gold mb-4" />
-                    <h3 className="text-2xl font-bold text-white">{t('refund_policy')}</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 mb-6">
-                    {t('refund_policy_brief')}
-                  </p>
-                  <ul className="space-y-3 mb-6">
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('refund_eligibility')}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('refund_process')}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gold mr-2 neon-text">•</span>
-                      <span>{t('special_circumstances')}</span>
-                    </li>
-                  </ul>
-                  <Link 
-                    href="/refund-policy"
-                    className="flex items-center justify-center w-full bg-dark-blue hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300"
-                  >
-                    {t('read_refund_policy')}
-                    <FaArrowRight className="ml-2" />
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
     </PageLayout>
   );
 } 
