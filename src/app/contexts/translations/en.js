@@ -267,6 +267,20 @@ const enTranslations = {
   'footer_certifications': 'Certifications',
   'footer_testimonials': 'Testimonials',
   'footer_news_events': 'News & Events',
+
+  // Certificate Verification
+  'verify_your_certificate': 'Verify Your Greenwich Certificate',
+  'certificate_verification_text': 'Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich Institute.',
+  'verify_certificate': 'Verify Certificate',
+  'certificate_id_placeholder': 'e.g., RA-2023-00123',
+  'try_demo_ids': 'Try demo IDs:',
+  'or': 'or',
+  'verifying': 'Verifying...',
+  'certificate_valid': 'Certificate Valid',
+  'certificate_not_found': 'Certificate not found. Please check the ID and try again.',
+  'name': 'Name',
+  'program': 'Program',
+  'issue_date': 'Issue Date',
 };
 
 export default enTranslations; 

@@ -267,6 +267,20 @@ const arTranslations = {
   'footer_certifications': 'الشهادات',
   'footer_testimonials': 'الشهادات',
   'footer_news_events': 'الأخبار والأحداث',
+
+  // Certificate Verification
+  'verify_your_certificate': 'تحقق من شهادة Greenwich الخاصة بك',
+  'certificate_verification_text': 'يضمن نظام التحقق الآمن لدينا أصالة وسلامة جميع الشهادات الصادرة عن معهد Greenwich.',
+  'verify_certificate': 'تحقق من الشهادة',
+  'certificate_id_placeholder': 'مثال: RA-2023-00123',
+  'try_demo_ids': 'جرب معرفات العرض التوضيحي:',
+  'or': 'أو',
+  'verifying': 'جاري التحقق...',
+  'certificate_valid': 'الشهادة صالحة',
+  'certificate_not_found': 'الشهادة غير موجودة. يرجى التحقق من المعرف والمحاولة مرة أخرى.',
+  'name': 'الاسم',
+  'program': 'البرنامج',
+  'issue_date': 'تاريخ الإصدار',
 };
 
 export default arTranslations; 

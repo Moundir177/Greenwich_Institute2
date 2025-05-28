@@ -55,7 +55,7 @@ const TrustBadges = () => {
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
               <Image 
-                src="/images/logos/ilo-logo.png" 
+                src="/images/logos/ilo-logo.svg" 
                 alt="International Labour Organization" 
                 width={240}
                 height={120}
@@ -75,14 +75,14 @@ const TrustBadges = () => {
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
               <Image 
-                src="/images/logos/peace-ambassadors-logo.png" 
-                alt="Peace Ambassadors Foundation" 
+                src="/images/logos/bac-logo.svg" 
+                alt="British Accreditation Council" 
                 width={240}
                 height={120}
                 className="object-contain w-full h-full"
               />
             </div>
-            <p className="mt-4 text-base font-medium text-gray-700">Peace Ambassadors Foundation</p>
+            <p className="mt-4 text-base font-medium text-gray-700">British Accreditation Council</p>
           </motion.div>
           
           <motion.div 
@@ -95,14 +95,14 @@ const TrustBadges = () => {
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
               <Image 
-                src="/images/logos/sindibad-logo.png" 
-                alt="Sindibad Foundation" 
+                src="/images/logos/iso-logo.svg" 
+                alt="ISO 9001 Certification" 
                 width={240}
                 height={120}
                 className="object-contain w-full h-full"
               />
             </div>
-            <p className="mt-4 text-base font-medium text-gray-700">Sindibad Foundation</p>
+            <p className="mt-4 text-base font-medium text-gray-700">ISO 9001 Certification</p>
           </motion.div>
           
           <motion.div 
@@ -114,11 +114,15 @@ const TrustBadges = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="w-64 h-32 relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex items-center justify-center h-full bg-blue-50 rounded-lg p-2">
-                <h3 className="text-dark-blue text-lg font-serif font-bold text-center">Pioneers of Intellectual Development</h3>
-              </div>
+              <Image 
+                src="/images/logos/qaa-logo.svg" 
+                alt="Quality Assurance Agency" 
+                width={240}
+                height={120}
+                className="object-contain w-full h-full"
+              />
             </div>
-            <p className="mt-4 text-base font-medium text-gray-700">Pioneers of Intellectual Development</p>
+            <p className="mt-4 text-base font-medium text-gray-700">Quality Assurance Agency</p>
           </motion.div>
         </motion.div>
       </div>

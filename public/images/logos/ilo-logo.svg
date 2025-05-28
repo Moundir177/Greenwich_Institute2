@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" fill="none">
+  <path d="M200 30C226.51 30 248 51.49 248 78C248 104.51 226.51 126 200 126C173.49 126 152 104.51 152 78C152 51.49 173.49 30 200 30Z" fill="#009EDB"/>
+  <path d="M179 57H221V65H179V57Z" fill="white"/>
+  <path d="M179 74H221V82H179V74Z" fill="white"/>
+  <path d="M179 91H221V99H179V91Z" fill="white"/>
+  <text x="70" y="170" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#002E63">
+    INTERNATIONAL LABOUR ORGANIZATION
+  </text>
+</svg> 

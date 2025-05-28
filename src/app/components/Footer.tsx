@@ -4,6 +4,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
+import CertificateVerifier from './CertificateVerifier';
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -75,6 +76,15 @@ const Footer = () => {
               <FaYoutube />
             </a>
           </div>
+        </div>
+        
+        {/* Certificate Verification Section */}
+        <div className="max-w-4xl mx-auto mb-16 border-t border-white/10 pt-12">
+          <h2 className="text-2xl font-playfair text-center mb-8 text-gold">{t('verify_your_certificate') || 'Verify Your Certificate'}</h2>
+          <p className="text-center text-white/80 mb-8 max-w-2xl mx-auto">
+            {t('certificate_verification_text') || 'Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich.'}
+          </p>
+          <CertificateVerifier />
         </div>
         
         {/* Copyright and Accreditation Logos */}

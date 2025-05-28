@@ -267,6 +267,20 @@ const frTranslations = {
   'footer_certifications': 'Certifications',
   'footer_testimonials': 'Témoignages',
   'footer_news_events': 'Actualités & Événements',
+
+  // Certificate Verification
+  'verify_your_certificate': 'Vérifiez Votre Certificat Greenwich',
+  'certificate_verification_text': 'Notre système de vérification sécurisé garantit l\'authenticité et l\'intégrité de tous les certificats délivrés par l\'Institut Greenwich.',
+  'verify_certificate': 'Vérifier le Certificat',
+  'certificate_id_placeholder': 'ex., RA-2023-00123',
+  'try_demo_ids': 'Essayez les ID de démo:',
+  'or': 'ou',
+  'verifying': 'Vérification en cours...',
+  'certificate_valid': 'Certificat Valide',
+  'certificate_not_found': 'Certificat non trouvé. Veuillez vérifier l\'ID et réessayer.',
+  'name': 'Nom',
+  'program': 'Programme',
+  'issue_date': 'Date d\'émission',
 };
 
 export default frTranslations; 

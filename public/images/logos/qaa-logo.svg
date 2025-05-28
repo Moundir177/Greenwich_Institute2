@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" fill="none">
+  <rect x="70" y="40" width="260" height="120" rx="8" fill="#E6007E"/>
+  <path d="M110 80C110 67.85 119.85 58 132 58H152C164.15 58 174 67.85 174 80C174 92.15 164.15 102 152 102H132C119.85 102 110 92.15 110 80Z" fill="white"/>
+  <path d="M125 80C125 75.58 128.58 72 133 72H151C155.42 72 159 75.58 159 80C159 84.42 155.42 88 151 88H133C128.58 88 125 84.42 125 80Z" fill="#E6007E"/>
+  <path d="M184 80C184 67.85 193.85 58 206 58H226C238.15 58 248 67.85 248 80C248 92.15 238.15 102 226 102H206C193.85 102 184 92.15 184 80Z" fill="white"/>
+  <path d="M199 80C199 75.58 202.58 72 207 72H225C229.42 72 233 75.58 233 80C233 84.42 229.42 88 225 88H207C202.58 88 199 84.42 199 80Z" fill="#E6007E"/>
+  <path d="M258 80C258 67.85 267.85 58 280 58H300C312.15 58 322 67.85 322 80C322 92.15 312.15 102 300 102H280C267.85 102 258 92.15 258 80Z" fill="white"/>
+  <path d="M273 80C273 75.58 276.58 72 281 72H299C303.42 72 307 75.58 307 80C307 84.42 303.42 88 299 88H281C276.58 88 273 84.42 273 80Z" fill="#E6007E"/>
+  <text x="200" y="140" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">
+    QUALITY ASSURANCE AGENCY
+  </text>
+  <text x="200" y="160" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">
+    FOR HIGHER EDUCATION
+  </text>
+</svg> 
