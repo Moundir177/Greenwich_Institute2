@@ -19,7 +19,7 @@ const OFFICE_LOCATIONS = [
     id: 'main',
     name: 'Main Campus',
     address: '73A Stanley Road, Bootle, England, L20 7BZ',
-    phone: '+44 20 7123 4567',
+    phone: '00447350555404',
     email: 'info@greenwichhstc.edu',
     hours: 'Monday - Friday: 8:30 AM - 5:30 PM',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2377.088930899425!2d-2.9946796232165734!3d53.4474024732881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b23e6608198b9%3A0x8a3fc22f654f5641!2s73A%20Stanley%20Rd%2C%20Bootle%20L20%207BZ%2C%20UK!5e0!3m2!1sen!2sus!4v1689517281943!5m2!1sen!2sus',
@@ -29,7 +29,7 @@ const OFFICE_LOCATIONS = [
     id: 'city',
     name: 'City Campus',
     address: '73A Stanley Road, Bootle, England, L20 7BZ',
-    phone: '+44 20 7123 4567',
+    phone: '00213793335603',
     email: 'info@greenwichhstc.edu',
     hours: 'Monday - Friday: 8:30 AM - 5:30 PM',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2377.088930899425!2d-2.9946796232165734!3d53.4474024732881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b23e6608198b9%3A0x8a3fc22f654f5641!2s73A%20Stanley%20Rd%2C%20Bootle%20L20%207BZ%2C%20UK!5e0!3m2!1sen!2sus!4v1689517281943!5m2!1sen!2sus',
@@ -46,9 +46,9 @@ const CONTACT_METHODS = [
     title: 'Call Us',
     description: 'Speak directly with our team',
     icon: <FaPhone className="h-6 w-6" />,
-    primary: '+44 20 7123 4567',
+    primary: '00447350555404',
     secondary: 'Mon-Fri, 8:30 AM - 5:30 PM GMT',
-    action: 'tel:+442071234567',
+    action: 'tel:00447350555404',
     actionText: 'Call Now'
   },
   {
@@ -372,7 +372,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                               <h4 className="font-semibold mb-1">Phone</h4>
-                              <p className="text-blue-100">+44 20 7123 4567</p>
+                              <p className="text-blue-100">00447350555404</p>
                         </div>
                       </div>
                       
@@ -438,11 +438,11 @@ export default function ContactPage() {
                         For urgent inquiries, please call our support hotline for immediate assistance.
                       </p>
                       <a 
-                        href="tel:+442071234567" 
+                        href="tel:00447350555404" 
                         className="inline-flex items-center text-uk-blue hover:text-uk-blue-dark font-medium"
                       >
                         <FaHeadset className="mr-2" />
-                        +44 20 7123 4567
+                        00447350555404
                       </a>
                     </div>
                   </motion.div>

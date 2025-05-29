@@ -221,7 +221,7 @@ export default function ServicesPage() {
               Institute <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-amber-400 to-gold">Programs</span>
             </h2>
             <p className="text-lg max-w-3xl animate-slideUpFade">
-              Our institute offers three main areas of expertise to support your educational and professional growth.
+              We offer three specialized sectors of education to enhance your professional development.
             </p>
           </div>
           

@@ -266,15 +266,15 @@ const staggerContainer = {
 export default function AboutPage() {
   const { t, language } = useLanguage();
   const isRtl = language === 'ar';
-
+  
   // State for active tab
   const [activeTab, setActiveTab] = useState<string>('mission');
-  
+    
   // Handle hash change for deep linking
   useEffect(() => {
     // Set initial tab based on URL hash
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
+    const hash = window.location.hash.replace('#', '');
       if (['mission', 'history', 'team', 'facilities'].includes(hash)) {
         setActiveTab(hash);
       }
@@ -300,7 +300,7 @@ export default function AboutPage() {
   return (
     <PageLayout>
       {/* Page Hero */}
-      <PageHeroSection
+      <PageHeroSection 
         title={t('about_hero_title')}
         titleHighlight={t('about_hero_highlight')}
         description={t('about_hero_description')}
@@ -823,7 +823,7 @@ export default function AboutPage() {
                       <FaHandshake className="text-gold text-2xl" />
                     </div>
                     <div className="text-3xl md:text-4xl font-bold text-dark-blue mb-2">200+</div>
-                    <div className="text-gray-600">Partenaires Institutionnels</div>
+                    <div className="text-gray-600">Institutional Partners</div>
                   </div>
                 </div>
                 
@@ -1039,7 +1039,7 @@ export default function AboutPage() {
                   <FaGlobe className="text-dark-blue text-2xl" />
                 </div>
                 <h3 className="text-2xl font-bold text-center mb-2">12</h3>
-                <p className="text-dark-blue/80 text-center">Nationalités représentées</p>
+                <div className="text-dark-blue/80 text-center">Nationalities represented</div>
               </div>
               
               <div className="rounded-xl bg-gradient-to-br from-dark-blue to-blue-800 p-8 text-white shadow-lg">
@@ -1047,7 +1047,7 @@ export default function AboutPage() {
                   <FaAward className="text-gold text-2xl" />
                 </div>
                 <h3 className="text-2xl font-bold text-center mb-2">30+</h3>
-                <p className="text-white/80 text-center">Prix et distinctions reçus</p>
+                <div className="text-white/80 text-center">Awards and recognitions received</div>
               </div>
             </motion.div>
             

@@ -29,6 +29,7 @@ const frTranslations = {
   'certificates': 'Certificats',
   'certifications': 'Accréditations',
   'contact': 'Contact',
+  'verify_certificate': 'Vérifier Certificat',
   'our_story': 'Notre Histoire',
   'mission_values': 'Mission & Valeurs',
   'leadership_team': 'Équipe de Direction',
@@ -159,7 +160,7 @@ const frTranslations = {
   
   // About Page Hero - English placeholders kept as needed
   'about_hero_title': 'À Propos',
-  'about_hero_highlight': 'Greenwich Institute',
+  'about_hero_highlight': 'Greenwich HSTC LTD',
   'about_hero_description': 'Découvrez notre histoire, notre mission et nos valeurs qui inspirent l\'excellence éducative.',
   'about_hero_button': 'Contactez-Nous',
   
@@ -189,7 +190,7 @@ const frTranslations = {
   'partnerships_impact_title': 'L\'Impact de Nos Partenariats',
   'partnerships_impact_description': 'Grâce à nos partenariats stratégiques, nous avons créé un impact éducatif durable et favorisé des connexions mondiales qui profitent à nos étudiants et communautés.',
   'partnerships_main_title': 'Partenaires Stratégiques et Leur Impact',
-  'partnerships_main_description': 'Ces organisations clés collaborent avec Greenwich Institute pour améliorer nos offres éducatives, renforcer notre présence mondiale et créer des opportunités précieuses pour nos étudiants et notre corps professoral.',
+  'partnerships_main_description': 'Ces organisations clés collaborent avec Greenwich HSTC LTD pour améliorer nos offres éducatives, renforcer notre présence mondiale et créer des opportunités précieuses pour nos étudiants et notre corps professoral.',
   
   // Featured Courses Section
   'featured_courses': 'Cours en Vedette',
@@ -252,8 +253,8 @@ const frTranslations = {
   'back_to_home': 'Retour à l\'Accueil',
 
   // Footer - Some items kept in English as they may be brand names
-  'footer_about': 'Greenwich Institute est une institution éducative de premier plan dédiée à fournir des programmes de formation et de certification de classe mondiale. Notre mission est de donner aux individus les connaissances et les compétences nécessaires pour réussir dans un environnement mondial en évolution rapide.',
-  'copyright': 'Greenwich Institute. Tous droits réservés.',
+  'footer_about': 'Greenwich HSTC LTD est une institution éducative de premier plan dédiée à fournir des programmes de formation et de certification de classe mondiale. Notre mission est de donner aux individus les connaissances et les compétences nécessaires pour réussir dans un environnement mondial en évolution rapide.',
+  'copyright': 'Greenwich HSTC LTD. Tous droits réservés.',
   'quick_links': 'Liens Rapides',
   'our_courses': 'Nos Cours',
   'contact_us': 'Contactez-Nous',
@@ -267,6 +268,16 @@ const frTranslations = {
   'footer_certifications': 'Certifications',
   'footer_testimonials': 'Témoignages',
   'footer_news_events': 'Actualités & Événements',
+
+  // Certificate Verification
+  'verify_your_certificate': 'Vérifiez Votre Certificat Greenwich HSTC LTD',
+  'certificate_verification_text': 'Notre système de vérification sécurisé garantit l\'authenticité et l\'intégrité de tous les certificats délivrés par Greenwich HSTC LTD.',
+  'verify_hero_description': 'Notre système de vérification sécurisé garantit l\'authenticité et l\'intégrité de tous les certificats délivrés par Greenwich HSTC LTD.',
+  
+  // Trust Badges Section
+  'trust_badges': 'Badges de Confiance',
+  'accredited_organizations': 'Accrédité par des organisations internationales de premier plan',
+  'programs_recognized': 'Nos programmes sont reconnus mondialement, garantissant que votre éducation répond aux normes internationales d\'excellence.',
 };
 
 export default frTranslations; 

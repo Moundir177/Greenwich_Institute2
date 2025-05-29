@@ -28,6 +28,7 @@ const enTranslations = {
   'services': 'Services',
   'certificates': 'Certificates',
   'certifications': 'Certifications',
+  'verify_certificate': 'Verify Certificate',
   'contact': 'Contact',
   'our_story': 'Our Story',
   'mission_values': 'Mission & Values',
@@ -48,6 +49,10 @@ const enTranslations = {
   'menu': 'Menu',
   'news_events': 'News & Events',
   'partnerships': 'Partnerships',
+  'testimonials': 'Testimonials',
+  'faq': 'FAQ',
+  'privacy_policy': 'Privacy Policy',
+  'refund_policy': 'Refund Policy',
   
   // Tabs
   'overview': 'Overview',
@@ -159,7 +164,7 @@ const enTranslations = {
   
   // About Page Hero
   'about_hero_title': 'About',
-  'about_hero_highlight': 'Greenwich Institute',
+  'about_hero_highlight': 'Greenwich HSTC LTD',
   'about_hero_description': 'Discover our history, mission, and values that inspire educational excellence.',
   'about_hero_button': 'Contact Us',
   
@@ -189,7 +194,7 @@ const enTranslations = {
   'partnerships_impact_title': 'Our Partnership Impact',
   'partnerships_impact_description': 'Through our strategic partnerships, we\'ve created lasting educational impact and fostered global connections that benefit our students and communities.',
   'partnerships_main_title': 'Strategic Partners & Their Impact',
-  'partnerships_main_description': 'These key organizations collaborate with Greenwich Institute to enhance our educational offerings, strengthen our global presence, and create valuable opportunities for our students and faculty.',
+  'partnerships_main_description': 'These key organizations collaborate with Greenwich HSTC LTD to enhance our educational offerings, strengthen our global presence, and create valuable opportunities for our students and faculty.',
   
   // Featured Courses Section
   'featured_courses': 'Featured Courses',
@@ -213,11 +218,11 @@ const enTranslations = {
   // Call to Action Section
   'cta_title': 'Ready to Start Your Learning Journey?',
   'cta_subtitle': 'Join Our Global Learning Community',
-  'cta_description': 'Take the first step towards transforming your career with our world-class educational programs. Get personalized guidance from industry experts.',
+  'cta_description': 'Take the first step towards transforming your career with our world-class educational programs. Get personalized guidance from educational professionals.',
   'cta_benefit_1': 'Flexible learning options to fit your schedule',
   'cta_benefit_2': 'One-on-one career coaching and mentorship',
-  'cta_benefit_3': 'Industry-recognized certifications',
-  'cta_benefit_4': 'Global network of alumni and industry connections',
+  'cta_benefit_3': 'Globally-recognized certifications',
+  'cta_benefit_4': 'Global network of alumni and professional connections',
   'request_info_title': 'Request More Information',
   'thank_you': 'Thank You!',
   'form_success': 'We\'ve received your request. A member of our team will contact you shortly.',
@@ -252,8 +257,8 @@ const enTranslations = {
   'back_to_home': 'Back to Home',
 
   // Footer
-  'footer_about': 'Greenwich Institute is a leading educational institution dedicated to providing world-class training and certification programs. Our mission is to empower individuals with the knowledge and skills needed to succeed in a rapidly evolving global environment.',
-  'copyright': 'Greenwich Institute. All rights reserved.',
+  'footer_about': 'Greenwich HSTC LTD is a leading educational institution dedicated to providing world-class training and certification programs. Our mission is to empower individuals with the knowledge and skills needed to succeed in a rapidly evolving global environment.',
+  'copyright': 'Greenwich HSTC LTD. All rights reserved.',
   'quick_links': 'Quick Links',
   'our_courses': 'Our Courses',
   'contact_us': 'Contact Us',
@@ -270,7 +275,7 @@ const enTranslations = {
 
   // Certificate Verification
   'verify_your_certificate': 'Verify Your Greenwich Certificate',
-  'certificate_verification_text': 'Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich Institute.',
+  'certificate_verification_text': 'Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich HSTC LTD.',
   'verify_certificate': 'Verify Certificate',
   'certificate_id_placeholder': 'e.g., RA-2023-00123',
   'try_demo_ids': 'Try demo IDs:',
@@ -281,6 +286,33 @@ const enTranslations = {
   'name': 'Name',
   'program': 'Program',
   'issue_date': 'Issue Date',
+  
+  // Verify Certificate Page
+  'verify_hero_title': 'Verify',
+  'verify_hero_highlight': 'Certificate',
+  'verify_hero_description': 'Our secure verification system ensures the authenticity and integrity of all certificates issued by Greenwich HSTC LTD.',
+  'verification_benefits': 'Benefits of Our Verification System',
+  'how_it_works': 'How Our Verification System Works',
+  'how_it_works_desc': 'Our verification process is simple, secure, and provides instant results to confirm the authenticity of Greenwich certificates.',
+  'step_1_title': 'Enter Certificate ID',
+  'step_1_desc': 'Enter the unique Certificate ID found on your Greenwich certificate into the verification form.',
+  'step_2_title': 'Instant Verification',
+  'step_2_desc': 'Our system instantly compares the ID against our secure database of issued certificates.',
+  'step_3_title': 'View Results',
+  'step_3_desc': 'Receive immediate confirmation of the certificate\'s authenticity along with key details.',
+  'security_title': 'Secure Verification',
+  'security_desc': 'Our verification system uses advanced security protocols to protect the integrity of your certification data.',
+  'global_title': 'Global Recognition',
+  'global_desc': 'Greenwich certificates are recognized by employers and educational institutions worldwide.',
+  'authenticity_title': 'Authenticity Guaranteed',
+  'authenticity_desc': 'Each certificate contains unique identifiers that can be verified against our secure database.',
+  'instant_title': 'Instant Verification',
+  'instant_desc': 'Get immediate verification results to confirm the authenticity of any Greenwich certificate.',
+  
+  // Trust Badges Section
+  'trust_badges': 'Trust Badges',
+  'accredited_organizations': 'Accredited by leading international organizations',
+  'programs_recognized': 'Our programs are recognized globally, ensuring that your education meets international standards of excellence.'
 };
 
 export default enTranslations; 

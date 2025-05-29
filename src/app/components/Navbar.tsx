@@ -315,6 +315,17 @@ const Navbar = () => {
                         <span className={`w-6 h-6 flex items-center justify-center rounded-full ${language === 'fr' ? 'bg-gold text-white' : 'bg-gray-100'}`}>FR</span>
                         <span className="text-sm">{t('french')}</span>
                       </button>
+                      <button 
+                        onClick={() => { setIsLanguageOpen(false); setLanguage('ar'); }}
+                        className={`flex items-center gap-2 w-full text-left px-4 py-2 ${
+                          language === 'ar' 
+                            ? 'text-gold font-medium bg-light-gray' 
+                            : 'text-gray hover:bg-light-gray hover:text-dark-blue'
+                        } transition-all duration-200`}
+                      >
+                        <span className={`w-6 h-6 flex items-center justify-center rounded-full ${language === 'ar' ? 'bg-gold text-white' : 'bg-gray-100'}`}>AR</span>
+                        <span className="text-sm">{t('arabic')}</span>
+                      </button>
                     </div>
                   </motion.div>
                 )}
@@ -429,6 +440,17 @@ const Navbar = () => {
                       >
                         <span className={`w-6 h-6 flex items-center justify-center rounded-full ${language === 'fr' ? 'bg-gold text-white' : 'bg-gray-100'}`}>FR</span>
                         <span className="text-sm">{t('french')}</span>
+                      </button>
+                      <button 
+                        onClick={() => { setIsLanguageOpen(false); setLanguage('ar'); }}
+                        className={`flex items-center gap-2 w-full text-left px-4 py-2 ${
+                          language === 'ar' 
+                            ? 'text-gold font-medium bg-light-gray' 
+                            : 'text-gray hover:bg-light-gray hover:text-dark-blue'
+                        } transition-all duration-200`}
+                      >
+                        <span className={`w-6 h-6 flex items-center justify-center rounded-full ${language === 'ar' ? 'bg-gold text-white' : 'bg-gray-100'}`}>AR</span>
+                        <span className="text-sm">{t('arabic')}</span>
                       </button>
                     </div>
                   </motion.div>

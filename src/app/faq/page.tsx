@@ -523,8 +523,8 @@ export default function FAQPage() {
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Call us at</p>
-                        <a href="tel:+442071234567" className="text-dark-blue font-medium hover:text-gold transition-colors">
-                          +44 20 7123 4567
+                        <a href="tel:00447350555404" className="text-dark-blue font-medium hover:text-gold transition-colors">
+                          00447350555404
                         </a>
                       </div>
                     </div>

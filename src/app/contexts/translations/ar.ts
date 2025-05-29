@@ -28,6 +28,7 @@ const arTranslations = {
   'services': 'الخدمات',
   'certificates': 'الشهادات',
   'certifications': 'الاعتمادات',
+  'verify_certificate': 'تحقق من الشهادة',
   'contact': 'اتصل بنا',
   'our_story': 'قصتنا',
   'mission_values': 'المهمة والقيم',
@@ -159,7 +160,7 @@ const arTranslations = {
   
   // About Page Hero - Some English placeholders kept where needed
   'about_hero_title': 'حول',
-  'about_hero_highlight': 'Greenwich Institute',
+  'about_hero_highlight': 'Greenwich HSTC LTD',
   'about_hero_description': 'اكتشف تاريخنا ومهمتنا وقيمنا التي تلهم التميز التعليمي.',
   'about_hero_button': 'اتصل بنا',
   
@@ -252,8 +253,8 @@ const arTranslations = {
   'back_to_home': 'العودة إلى الصفحة الرئيسية',
 
   // Footer - Some English brand names kept
-  'footer_about': 'معهد غرينيتش هو مؤسسة تعليمية رائدة مكرسة لتوفير برامج تدريب وشهادات عالمية المستوى. مهمتنا هي تمكين الأفراد بالمعرفة والمهارات اللازمة للنجاح في بيئة عالمية سريعة التطور.',
-  'copyright': 'معهد غرينيتش. جميع الحقوق محفوظة.',
+  'footer_about': 'Greenwich HSTC LTD هو مؤسسة تعليمية رائدة مكرسة لتوفير برامج تدريب وشهادات عالمية المستوى. مهمتنا هي تمكين الأفراد بالمعرفة والمهارات اللازمة للنجاح في بيئة عالمية سريعة التطور.',
+  'copyright': 'Greenwich HSTC LTD. جميع الحقوق محفوظة.',
   'quick_links': 'روابط سريعة',
   'our_courses': 'دوراتنا',
   'contact_us': 'اتصل بنا',
@@ -267,6 +268,22 @@ const arTranslations = {
   'footer_certifications': 'الشهادات',
   'footer_testimonials': 'الشهادات',
   'footer_news_events': 'الأخبار والأحداث',
+
+  // Certificate Verification
+  'verify_your_certificate': 'تحقق من شهادة Greenwich HSTC LTD الخاصة بك',
+  'certificate_verification_text': 'يضمن نظام التحقق الآمن لدينا أصالة وسلامة جميع الشهادات الصادرة عن Greenwich HSTC LTD.',
+  'verify_hero_description': 'يضمن نظام التحقق الآمن لدينا أصالة وسلامة جميع الشهادات الصادرة عن Greenwich HSTC LTD.',
+  'how_it_works_desc': 'عملية التحقق لدينا بسيطة وآمنة وتوفر نتائج فورية لتأكيد أصالة شهادات Greenwich HSTC LTD.',
+  'step_1_title': 'أدخل معرّف الشهادة',
+  'step_1_desc': 'أدخل المعرّف الفريد الموجود على شهادة Greenwich HSTC LTD الخاصة بك في نموذج التحقق.',
+  'global_desc': 'شهادات Greenwich HSTC LTD معترف بها من قبل أصحاب العمل والمؤسسات التعليمية في جميع أنحاء العالم.',
+  'instant_desc': 'احصل على نتائج تحقق فورية لتأكيد أصالة أي شهادة من شهادات Greenwich HSTC LTD.',
+  'news_events_hero_description': 'ابق على اطلاع بأحدث التطورات والفعاليات القادمة في Greenwich HSTC LTD',
+  
+  // Trust Badges Section
+  'trust_badges': 'شارات الثقة',
+  'accredited_organizations': 'معتمد من قبل مؤسسات دولية رائدة',
+  'programs_recognized': 'برامجنا معترف بها عالمياً، مما يضمن أن تعليمك يلبي المعايير الدولية للتميز.',
 };
 
 export default arTranslations; 

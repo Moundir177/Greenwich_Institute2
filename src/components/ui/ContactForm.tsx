@@ -217,7 +217,7 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 name="phone"
                 value={formValues.phone}
                 onChange={handleChange}
-                placeholder="+44 20 1234 5678"
+                placeholder="00447350555404"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-uk-blue/50 focus:border-uk-blue transition-all duration-200"
               />
             </div>

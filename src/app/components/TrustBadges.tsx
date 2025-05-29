@@ -28,13 +28,13 @@ const TrustBadges = () => {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-gradient-to-r from-gold/20 to-amber-500/20 text-dark-blue text-sm font-medium mb-3">
-            Trust Badges
+            {t('trust_badges') || 'Trust Badges'}
           </span>
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-5 text-dark-blue">
-            Accredited by leading international organizations
+            {t('accredited_organizations') || 'Accredited by leading international organizations'}
           </h2>
           <p className="text-gray max-w-3xl mx-auto text-lg">
-            Our programs are recognized globally, ensuring that your education meets international standards of excellence.
+            {t('programs_recognized') || 'Our programs are recognized globally, ensuring that your education meets international standards of excellence.'}
           </p>
         </motion.div>
         

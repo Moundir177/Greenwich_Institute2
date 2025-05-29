@@ -159,7 +159,7 @@ const enTranslations = {
   
   // About Page Hero
   'about_hero_title': 'About',
-  'about_hero_highlight': 'Greenwich Institute',
+  'about_hero_highlight': 'Greenwich HSTC LTD',
   'about_hero_description': 'Discover our history, mission, and values that inspire educational excellence.',
   'about_hero_button': 'Contact Us',
   
@@ -189,7 +189,7 @@ const enTranslations = {
   'partnerships_impact_title': 'Our Partnership Impact',
   'partnerships_impact_description': 'Through our strategic partnerships, we\'ve created lasting educational impact and fostered global connections that benefit our students and communities.',
   'partnerships_main_title': 'Strategic Partners & Their Impact',
-  'partnerships_main_description': 'These key organizations collaborate with Greenwich Institute to enhance our educational offerings, strengthen our global presence, and create valuable opportunities for our students and faculty.',
+  'partnerships_main_description': 'These key organizations collaborate with Greenwich HSTC LTD to enhance our educational offerings, strengthen our global presence, and create valuable opportunities for our students and faculty.',
   
   // Featured Courses Section
   'featured_courses': 'Featured Courses',
@@ -252,8 +252,8 @@ const enTranslations = {
   'back_to_home': 'Back to Home',
 
   // Footer
-  'footer_about': 'Greenwich Institute is a leading educational institution dedicated to providing world-class training and certification programs. Our mission is to empower individuals with the knowledge and skills needed to succeed in a rapidly evolving global environment.',
-  'copyright': 'Greenwich Institute. All rights reserved.',
+  'footer_about': 'Greenwich HSTC LTD is a leading educational institution dedicated to providing world-class training and certification programs. Our mission is to empower individuals with the knowledge and skills needed to succeed in a rapidly evolving global environment.',
+  'copyright': 'Greenwich HSTC LTD. All rights reserved.',
   'quick_links': 'Quick Links',
   'our_courses': 'Our Courses',
   'contact_us': 'Contact Us',
